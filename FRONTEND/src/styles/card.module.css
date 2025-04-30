@@ -1,0 +1,7 @@
+.loginCard {
+  background-color: var(--card-bg);
+  padding: 2rem 2.5rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  width: 26rem;
+}

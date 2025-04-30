@@ -1,0 +1,30 @@
+.btn {
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    color: white;
+    font-weight: 500;
+    transition: background 0.3s ease;
+}
+
+.buttonGreen {
+    background-color: var(--success-color);
+}
+
+.buttonAccent {
+    background-color: var(--accent-color);
+}
+
+.buttonPrimary {
+    background-color: var(--primary-color);
+}
+
+.buttonCancel {
+    background-color: var(--cancel-color);
+    color: #2E2E2E;
+}
+
+.buttonRed {
+    background-color: var(--danger-color);
+}

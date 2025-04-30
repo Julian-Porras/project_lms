@@ -11,16 +11,14 @@ Route::controller(AuthController::class)->group(function () {
 
 // Logged in user routes
 Route::middleware(['auth:sanctum'])->group(function () {
+
+    Route::controller(AuthController::class)->group(function () {
+        Route::get('/user-info', 'getUser');
+    });
     // Admin routes
-    Route::middleware(['is_Admin'])->group(function () {
-
-    });
+    Route::middleware(['is_Admin'])->group(function () {});
     // Instructor routes
-    Route::middleware(['is_Instructor'])->group(function () {
-
-    });
+    Route::middleware(['is_Instructor'])->group(function () {});
     // Student routes
-    Route::middleware(['is_Student'])->group(function () {
-        
-    });
+    Route::middleware(['is_Student'])->group(function () {});
 });

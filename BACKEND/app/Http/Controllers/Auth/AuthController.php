@@ -40,6 +40,6 @@ class AuthController extends Controller
     public function getUser(Request $request)
     {
         $user = User::find(auth('sanctum')->user()->id);
-        return response()->json($user, 200);
+        return response()->json($user->load(['role']), 200);
     }
 }
