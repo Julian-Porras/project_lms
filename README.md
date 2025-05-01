@@ -1,4 +1,5 @@
 # React + Laravel
 
-Fontend: React js + Vite.
-Backend: Laravel.
+Fontend: React js + Vite
+
+Backend: Laravel

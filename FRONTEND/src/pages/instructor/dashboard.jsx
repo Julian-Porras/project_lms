@@ -1,7 +1,6 @@
-function Dashboard() {
+function InstructorDashboard() {
     return (
-        <div>this is dashboard</div>
+        <div>this is teacher dashboard</div>
     )
 }
-
-export default Dashboard;
+export default InstructorDashboard;

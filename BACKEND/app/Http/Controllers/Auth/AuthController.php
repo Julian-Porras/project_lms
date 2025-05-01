@@ -16,7 +16,7 @@ class AuthController extends Controller
             'password'      => 'required',
         ]);
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
+            return response()->json(['errors' => $validator->errors()], 422);
         } else {
             $user = User::where('email_address', $request->email_address)->first();
             if ($user && password_verify($request->password, $user->password)) {
@@ -37,9 +37,9 @@ class AuthController extends Controller
         return response()->json(['message' => 'Logout successful'], 200);
     }
 
-    public function getUser(Request $request)
+    public function getUser()
     {
         $user = User::find(auth('sanctum')->user()->id);
-        return response()->json($user->load(['role']), 200);
+        return response()->json($user, 200);
     }
 }

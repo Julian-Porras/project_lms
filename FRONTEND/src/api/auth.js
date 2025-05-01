@@ -1,7 +1,6 @@
-import axios from "axios";
-import { createAxiosInstances } from "../hooks/useAxios";
+import useAxios from "../hooks/useAxios"
 
-const { AxiosAuth, GuestAxios } = createAxiosInstances();
+const { AxiosAuth, GuestAxios } = useAxios();
 
 export const loginApi = async (credentials) => {
     await GuestAxios.get("/sanctum/csrf-cookie");
@@ -9,8 +8,8 @@ export const loginApi = async (credentials) => {
     return response.data;
 };
 
-export const getUserInfoApi = async () => {
-    const response = await AxiosAuth.post("/api/user-info");
+export const userInfoApi = async () => {
+    const response = await AxiosAuth.get("/api/userinfo");
     return response.data;
 };
 

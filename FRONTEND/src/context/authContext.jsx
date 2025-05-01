@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { loginApi, getUserInfoApi, logoutApi } from "../api/auth";
+import { loginApi, userInfoApi, logoutApi } from "../api/auth";
 import { useNavigate } from "react-router-dom";
+import { ROLES } from "../constants/role";
 
 const AuthContext = createContext();
 
@@ -27,8 +28,20 @@ export const AuthProvider = ({ children }) => {
             localStorage.setItem("token", bearer);
             setToken(bearer);
             setErrors({});
-            await userInfo();
-            navigate("/dashboard");
+            const userData = await userInfo();
+            switch (userData.role_id) {
+                case ROLES.ADMIN:
+                    navigate("/admin/dashboard");
+                    break;
+                case ROLES.INSTRUCTOR:
+                    navigate("/instructor/dashboard");
+                    break;
+                case ROLES.STUDENT:
+                    navigate("/student/dashboard");
+                    break;
+                default:
+                    navigate("/");
+            }
         } catch (err) {
             const status = err.response?.status;
             setErrors(
@@ -43,13 +56,14 @@ export const AuthProvider = ({ children }) => {
 
     const userInfo = async () => {
         try {
-            const data = await getUserInfoApi();
+            const data = await userInfoApi();
             setUser(data);
             setAuthUser(true);
             localStorage.setItem("__AuthUser", "true");
-            localStorage.setItem("code", data.role_name || "");
+            localStorage.setItem("code", data.role_id || "");
+            return data;
         } catch {
-            logout(); // token invalid, force logout
+            logout();
         }
     };
 
@@ -63,7 +77,7 @@ export const AuthProvider = ({ children }) => {
             setToken(null);
             setAuthUser(false);
             setUser(null);
-            navigate("/login");
+            navigate("/");
             setLoggingOut(false);
         }
     };

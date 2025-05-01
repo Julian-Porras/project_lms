@@ -2,14 +2,12 @@ import axios from "axios";
 
 const useAxios = () => {
     const backend = import.meta.env.VITE_BACKEND_URL;
-    const timeout = 1000 * 20; 
-    const AxiosAuth = axios.create({ timeout, withCredentials: true, });
+    const timeout = 1000 * 20;
+    const AxiosAuth = axios.create({ baseURL: backend, timeout, withCredentials: true, });
     AxiosAuth.interceptors.request.use(
         (config) => {
             const token = localStorage.getItem("token");
-            if (token) {
-                config.headers["Authorization"] = `Bearer ${token}`;
-            }
+            if (token) { config.headers["Authorization"] = `Bearer ${token}`; }
             return config;
         },
         (error) => {
@@ -18,9 +16,7 @@ const useAxios = () => {
     );
 
     const GuestAxios = axios.create({
-        baseURL: backend,
-        timeout,
-        withCredentials: true,
+        baseURL: backend, timeout, withCredentials: true,
     });
 
     return { AxiosAuth, GuestAxios, };

@@ -1,11 +1,14 @@
 import React from "react";
 import styles from '../../styles/login.module.css';
 import { LoginCard } from "../../components/Card";
-import { useState } from "react";
-import { useAuth } from "../context/AuthContext";
+import { useState, useEffect } from "react";
+import { useAuth } from "../../context/authContext";
+import { useNavigate } from "react-router-dom";
+import { ROLES } from "../../constants/role";
 
 function LoginPage() {
-    const { login, loading, errors } = useAuth();
+    const { login, loading, errors, authUser, user } = useAuth();
+    const navigate = useNavigate();
 
     const [credentials, setCredentials] = useState({
         email_address: "",
@@ -19,6 +22,24 @@ function LoginPage() {
         await login(credentials);
     };
 
+    useEffect(() => {
+        if (authUser && user) {
+          switch (user.role_id) {
+            case ROLES.ADMIN:
+              navigate("/admin/dashboard");
+              break;
+            case ROLES.INSTRUCTOR:
+              navigate("/instructor/dashboard");
+              break;
+            case ROLES.STUDENT:
+              navigate("/student/dashboard");
+              break;
+            default:
+              navigate("/");
+          }
+        }
+      }, [authUser, user]);
+
     return (
         <div className={styles.loginPage}>
             <LoginCard>
@@ -26,13 +47,14 @@ function LoginPage() {
                 <h2 className={styles.title}>Login to your account</h2>
                 <form className={styles.form} onSubmit={handleSubmit}>
                     <div className={styles.formGroup}>
-                        <label htmlFor="email">Email address</label>
-                        <input type="email" name="email_address" value={credentials.email_address} onChange={handleChange} required />
-                        {errors.email && <p className="error">{errors.email[0]}</p>}
+                        <label htmlFor="email_address">Email address</label>
+                        <input type="email" name="email_address" value={credentials.email_address} onChange={handleChange} />
+                        {errors?.email_address && <p className="text-sm text-red-500 mt-1">{errors.email_address}</p>}
                     </div>
                     <div className={styles.formGroup}>
                         <label htmlFor="password">Password</label>
-                        <input type="password" name="password" value={credentials.password} onChange={handleChange} required />
+                        <input type="password" name="password" value={credentials.password} onChange={handleChange} />
+                        {errors?.password && <p className="text-sm text-red-500 mt-2">{errors.password}</p>}
                     </div>
                     <div className={styles.actions}>
                         <button type="submit" className={styles.btnPrimary} disabled={loading} >

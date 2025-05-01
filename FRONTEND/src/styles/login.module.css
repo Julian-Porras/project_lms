@@ -4,7 +4,6 @@
   align-items: center;
   height: 100vh;
   background-color: var(--bg-color);
-  transition: background-color 0.3s ease;
 }
 
 .title {
@@ -40,7 +39,7 @@
   padding: 0.6rem .8rem;
   border: 1px solid #ccc;
   border-radius: var(--border-radius);
-  font-size: .8rem;
+  font-size: 1rem;
   outline: none;
   transition: border-color 0.3s ease;
 }
@@ -64,7 +63,6 @@
   border-radius: var(--border-radius);
   font-size: 1rem;
   font-weight: 600;
-  cursor: pointer;
   transition: background 0.3s ease;
   margin-bottom: 1rem;
 }

@@ -5,15 +5,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::controller(AuthController::class)->group(function () {
-    Route::post('/login', 'login')->name('login');
-    Route::post('/logout', 'logout')->name('logout');
+    Route::post('/login', 'login');
+    Route::post('/logout', 'logout');
+    Route::get('/userinfo', 'getUser');
 });
 
 // Logged in user routes
 Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::controller(AuthController::class)->group(function () {
-        Route::get('/user-info', 'getUser');
+        Route::get('/userinfo', 'getUser');
     });
     // Admin routes
     Route::middleware(['is_Admin'])->group(function () {});
