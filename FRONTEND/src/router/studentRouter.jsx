@@ -5,12 +5,14 @@ import { ROLES } from "../constants/role";
 
 const studentRouter = [
     {
-        path: "/student/dashboard",
+        path: "dashboard",
         element: <ProtectedRoute role={ROLES.STUDENT}><StudentDashboard /></ProtectedRoute>,
+        meta: { label: "Dashboard", role: ROLES.STUDENT },
     },
     {
-        path: "/student/classroom",
+        path: "classroom",
         element: <ProtectedRoute role={ROLES.STUDENT}><StudentClassroomTab /></ProtectedRoute>,
+        meta: { label: "Classroom", role: ROLES.STUDENT },
     },
 ];
 

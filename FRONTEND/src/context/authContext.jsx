@@ -6,7 +6,7 @@ import { ROLES } from "../constants/role";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-    const [token, setToken] = useState(localStorage.getItem("token") || null);
+    const [token, setToken] = useState(localStorage.getItem("token"));
     const [authUser, setAuthUser] = useState(!!localStorage.getItem("__AuthUser"));
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -21,13 +21,13 @@ export const AuthProvider = ({ children }) => {
     }, [token]);
 
     const login = async (credentials) => {
-        setLoading(true);
+        setLoading((d) => true);
         try {
             const data = await loginApi(credentials);
             const bearer = data.token;
             localStorage.setItem("token", bearer);
-            setToken(bearer);
-            setErrors({});
+            setToken((d) => bearer);
+            setErrors((d) => {});
             const userData = await userInfo();
             switch (userData.role_id) {
                 case ROLES.ADMIN:
@@ -44,21 +44,21 @@ export const AuthProvider = ({ children }) => {
             }
         } catch (err) {
             const status = err.response?.status;
-            setErrors(
+            setErrors((d) => 
                 status === 422 || status === 401
                     ? err.response.data.errors
                     : { general: "Something went wrong" }
             );
         } finally {
-            setLoading(false);
+            setLoading((d) => false);
         }
     };
 
     const userInfo = async () => {
         try {
             const data = await userInfoApi();
-            setUser(data);
-            setAuthUser(true);
+            setUser((d) => data);
+            setAuthUser((d) => true);
             localStorage.setItem("__AuthUser", "true");
             localStorage.setItem("code", data.role_id || "");
             return data;
@@ -68,17 +68,17 @@ export const AuthProvider = ({ children }) => {
     };
 
     const logout = async () => {
-        setLoggingOut(true);
+        setLoggingOut((d) => true);
         try {
             await logoutApi();
         } catch { }
         finally {
             localStorage.clear();
-            setToken(null);
-            setAuthUser(false);
-            setUser(null);
+            setToken((d) => null);
+            setAuthUser((d) => false);
+            setUser((d) => null);
             navigate("/");
-            setLoggingOut(false);
+            setLoggingOut((d) => false);
         }
     };
 

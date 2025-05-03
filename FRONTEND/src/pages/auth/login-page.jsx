@@ -44,7 +44,7 @@ function LoginPage() {
         <div className={styles.loginPage}>
             <LoginCard>
                 <p className={styles.subtitle}>Please enter your details</p>
-                <h2 className={styles.title}>Login to your account</h2>
+                <h1 className={styles.title}>Login to your account</h1>
                 <form className={styles.form} onSubmit={handleSubmit}>
                     <div className={styles.formGroup}>
                         <label htmlFor="email_address">Email address</label>

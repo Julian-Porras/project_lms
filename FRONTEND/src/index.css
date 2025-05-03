@@ -22,7 +22,7 @@
   background-color: var(--bg-color);
 
   scroll-behavior: smooth;
-  transition: all 0.2s ease;
+  /* transition: all 0.2s ease; */
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -38,7 +38,6 @@
 
 #root {
   width: 100%;
-  display: contents;
 }
 
 body {
