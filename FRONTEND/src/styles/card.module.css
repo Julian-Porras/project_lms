@@ -5,3 +5,10 @@
   box-shadow: var(--box-shadow);
   width: 26rem;
 }
+
+.containerCard{
+  padding: 1rem;
+  background-color: var(--card-bg);
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 24px rgba(0, 0, 0, 0.1);
+}

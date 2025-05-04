@@ -2,16 +2,17 @@
 :root {
   /* font-family: system-ui, Avenir, Helvetica, Arial, sans-serif; */
   /* font-weight: 400; */
-  font-family: "Departure Mono", "Menlo", "Monaco", "Consolas", "Liberation Mono", "Courier New", "monospace";
+  font-family: "Open Sans", sans-serif, "Departure Mono";
   font-size: clamp(1rem, 1.2vw, 1.2rem);
   line-height: 1.4;
 
   --bg-color: #E8ECF8;
+  --bg-color-default: #ffffff;
   --card-bg: #ffffff;
-  --text-color: #2E2E2E;
+  --text-color: #01214a;
   --gray-color: #a7a7a7;
-  --primary-color: #3C4F88;
-  --accent-color: #6C63FF;
+  --primary-color: #00154d;
+  --accent-color: #2b66b5;
   --danger-color: #E74C3C;
   --success-color: #2ECC71;
   --cancel-color: #B0B0B0;
@@ -19,7 +20,7 @@
   --box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 
   color: var(--text-color);
-  background-color: var(--bg-color);
+  background-color: var(--bg-color-default);
 
   scroll-behavior: smooth;
   /* transition: all 0.2s ease; */

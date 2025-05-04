@@ -1,6 +1,8 @@
+import style from "../../styles/page.module.css";
+
 function AdminPeopleTab() {
     return (
-        <div>this is admin people tab</div>
+        <p className={style.title} >People</p>
     )
 }
 export default AdminPeopleTab;

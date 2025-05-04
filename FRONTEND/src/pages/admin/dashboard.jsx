@@ -1,6 +1,8 @@
+import style from "../../styles/page.module.css";
+
 function AdminDashboard() {
     return (
-        <div>this is admin dashboard</div>
+        <p className={style.title} >DASHBOARD</p>
     )
 }
 export default AdminDashboard;

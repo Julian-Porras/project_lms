@@ -49,12 +49,12 @@ function LoginPage() {
                     <div className={styles.formGroup}>
                         <label htmlFor="email_address">Email address</label>
                         <input type="email" name="email_address" value={credentials.email_address} onChange={handleChange} />
-                        {errors?.email_address && <p className="text-sm text-red-500 mt-1">{errors.email_address}</p>}
+                        {errors?.email_address && <p className="text-sm text-red-500 mt-1">&nbsp;{errors.email_address}</p>}
                     </div>
                     <div className={styles.formGroup}>
                         <label htmlFor="password">Password</label>
                         <input type="password" name="password" value={credentials.password} onChange={handleChange} />
-                        {errors?.password && <p className="text-sm text-red-500 mt-2">{errors.password}</p>}
+                        {errors?.password && <p className="text-sm text-red-500 mt-2">&nbsp;{errors.password}</p>}
                     </div>
                     <div className={styles.actions}>
                         <button type="submit" className={styles.btnPrimary} disabled={loading} >

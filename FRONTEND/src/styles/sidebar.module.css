@@ -1,10 +1,25 @@
 @import "tailwindcss";
 .sidebarAside{
-    @apply w-52 h-screen bg-[#ffffff] border-r border-gray-200 p-4 shadow-sm flex flex-col;
-}
-.logoContainer{
-    @apply flex flex-row items-center mb-6
+    @apply w-52 h-screen bg-[#ffffff] border-r border-gray-200 p-2 flex flex-col pt-18;
 }
 .navContainer{
-    @apply flex flex-col gap-1 overflow-y-auto px-1
+    @apply flex flex-col gap-2 overflow-y-auto px-1;
+}
+.navLink{
+    @apply flex items-center gap-3 px-3 py-2 rounded-sm;
+    font-size: 1rem;
+}
+
+.navActive{
+    @apply text-white shadow;
+    background-color: var(--primary-color);
+    transition: all 0.1s ease;
+}
+.navNotActive{
+    @apply hover:bg-gray-200 ;
+    transition: all 0.1s ease;
+    
+}
+.navNotActive:hover{
+    /* color: var(--primary-color); */
 }

@@ -1,6 +1,8 @@
+import style from "../../styles/page.module.css";
+
 function AdminCourseTab() {
     return (
-        <div>this is admin course tab</div>
+        <p className={style.title} >Courses</p>
     )
 }
 export default AdminCourseTab;
