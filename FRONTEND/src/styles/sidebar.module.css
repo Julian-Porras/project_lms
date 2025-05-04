@@ -1,25 +1,53 @@
 @import "tailwindcss";
-.sidebarAside{
-    @apply w-52 h-screen bg-[#ffffff] border-r border-gray-200 p-2 flex flex-col pt-18;
-}
-.navContainer{
-    @apply flex flex-col gap-2 overflow-y-auto px-1;
-}
-.navLink{
-    @apply flex items-center gap-3 px-3 py-2 rounded-sm;
-    font-size: 1rem;
+
+.sidebarAside {
+    @apply w-52 h-screen border-r border-gray-200 p-2 flex flex-col pt-18;
+    background-color: var(--bg-color-default)
 }
 
-.navActive{
+.navContainer {
+    @apply flex flex-col gap-2 overflow-y-auto px-1;
+}
+
+.navLink {
+    @apply flex items-center gap-3 px-3 py-2 rounded-sm;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.navActive {
     @apply text-white shadow;
     background-color: var(--primary-color);
     transition: all 0.1s ease;
 }
-.navNotActive{
-    @apply hover:bg-gray-200 ;
+
+.navNotActive {
+    @apply hover:bg-gray-200;
     transition: all 0.1s ease;
-    
+
 }
-.navNotActive:hover{
-    /* color: var(--primary-color); */
+
+.dropdownIcon {
+    transition: transform 0.3s ease;
+    margin-left: auto;
+}
+
+.rotateIcon {
+    transform: rotate(180deg);
+}
+
+.subMenu {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--spacing) * 1);
+    max-height: 0;
+    overflow: hidden;
+    transition: 0.3s ease, padding 0.3s ease;
+}
+
+.subMenuOpen {
+    background-color: var(--bg-color);
+    border-radius: var(--border-radius);
+    max-height: 500px;
+    margin-top: calc(var(--spacing) * 2);
 }

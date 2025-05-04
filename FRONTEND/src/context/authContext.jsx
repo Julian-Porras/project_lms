@@ -44,21 +44,21 @@ export const AuthProvider = ({ children }) => {
             }
         } catch (err) {
             const status = err.response?.status;
-            setErrors((d) => 
+            setErrors(
                 status === 422 || status === 401
                     ? err.response.data.errors
                     : { general: "Something went wrong" }
             );
         } finally {
-            setLoading((d) => false);
+            setLoading(false);
         }
     };
 
     const userInfo = async () => {
         try {
             const data = await userInfoApi();
-            setUser((d) => data);
-            setAuthUser((d) => true);
+            setUser(data);
+            setAuthUser(true);
             localStorage.setItem("__AuthUser", "true");
             localStorage.setItem("code", data.role_id || "");
             return data;
