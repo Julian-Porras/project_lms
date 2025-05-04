@@ -1,0 +1,10 @@
+@import "tailwindcss";
+.sidebarAside{
+    @apply w-52 h-screen bg-[#ffffff] border-r border-gray-200 p-4 shadow-sm flex flex-col;
+}
+.logoContainer{
+    @apply flex flex-row items-center mb-6
+}
+.navContainer{
+    @apply flex flex-col gap-1 overflow-y-auto px-1
+}

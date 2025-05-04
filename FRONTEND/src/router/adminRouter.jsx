@@ -3,12 +3,13 @@ import AdminCourseTab from "../pages/admin/course";
 import AdminPeopleTab from "../pages/admin/people";
 import ProtectedRoute from "../components/ProtectedRoute";
 import { ROLES } from "../constants/role";
+import { FaTachometerAlt, FaBook, FaUsers } from "react-icons/fa";
 
 const adminRouter = [
   {
     path: "dashboard",
     element: <ProtectedRoute role={ROLES.ADMIN}><AdminDashboard /></ProtectedRoute>,
-    meta: { label: "Dashboard", role: ROLES.ADMIN },
+    meta: { label: "Dashboard", role: ROLES.ADMIN, icon: FaTachometerAlt  },
   },
   {
     path: "course",
