@@ -40,11 +40,11 @@ function LoginPage() {
         }
       }, [authUser, user]);
 
-    return (
+    return ( !authUser && !user &&
         <div className={styles.loginPage}>
             <LoginCard>
                 <p className={styles.subtitle}>Please enter your details</p>
-                <h1 className={styles.title}>Login to your account</h1>
+                <h2 className={styles.title}>Login to your account</h2>
                 <form className={styles.form} onSubmit={handleSubmit}>
                     <div className={styles.formGroup}>
                         <label htmlFor="email_address">Email address</label>

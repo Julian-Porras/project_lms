@@ -3,6 +3,8 @@ import StudentClassroomTab from "../pages/student/classroom";
 import ProtectedRoute from "../components/ProtectedRoute";
 import { ROLES } from "../constants/role";
 import { FaTachometerAlt, FaBook, FaDesktop } from "react-icons/fa";
+import SettingsPage from "../pages/settings";
+
 const studentRouter = [
     {
         path: "dashboard",
@@ -13,6 +15,10 @@ const studentRouter = [
         path: "classroom",
         element: <ProtectedRoute role={ROLES.STUDENT}><StudentClassroomTab /></ProtectedRoute>,
         meta: { label: "Classes", role: ROLES.STUDENT, icon: FaDesktop },
+    },
+    {
+      path: "settings",
+      element: <SettingsPage />,
     },
 ];
 

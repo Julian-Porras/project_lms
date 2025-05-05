@@ -1,9 +1,9 @@
 .loginCard {
   background-color: var(--card-bg);
-  padding: 2rem 2.5rem;
+  padding: 2rem;
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
-  width: 26rem;
+  width: 24rem;
 }
 
 .containerCard{

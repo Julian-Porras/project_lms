@@ -2,11 +2,13 @@ import style from "../styles/header.module.css";
 import { FaGear, FaArrowRightFromBracket } from "react-icons/fa6";
 import { useAuth } from "../context/authContext";
 import { useState, useRef, useEffect } from "react";
+import { NavLink } from "react-router-dom";
 
 function Header() {
     const { user, logout } = useAuth();
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const dropdownRef = useRef(null);
+    const base = location.pathname.split("/")[1];
 
     const handleClickOutside = (e) => {
         if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
@@ -15,6 +17,7 @@ function Header() {
     };
 
     const handleLogout = async (e) => {
+        setDropdownOpen(false);
         e.preventDefault();
         await logout();
     };
@@ -34,23 +37,31 @@ function Header() {
             <div className="relative px-4" ref={dropdownRef}>
                 {user && (
                     <div onClick={() => setDropdownOpen((prev) => !prev)} className="cursor-pointer">
-                        <p>{user.last_name}, {user.first_name}</p>
+                        <p className={style.profileNav} >{user.last_name}, {user.first_name}</p>
                     </div>
                 )}
 
                 {dropdownOpen && user && (
                     <div className={style.dropdownNav}>
                         <div className={style.dropdownTab}>
-                            <strong>{user.first_name} {user.last_name}</strong><br />
+                            <strong>{user.first_name} {user.last_name}</strong>
                             <span className="text-gray-600 text-xs">{user?.email_address}</span>
                         </div>
                         <div className={style.dropdownTab}>
-                            <FaGear />
-                            <span>Settings</span>
+                            <NavLink
+                                className="flex flex-row items-center gap-2"
+                                to={`/${base}/settings`}
+                                onClick={() => setDropdownOpen(false)}
+                            >
+                                <FaGear />
+                                <span>Settings</span>
+                            </NavLink>
                         </div>
                         <div className={style.dropdownTab} onClick={handleLogout}>
-                            <FaArrowRightFromBracket />
-                            <span>Sign out</span>
+                            <div className="flex flex-row items-center gap-2" >
+                                <FaArrowRightFromBracket />
+                                <span>Sign out</span>
+                            </div>
                         </div>
                     </div>
                 )}

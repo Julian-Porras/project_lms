@@ -4,6 +4,7 @@ import AdminPeopleTab from "../pages/admin/people";
 import ProtectedRoute from "../components/ProtectedRoute";
 import { ROLES } from "../constants/role";
 import { FaTachometerAlt, FaBook, FaUsers } from "react-icons/fa";
+import SettingsPage from "../pages/settings";
 
 const adminRouter = [
   {
@@ -12,8 +13,6 @@ const adminRouter = [
     meta: { label: "Dashboard", role: ROLES.ADMIN, icon: FaTachometerAlt },
   },
   {
-    // path: "course",
-    // element: (<ProtectedRoute role={ROLES.ADMIN}><AdminCourseTab /></ProtectedRoute>),
     meta: { label: "Courses", role: ROLES.ADMIN, icon: FaBook },
     children: [
       {
@@ -77,6 +76,10 @@ const adminRouter = [
     path: "people",
     element: (<ProtectedRoute role={ROLES.ADMIN}><AdminPeopleTab /></ProtectedRoute>),
     meta: { label: "People", role: ROLES.ADMIN, icon: FaUsers },
+  },
+  {
+    path: "settings",
+    element: <SettingsPage />,
   },
 ];
 

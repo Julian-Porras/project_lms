@@ -29,7 +29,7 @@ function card2({ title, children }) {
     );
 }
 
-function LoginCard({ title, children }) {
+function LoginCard({ children }) {
     return (
         <div className={styles.loginCard}>
                 <div>{children}</div>
