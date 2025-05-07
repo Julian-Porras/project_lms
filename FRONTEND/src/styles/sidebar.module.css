@@ -1,59 +1,49 @@
 @import "tailwindcss";
 
-.sidebar-open {
-    opacity: 1;
-    transform: translateX(0);
-    pointer-events: auto;
+.sidebarOpen {
+    @apply w-64 p-2;
 }
-.sidebar-closed {
-    opacity: 0;
-    transform: translateX(-100%);
-    pointer-events: none;
-    display: none;
+.sidebarClosed {
+    @apply w-0 opacity-0 p-0;
 }
 .sidebarAside {
-    @apply w-64 h-screen border-r border-gray-200 p-2 flex flex-col pt-22;
+    @apply h-screen border-r border-gray-200 pt-22 flex flex-col whitespace-nowrap;
     background-color: var(--bg-color-default);
-    transition: all 0.3s ease-in-out;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    transition: all 0.2s ease-in-out ;
 }
-
 .sidebarHead {
     font-size: .8rem;
     margin: .6rem;
     @apply text-gray-400;
     text-transform: uppercase;
 }
-
 .navContainer {
-    @apply flex flex-col gap-2 overflow-y-auto px-1;
+    @apply flex flex-col gap-2 overflow-y-auto px-1 ;
+    overflow-x: hidden;
 }
-
 .navLink {
     @apply flex items-center gap-3 px-4 py-3 rounded-sm;
     font-size: 1rem;
     cursor: pointer;
 }
-
 .navActive {
     @apply text-white shadow;
     background-color: var(--primary-color);
     transition: all 0.1s ease;
 }
-
 .navNotActive {
     @apply hover:bg-gray-300;
     transition: all 0.1s ease;
 }
-
 .dropdownIcon {
     transition: transform 0.3s ease;
     margin-left: auto;
 }
-
 .rotateIcon {
     transform: rotate(180deg);
 }
-
 .subMenu {
     display: flex;
     flex-direction: column;
@@ -62,7 +52,6 @@
     overflow: hidden;
     transition: 0.3s ease, padding 0.3s ease;
 }
-
 .subMenuOpen {
     background-color: var(--bg-color);
     border-radius: var(--border-radius);

@@ -33,7 +33,7 @@ function Header({ resetSubmenus, isOpenSidebar, setOpen }) {
             <div className="flex flex-row items-center" >
                 <div className={style.logoContainer}>
                     <img src="/src/assets/images/react.svg" className="w-6" alt="" />
-                    <h2 className="text-md px-2 cursor-pointer">LMS</h2>
+                    <small className="text-md px-2 cursor-pointer">LMS</small>
                 </div>
                 <FaBars className="text-xl cursor-pointer" onClick={ () =>
                     setOpen(isOpenSidebar ? false : true)

@@ -28,7 +28,7 @@ function Sidebar({ isOpenSubmenu, toggleSubmenu, resetSubmenus, isOpenSidebar })
     }
 
     return (
-        <aside className={`${style.sidebarAside} ${isOpenSidebar ? 'sidebar-open' : 'sidebar-closed'}`}>
+        <aside className={`${style.sidebarAside} ${isOpenSidebar ? style.sidebarOpen : style.sidebarClosed}`}>
             <p className={style.sidebarHead} >{sidebarHeader}</p>
             <nav className={style.navContainer}>
                 {routes.filter(route => route.meta?.label).map(route => {

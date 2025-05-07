@@ -19,7 +19,7 @@ const MainLayout = () => {
                 resetSubmenus={resetSubmenus}
                 isOpenSidebar={isOpenSidebar}
             />
-            <main className="flex-1 p-4 overflow-y-scroll mt-12">
+            <main className={`flex-1 p-4 overflow-y-scroll mt-12 `}>
                 <Outlet />
             </main>
         </div>
