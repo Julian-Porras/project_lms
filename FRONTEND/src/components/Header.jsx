@@ -1,10 +1,11 @@
 import style from "../styles/header.module.css";
 import { FaGear, FaArrowRightFromBracket } from "react-icons/fa6";
+import { FaBars  } from "react-icons/fa";
 import { useAuth } from "../context/authContext";
 import { useState, useRef, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 
-function Header({ resetSubmenus }) {
+function Header({ resetSubmenus, isOpenSidebar, setOpen }) {
     const { user, logout } = useAuth();
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const dropdownRef = useRef(null);
@@ -29,11 +30,15 @@ function Header({ resetSubmenus }) {
 
     return (
         <header className={style.header} >
-            <div className={style.logoContainer}>
-                <img src="/src/assets/images/react.svg" className="w-6" alt="" />
-                <h2 className="text-md px-2">LMS</h2>
+            <div className="flex flex-row items-center" >
+                <div className={style.logoContainer}>
+                    <img src="/src/assets/images/react.svg" className="w-6" alt="" />
+                    <h2 className="text-md px-2 cursor-pointer">LMS</h2>
+                </div>
+                <FaBars className="text-xl cursor-pointer" onClick={ () =>
+                    setOpen(isOpenSidebar ? false : true)
+                } />
             </div>
-
             <div className="relative px-4" ref={dropdownRef}>
                 {user && (
                     <div onClick={() => setDropdownOpen((prev) => !prev)} className="cursor-pointer">

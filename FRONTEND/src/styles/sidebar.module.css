@@ -1,10 +1,23 @@
 @import "tailwindcss";
 
-.sidebarAside {
-    @apply w-62 h-screen border-r border-gray-200 p-2 flex flex-col pt-22;
-    background-color: var(--bg-color-default);
+.sidebar-open {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
 }
-.sidebarHead{
+.sidebar-closed {
+    opacity: 0;
+    transform: translateX(-100%);
+    pointer-events: none;
+    display: none;
+}
+.sidebarAside {
+    @apply w-64 h-screen border-r border-gray-200 p-2 flex flex-col pt-22;
+    background-color: var(--bg-color-default);
+    transition: all 0.3s ease-in-out;
+}
+
+.sidebarHead {
     font-size: .8rem;
     margin: .6rem;
     @apply text-gray-400;

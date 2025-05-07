@@ -7,7 +7,7 @@ import studentRouter from "../router/studentRouter";
 import style from "../styles/sidebar.module.css"
 import { FaAngleDown } from "react-icons/fa";
 
-function Sidebar({ isOpenSubmenu, toggleSubmenu, resetSubmenus }) {
+function Sidebar({ isOpenSubmenu, toggleSubmenu, resetSubmenus, isOpenSidebar }) {
     let sidebarHeader = null;
     const { user } = useAuth();
     const location = useLocation();
@@ -28,7 +28,7 @@ function Sidebar({ isOpenSubmenu, toggleSubmenu, resetSubmenus }) {
     }
 
     return (
-        <aside className={style.sidebarAside}>
+        <aside className={`${style.sidebarAside} ${isOpenSidebar ? 'sidebar-open' : 'sidebar-closed'}`}>
             <p className={style.sidebarHead} >{sidebarHeader}</p>
             <nav className={style.navContainer}>
                 {routes.filter(route => route.meta?.label).map(route => {
