@@ -1,13 +1,14 @@
 @import "tailwindcss";
 
 .sidebarAside {
-    @apply w-54 h-screen border-r border-gray-200 p-2 flex flex-col pt-18;
+    @apply w-62 h-screen border-r border-gray-200 p-2 flex flex-col pt-22;
     background-color: var(--bg-color-default);
 }
 .sidebarHead{
     font-size: .8rem;
-    margin: .4rem;
+    margin: .6rem;
     @apply text-gray-400;
+    text-transform: uppercase;
 }
 
 .navContainer {
@@ -15,7 +16,7 @@
 }
 
 .navLink {
-    @apply flex items-center gap-3 px-3 py-2 rounded-sm;
+    @apply flex items-center gap-3 px-4 py-3 rounded-sm;
     font-size: 1rem;
     cursor: pointer;
 }

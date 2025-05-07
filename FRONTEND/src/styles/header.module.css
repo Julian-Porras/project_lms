@@ -3,7 +3,7 @@
     @apply flex flex-row gap-1 items-center;
     justify-content: space-between;
     background-color: var(--card-bg);
-    box-shadow: 0px 2px 20px rgba(1, 41, 112, 0.1);
+    box-shadow: 0px 2px 14px rgba(1, 41, 112, 0.1);
     width: 100%;
     z-index: 2;
     position: fixed;
@@ -15,7 +15,7 @@
     font-weight: 600;
 }
 .profileNav{
-    font-size: .9rem;
+    font-size: 1rem;
 }
 .profileNav:hover{
     color: var(--accent-color);
@@ -26,6 +26,6 @@
 }
 .dropdownTab{
     @apply px-4 py-2 hover:bg-gray-200 cursor-pointer flex gap-1;
-    font-size: .8rem;
+    font-size: .9rem;
     flex-direction: column;
 }
