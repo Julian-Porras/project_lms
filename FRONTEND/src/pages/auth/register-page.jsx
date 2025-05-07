@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { ROLES } from "../../constants/role";
 import { NavLink } from "react-router-dom";
 
-function LoginPage() {
+function RegisterPage() {
     const { login, loading, errors, authUser, user } = useAuth();
     const navigate = useNavigate();
 
@@ -44,11 +44,12 @@ function LoginPage() {
     return (!authUser && !user &&
         <div className={styles.loginPage}>
             <LoginCard>
-                <p className={styles.subtitle}>Please enter your details</p>
-                <h2 className={styles.title}>Login to your account</h2>
+                <p className={styles.subtitle}>Please fill in this form to create an account</p>
+                <h2 className={styles.title}>Sign up</h2>
                 <form className={styles.form} onSubmit={handleSubmit}>
                     <div className={styles.formGroup}>
-                        <label htmlFor="email_address">Email address</label>
+                        <input type="email" name="email_address" value={credentials.email_address} onChange={handleChange} placeholder="Type your email address" />
+                        {errors?.email_address && <p className="text-sm text-red-500 mt-1">&nbsp;{errors.email_address}</p>}
                         <input type="email" name="email_address" value={credentials.email_address} onChange={handleChange} placeholder="Type your email address" />
                         {errors?.email_address && <p className="text-sm text-red-500 mt-1">&nbsp;{errors.email_address}</p>}
                     </div>
@@ -60,15 +61,15 @@ function LoginPage() {
                     <a href="#" className={styles.forgotLink}>Forgot Password?</a>
                     <div className={styles.actions}>
                         <button type="submit" className={styles.btnPrimary} disabled={loading} >
-                            {loading ? "Logging in..." : "Login"}
+                            {loading ? "Please wait..." : "Sign Up"}
                         </button>
                     </div>
-                    <p className={styles.registerText} >Don't have an account?
-                        <NavLink className={styles.forgotLink} to={`/signup`}> Sign up</NavLink>
+                    <p className={styles.registerText} >Already have an account?
+                        <NavLink className={styles.forgotLink} to={`/`}> Login</NavLink>
                     </p>
                 </form>
             </LoginCard>
         </div>
     );
 }
-export default LoginPage;
+export default RegisterPage;

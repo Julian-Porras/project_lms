@@ -25,7 +25,7 @@
     box-shadow: 0px 2px 20px rgba(1, 42, 112, 0.301);
 }
 .dropdownTab{
-    @apply px-4 py-2 hover:bg-gray-100 cursor-pointer flex gap-1;
+    @apply px-4 py-2 hover:bg-gray-200 cursor-pointer flex gap-1;
     font-size: .8rem;
     flex-direction: column;
 }

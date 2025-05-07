@@ -4,7 +4,7 @@ import { useAuth } from "../context/authContext";
 import { useState, useRef, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 
-function Header() {
+function Header({ resetSubmenus }) {
     const { user, logout } = useAuth();
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const dropdownRef = useRef(null);
@@ -51,7 +51,11 @@ function Header() {
                             <NavLink
                                 className="flex flex-row items-center gap-2"
                                 to={`/${base}/settings`}
-                                onClick={() => setDropdownOpen(false)}
+                                onClick={() => {
+                                    setDropdownOpen(false);
+                                    resetSubmenus();
+                                }
+                                }
                             >
                                 <FaGear />
                                 <span>Settings</span>

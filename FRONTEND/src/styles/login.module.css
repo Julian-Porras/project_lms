@@ -1,3 +1,4 @@
+@import "tailwindcss";
 .loginPage {
   display: flex;
   justify-content: center;
@@ -8,13 +9,14 @@
 
 .title {
   text-align: left;
+  font-weight: 600;
   color: var(--text-color);
-  margin-bottom: 1rem;
-  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  font-size: 1.8rem;
 }
 
 .subtitle {
-  font-size: .8rem;
+  font-size: .9rem;
   text-align: left;
   color: var(--gray-color);
 }
@@ -31,7 +33,7 @@
 }
 
 .formGroup label {
-  font-size: .9rem;
+  font-size: 1rem;
   margin-bottom: 0.1rem;
   color: var(--text-color);
 }
@@ -46,7 +48,7 @@
 }
 
 .formGroup input:focus {
-  border-color: var(--primary-color);
+  border-color: var(--accent-color);
 }
 
 .actions {
@@ -57,7 +59,8 @@
 
 .btnPrimary {
   width: 100%;
-  background-color: var(--primary-color);
+  /* background-color: var(--primary-color); */
+  @apply bg-blue-600 ;
   color: white;
   border: none;
   padding: 0.75rem;
@@ -71,15 +74,19 @@
 .btnPrimary:hover {
   background-color: #2a3b66;
 }
-
+.registerText{
+  text-align: center;
+  font-size: 0.9rem;
+}
 .forgotLink {
   font-size: 0.9rem;
-  color: var(--accent-color);
+  @apply text-blue-600 ;
   text-decoration: none;
+  text-align: right;
   transition: color 0.3s ease;
+  margin-bottom: 2rem;
 }
-
 .forgotLink:hover {
   text-decoration: underline;
-  color: #5a50d0;
+  @apply text-blue-700 ;
 }
