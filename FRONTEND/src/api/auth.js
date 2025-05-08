@@ -8,6 +8,12 @@ export const loginApi = async (credentials) => {
     return response.data;
 };
 
+export const registerApi = async (credentials) => {
+    await GuestAxios.get("/sanctum/csrf-cookie");
+    const response = await GuestAxios.post("/api/register", credentials);
+    return response.data;
+};
+
 export const userInfoApi = async () => {
     const response = await AxiosAuth.get("/api/userinfo");
     return response.data;

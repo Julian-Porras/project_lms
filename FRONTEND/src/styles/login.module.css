@@ -10,8 +10,8 @@
 .title {
   text-align: left;
   font-weight: 600;
-  color: var(--text-color);
-  margin-bottom: 2rem;
+  color: var(--secondary-color);
+  margin-bottom: 1.6rem;
   font-size: 1.8rem;
 }
 
@@ -30,11 +30,12 @@
   display: flex;
   flex-direction: column;
   margin-bottom: 1rem;
+  width: 100%;
 }
 
 .formGroup label {
   font-size: 1rem;
-  margin-bottom: 0.1rem;
+  margin-bottom: 0.2rem;
   color: var(--text-color);
 }
 
@@ -48,7 +49,7 @@
 }
 
 .formGroup input:focus {
-  border-color: var(--accent-color);
+  border-color: var(--secondary-color);
 }
 
 .actions {
@@ -59,8 +60,8 @@
 
 .btnPrimary {
   width: 100%;
-  /* background-color: var(--primary-color); */
-  @apply bg-blue-600 ;
+  background-color: var(--secondary-color);
+  /* @apply bg-blue-600 ; */
   color: white;
   border: none;
   padding: 0.75rem;
@@ -69,10 +70,10 @@
   font-weight: 600;
   transition: background 0.3s ease;
   margin-bottom: 1rem;
+  cursor: pointer;
 }
-
 .btnPrimary:hover {
-  background-color: #2a3b66;
+  background-color: #196597;
 }
 .registerText{
   text-align: center;
@@ -80,7 +81,8 @@
 }
 .forgotLink {
   font-size: 0.9rem;
-  @apply text-blue-600 ;
+  /* @apply text-blue-600 ; */
+  color: var(--secondary-color);
   text-decoration: none;
   text-align: right;
   transition: color 0.3s ease;
@@ -88,5 +90,6 @@
 }
 .forgotLink:hover {
   text-decoration: underline;
-  @apply text-blue-700 ;
+  color: var(--secondary-color);
+  /* @apply text-blue-700 ; */
 }

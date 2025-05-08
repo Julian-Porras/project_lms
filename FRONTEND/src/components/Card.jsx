@@ -37,6 +37,14 @@ function LoginCard({ children }) {
     )
 }
 
+function RegisterCard({ children }) {
+    return (
+        <div className={styles.registerCard}>
+                <div>{children}</div>
+        </div>
+    )
+}
+
 function ContainerCard({ children }) {
     return (
         <div className={styles.containerCard}>
@@ -45,4 +53,4 @@ function ContainerCard({ children }) {
     )
 }
 
-export { card1, card2, LoginCard, ContainerCard };
+export { card1, card2, LoginCard, RegisterCard, ContainerCard };

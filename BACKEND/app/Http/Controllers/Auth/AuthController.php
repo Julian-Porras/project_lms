@@ -33,12 +33,27 @@ class AuthController extends Controller
         }
     }
 
-    public function register(Request $request){
+    private function directLogin($email_address, $password)
+    {
+        $user = User::where('email_address', $email_address)->first();
+        if ($user && password_verify($password, $user->password)) {
+            $token = $user->createToken($user->email_address)->plainTextToken;
+            return response()->json([
+                'token' => $token,
+                'user'  => $user,
+            ], 200);
+        } else {
+            return response()->json(['errors' => ['email_address' => 'Invalid credential']], 401);
+        }
+    }
+
+    public function register(Request $request)
+    {
         $validator = Validator::make($request->all(), [
-            'email_address' => 'required|email',
-            'first_name'    => 'required',
-            'last_name'     => 'required',
-            'password'      => 'required|min:8',
+            'email_address'     => 'required|email|unique:users',
+            'first_name'        => 'required',
+            'last_name'         => 'required',
+            'password'          => 'required|min:8',
             'password_confirmation' => 'required_with:password|same:password',
         ]);
         if ($validator->fails()) {
@@ -52,9 +67,9 @@ class AuthController extends Controller
                 'email_address' => $request->email_address,
                 'password'      => Hash::make($request->password),
             ]);
-            $this->login($request->email_address, $request->password);
+            $data = $this->directLogin($request->email_address, $request->password);
+            return $data;
         }
-
     }
 
     public function logout(Request $request)

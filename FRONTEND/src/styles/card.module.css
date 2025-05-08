@@ -6,6 +6,14 @@
   width: 24rem;
 }
 
+.registerCard {
+  background-color: var(--card-bg);
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  width: 32rem;
+}
+
 .containerCard{
   padding: 1rem;
   background-color: var(--card-bg);
