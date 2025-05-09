@@ -1,6 +1,8 @@
+import style from "../../styles/page.module.css";
+
 function InstructorDashboard() {
     return (
-        <div>this is teacher dashboard</div>
+        <p className={style.title} >Dashboard</p>
     )
 }
 export default InstructorDashboard;

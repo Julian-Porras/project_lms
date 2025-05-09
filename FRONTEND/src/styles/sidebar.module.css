@@ -11,7 +11,6 @@
     background-color: var(--bg-color-default);
     overflow-y: auto;
     scrollbar-width: thin;
-    transition: all 0.2s ease-in-out ;
 }
 .sidebarHead {
     font-size: .8rem;
@@ -20,6 +19,7 @@
     text-transform: uppercase;
 }
 .navContainer {
+    transition: all 0.2s ease-in-out ;
     @apply flex flex-col gap-2 overflow-y-auto px-1 ;
     overflow-x: hidden;
 }

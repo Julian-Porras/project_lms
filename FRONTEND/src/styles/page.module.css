@@ -1,5 +1,7 @@
 @import "tailwindcss";
 .title{
-    font-size: 1.2rem;
+    color: var(--text-color);
+    font-size: 1.4rem;
     font-weight: 600;
+    text-transform: uppercase;
 }

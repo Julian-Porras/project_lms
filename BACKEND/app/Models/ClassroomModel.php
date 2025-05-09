@@ -8,11 +8,11 @@ class ClassroomModel extends Model
 {
     protected $table = 'tbl_classroom';
     protected $fillable = [
+        'users_id',
         'course_id',
         'classroom_name',
         'classroom_code',
         'status',
-        'created_by',
         'created_at',
         'updated_at',
     ];
@@ -21,9 +21,9 @@ class ClassroomModel extends Model
     {
         return $this->belongsTo(CourseModel::class, 'course_id');
     }
-    public function createdBy()
+    public function user()
     {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->belongsTo(User::class, 'users_id');
     }
     public function students()
     {

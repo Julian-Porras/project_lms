@@ -1,0 +1,10 @@
+.dividerSolid{
+    margin-top: .8rem;
+    margin-bottom: .8rem;
+    border-top: 3px solid var(--light-gray-color);
+}
+.dividerThin{
+    margin-top: .8rem;
+    margin-bottom: .8rem;
+    border-top: 1px solid var(--light-gray-color);
+}
