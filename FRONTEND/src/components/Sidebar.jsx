@@ -18,6 +18,10 @@ function Sidebar({ isOpenSubmenu, toggleSubmenu, resetSubmenus, isOpenSidebar })
         routes = adminRouter;
         sidebarHeader = 'Administrator account';
     }
+    else if (user?.role_id === ROLES.DEVELOPER) {
+        routes = instructorRouter;
+        sidebarHeader = 'Developer account';
+    }
     else if (user?.role_id === ROLES.INSTRUCTOR) {
         routes = instructorRouter;
         sidebarHeader = 'Instructor account';

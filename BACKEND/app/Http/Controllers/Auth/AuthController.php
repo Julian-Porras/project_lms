@@ -32,21 +32,7 @@ class AuthController extends Controller
             }
         }
     }
-
-    private function directLogin($email_address, $password)
-    {
-        $user = User::where('email_address', $email_address)->first();
-        if ($user && password_verify($password, $user->password)) {
-            $token = $user->createToken($user->email_address)->plainTextToken;
-            return response()->json([
-                'token' => $token,
-                'user'  => $user,
-            ], 200);
-        } else {
-            return response()->json(['errors' => ['email_address' => 'Invalid credential']], 401);
-        }
-    }
-
+    
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -67,7 +53,7 @@ class AuthController extends Controller
                 'email_address' => $request->email_address,
                 'password'      => Hash::make($request->password),
             ]);
-            $data = $this->directLogin($request->email_address, $request->password);
+            $data = $this->login($request);
             return $data;
         }
     }

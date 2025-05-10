@@ -8,19 +8,24 @@ export const fetchCoursesApi = async (search) => {
     return response.data;
 };
 
-export const fetchCourseModulesApi = async (class_id) => {
-    const response = await AxiosAuth.get(`/api/i/course/${class_id}`);
+export const fetchCourseApi = async (course_id) => {
+    const response = await AxiosAuth.get(`/api/i/course/${course_id}`);
     return response.data;
 };
 
-export const fetchCourseModuleItemApi = async (class_id) => {
-    const response = await AxiosAuth.get(`/api/i/course/${class_id}`);
+export const fetchCourseModuleItemApi = async (item_id) => {
+    const response = await AxiosAuth.get(`/api/i/course/module/${item_id}`);
     return response.data;
 };
 
 // ****************** class api ******************
 export const fetchClassesApi = async (page, limit, search, status) => {
     const response = await AxiosAuth.get(`/api/i/class?page=${page}$limit=${limit}&search=${search}$status=${status}`);
+    return response.data;
+};
+
+export const fetchClassApi = async (class_id) => {
+    const response = await AxiosAuth.get(`/api/i/class/${class_id}`);
     return response.data;
 };
 
@@ -34,34 +39,34 @@ export const editClassApi = async (class_id, credentials) => {
     return response.data;
 };
 
-export const activateClassApi = async (class_id) => {
-    const response = await AxiosAuth.post(`/api/i/activate-class/${class_id}`);
-    return response.data;
-};
-
-export const deActivateClassApi = async (class_id) => {
-    const response = await AxiosAuth.post(`/api/i/deactivate-class/${class_id}`);
+export const editClassStatusApi = async (class_id) => {
+    const response = await AxiosAuth.post(`/api/i/edit-status-class/${class_id}`);
     return response.data;
 };
 
 // ****************** module api ******************
-export const fetchClassModulesApi = async (class_id) => {
-    const response = await AxiosAuth.get(`/api/i/class/${class_id}`);
+export const fetchClassModuleItemApi = async (item_id) => {
+    const response = await AxiosAuth.get(`/api/i/class/module/${item_id}`);
     return response.data;
 };
 
-export const fetchClassModuleItemApi = async (module_id) => {
-    const response = await AxiosAuth.get(`/api/i/class/module/${module_id}`);
+export const createModuleApi = async (credentials) => {
+    const response = await AxiosAuth.post(`/api/i/class/create-module`, credentials);
     return response.data;
 };
 
-export const createModuleApi = async (class_id, credentials) => {
-    const response = await AxiosAuth.post(`/api/i/class/create-module/${class_id}`, credentials);
+export const editModuleApi = async (module_id, credentials) => {
+    const response = await AxiosAuth.post(`/api/i/class/edit-module/${module_id}`, credentials);
     return response.data;
-};
+}
 
-export const createModuleItemApi = async (module_id, credentials) => {
-    const response = await AxiosAuth.post(`/api/i/class/module/create-item/${module_id}`, credentials);
+export const deleteModuleApi = async (module_id) => {
+    const response = await AxiosAuth.post(`/api/i/class/delete-module/${module_id}`);
+    return response.data;
+}
+
+export const createModuleItemApi = async (credentials) => {
+    const response = await AxiosAuth.post(`/api/i/class/module/create-item`, credentials);
     return response.data;
 };
 

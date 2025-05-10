@@ -21,7 +21,34 @@ class UserSeeder extends Seeder
             'first_name'    => 'Julian',
             'last_name'     => 'Porras',
             'middle_name'   => 'Aquino',
+            'email_address' => 'porrasjulian1@gmail.com',
+            'password'      => Hash::make('admin123'),
+        ]);
+        User::create([
+            'role_id'       => RoleEnum::DEVELOPER->value,
+            'username'      => 'Porras',
+            'first_name'    => 'Julian',
+            'last_name'     => 'Porras',
+            'middle_name'   => 'Aquino',
             'email_address' => 'porrasjulian10@gmail.com',
+            'password'      => Hash::make('admin123'),
+        ]);
+        User::create([
+            'role_id'       => RoleEnum::INSTRUCTOR->value,
+            'username'      => 'Porras',
+            'first_name'    => 'Julian',
+            'last_name'     => 'Porras',
+            'middle_name'   => 'Aquino',
+            'email_address' => 'porrasjulian100@gmail.com',
+            'password'      => Hash::make('admin123'),
+        ]);
+        User::create([
+            'role_id'       => RoleEnum::STUDENT->value,
+            'username'      => 'Porras',
+            'first_name'    => 'Julian',
+            'last_name'     => 'Porras',
+            'middle_name'   => 'Aquino',
+            'email_address' => 'porrasjulian1000@gmail.com',
             'password'      => Hash::make('admin123'),
         ]);
     }

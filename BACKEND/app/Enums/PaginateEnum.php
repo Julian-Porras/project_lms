@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum PaginateEnum: int
+enum PaginateEnum : int
 {
     case ONE = 1;
     case THREE = 3;

@@ -16,6 +16,7 @@ class RoleSeeder extends Seeder
     {
         $roles = [
             [RoleEnum::ADMIN->value, 'admin'],
+            [RoleEnum::DEVELOPER->value, 'developer'],
             [RoleEnum::INSTRUCTOR->value, 'instructor'],
             [RoleEnum::STUDENT->value, 'student'],
         ];

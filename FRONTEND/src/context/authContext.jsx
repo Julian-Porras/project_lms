@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }) => {
                 case ROLES.ADMIN:
                     navigate("/admin/dashboard");
                     break;
-                case ROLES.INSTRUCTOR:
+                case ROLES.INSTRUCTOR || ROLES.DEVELOPER:
                     navigate("/instructor/dashboard");
                     break;
                 case ROLES.STUDENT:
@@ -68,7 +68,7 @@ export const AuthProvider = ({ children }) => {
                 case ROLES.ADMIN:
                     navigate("/admin/dashboard");
                     break;
-                case ROLES.INSTRUCTOR:
+                case ROLES.INSTRUCTOR || ROLES.DEVELOPER:
                     navigate("/instructor/dashboard");
                     break;
                 case ROLES.STUDENT:

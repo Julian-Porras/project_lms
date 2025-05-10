@@ -8,11 +8,13 @@ class ClassroomModel extends Model
 {
     protected $table = 'tbl_classroom';
     protected $fillable = [
-        'users_id',
+        'id',
+        'user_id',
         'course_id',
         'classroom_name',
         'classroom_code',
         'status',
+        'background',
         'created_at',
         'updated_at',
     ];
@@ -23,10 +25,14 @@ class ClassroomModel extends Model
     }
     public function user()
     {
-        return $this->belongsTo(User::class, 'users_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
     public function students()
     {
         return $this->hasMany(StudentModel::class, 'classroom_id');
+    }
+    public function modules()
+    {
+        return $this->hasMany(ModuleModel::class, 'classroom_id');
     }
 }
