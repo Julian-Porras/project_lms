@@ -32,6 +32,9 @@ function LoginPage() {
                 case ROLES.INSTRUCTOR:
                     navigate("/instructor/dashboard");
                     break;
+                case ROLES.DEVELOPER:
+                    navigate("/dev/dashboard");
+                    break;
                 case ROLES.STUDENT:
                     navigate("/student/dashboard");
                     break;

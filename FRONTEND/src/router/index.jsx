@@ -8,6 +8,7 @@ import MainLayout from "../layouts/mainLayout";
 import AdminLoginPage from "../pages/auth/admin-login-page";
 import ForgotPassPage from "../pages/auth/forgot-pass";
 import RegisterPage from "../pages/auth/register-page";
+import developerRouter from "./developerRouter";
 
 const router = createBrowserRouter([
   {
@@ -39,6 +40,11 @@ const router = createBrowserRouter([
         path: "instructor",
         element: <MainLayout />,
         children: instructorRouter,
+      },
+      {
+        path: "dev",
+        element: <MainLayout />,
+        children: developerRouter,
       },
       {
         path: "student",
