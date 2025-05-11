@@ -3,12 +3,13 @@
 namespace App\Services;
 
 use App\Enums\PaginateEnum;
-use Illuminate\Http\Request;
 use App\Models\ClassroomModel;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class ClassroomService
 {
+    use AuthorizesRequests;
+    
     public function getAllClassrooms($request, $user_id)
     {
         $search = trim($request->search);
@@ -50,7 +51,9 @@ class ClassroomService
 
     public function updateClassroom($class_id, $request)
     {
-        return ClassroomModel::where('id', $class_id)->update($request);
+        $classroom = ClassroomModel::find($class_id);
+        $this->authorize('update', $classroom);
+        return $classroom->update($request);
     }
 
     public function deleteClassroom($id)

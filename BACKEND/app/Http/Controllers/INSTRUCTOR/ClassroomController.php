@@ -4,7 +4,7 @@ namespace App\Http\Controllers\instructor;
 
 use App\Enums\PaginateEnum;
 use App\Http\Controllers\Controller;
-use App\Models\ClassroomModel;
+use App\Models\ClassroomLogsModel;
 use App\Services\ClassroomService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -12,7 +12,8 @@ use Illuminate\Support\Facades\Validator;
 class ClassroomController extends Controller
 {
     public function __construct(
-        protected ClassroomService $classroomService
+        protected ClassroomService $classroomService,
+        protected ClassroomLogsModel $classroomLogsModel,
     ) {}
 
     public function fetchClasses(Request $request)
