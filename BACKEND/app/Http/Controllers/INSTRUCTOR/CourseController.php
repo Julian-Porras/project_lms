@@ -8,38 +8,31 @@ use App\Models\ModuleModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\ModuleItemModel;
+use App\Services\CourseService;
+use App\Services\ModuleService;
 
 class CourseController extends Controller
 {
+    public function __construct(
+        protected CourseService $courseService,
+        protected ModuleService $moduleService, 
+    ) {}
+
     public function fetchCourses(Request $request)
     {
-        $search = trim($request->search);
-        $courses = CourseModel::where('status', StatusEnum::ACTIVE->value)
-            ->when($search, function ($query) use ($search) {
-                $query->where(function ($q) use ($search) {
-                    $q->where('course_name', 'like', "%{$search}%");
-                });
-            })
-            ->get();
+        $courses = $this->courseService->getAllCourses($request);
         return response()->json($courses, 200);
     }
 
     public function fetchCourse($course_id)
     {
-        $course = CourseModel::with([
-            'modules.module_items' => function ($query) {
-                $query->select('id', 'item_name', 'item_type', 'module_id');
-            }
-        ])
-            ->where('id', $course_id)
-            ->first();
+        $course = $this->courseService->getCourseById($course_id);
         return response()->json($course, 200);
     }
 
     public function fetchCourseModuleItem($item_id)
     {
-        $item = ModuleItemModel::where('id', $item_id)
-            ->first()->load('module:module_name');
+        $item = $this->moduleService->getModuleItemById($item_id);
         return response()->json($item, 200);
     }
 }
