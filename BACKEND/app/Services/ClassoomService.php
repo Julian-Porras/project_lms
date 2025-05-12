@@ -39,14 +39,9 @@ class ClassroomService
             ->first();
     }
 
-    public function createClassroom($request, $user_id)
+    public function createClassroom($request)
     {
-        return ClassroomModel::create([
-            'user_id'           => $user_id,
-            'course_id'         => $request->course_id,
-            'classroom_name'    => $request->classroom_name,
-            'classroom_code'    => $request->classroom_code,
-        ]);
+        return ClassroomModel::create($request);
     }
 
     public function updateClassroom($class_id, $request)

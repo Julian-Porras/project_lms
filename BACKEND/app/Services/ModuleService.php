@@ -7,14 +7,9 @@ use App\Models\ModuleItemModel;
 
 class ModuleService
 {
-    public function createModule($request, $user_id)
+    public function createModule($request)
     {
-        return ModuleModel::create([
-            'user_id'       => $user_id,
-            'classroom_id'  => $request->classroom_id,
-            'module_name'   => $request->module_name,
-            'is_visible'    => $request->is_visible,
-        ]);
+        return ModuleModel::create($request->all());
     }
     public function updateModule($module_id, $request)
     {
@@ -31,22 +26,14 @@ class ModuleService
     {
         return ModuleItemModel::where('id', $item_id)->first()->load('module:module_name');
     }
-    public function createModuleItem($request, $user_id)
+    public function createModuleItem($request)
     {
-        return ModuleItemModel::create([
-            'user_id'       => $user_id,
-            'classroom_id'  => $request->classroom_id,
-            'module_id'     => $request->module_id,
-            'item_name'     => $request->item_name,
-            'item_type'     => $request->item_type,
-        ]);
+        return ModuleItemModel::create($request);
     }
     public function updateModuleItem($item_id, $request)
     {
-        return ModuleItemModel::where('id', $item_id)->update([
-            'item_name'     => $request->item_name,
-            'item_type'     => $request->item_type,
-        ]);
+        $module_item = ModuleItemModel::find($item_id);
+        return $module_item->update($request);
     }
     public function deleteModuleItem($item_id)
     {

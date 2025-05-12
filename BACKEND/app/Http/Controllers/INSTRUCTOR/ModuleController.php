@@ -32,7 +32,8 @@ class ModuleController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
         try {
-            $this->moduleService->createModule($request, $user->id);
+            $request->merge(['user_id' => $user->id]);
+            $this->moduleService->createModule($request);
             return response()->json(['message' => 'Module created successfully'], 201);
         } catch (\Exception $e) {
             // return response()->json(['error' => $e], 500);
@@ -77,7 +78,8 @@ class ModuleController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
         try {
-            $this->moduleService->createModuleItem($request, $user->id);
+            $request->merge(['user_id' => $user->id]);
+            $this->moduleService->createModuleItem($request);
             return response()->json(['message' => 'Module item created successfully'], 200);
         } catch (\Throwable $th) {
             return response()->json(['error' => 'Failed to create module item'], 500);

@@ -43,7 +43,8 @@ class ClassroomController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
         try {
-            $this->classroomService->createClassroom($request, $user->id);
+            $request->merge(['user_id' => $user->id]);
+            $this->classroomService->createClassroom($request);
             return response()->json(['message' => 'Classroom created successfully'], 201);
         } catch (\Exception $e) {
             // return response()->json(['error' => $e], 500);

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enums\PaginateEnum;
 use App\Enums\StatusEnum;
 use App\Models\CourseModel;
 
@@ -9,7 +10,7 @@ class CourseService {
     public function getAllCourses($request) {
         $search = trim($request->search);
         $status = strtolower($request->status);
-        $courses = CourseModel::when($search, function ($query) use ($search) {
+        return CourseModel::when($search, function ($query) use ($search) {
             $query->where(function ($q) use ($search) {
                 $q->where('course_name', 'like', "%{$search}%");
             });
@@ -18,8 +19,20 @@ class CourseService {
                 if ($status == 'all') return $query;
                 $query->where('status', $status ?? StatusEnum::ACTIVE->value);
             })
+            ->paginate($request->limit ?? PaginateEnum::TEN->value);
+    }
+    public function getAllCoursesByStatus($request) {
+        $search = trim($request->search);
+        $status = strtolower($request->status);
+        return CourseModel::when($search, function ($query) use ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('course_name', 'like', "%{$search}%");
+            });
+        })
+            ->when($status, function ($query, $status) {
+                $query->where('status', $status ?? StatusEnum::ACTIVE->value);
+            })
             ->get();
-        return $courses;
     }
 
     public function getCourseById($course_id) {
@@ -32,12 +45,14 @@ class CourseService {
             ->first();
     }
 
-    public function createCourse($data) {
-        // Logic to create a new course
+    public function createCourse($request) {
+        return CourseModel::create($request);
     }
 
-    public function updateCourse($id, $data) {
-        // Logic to update a course
+    public function updateCourse($course_id, $request) {
+        $course = CourseModel::find($course_id);
+        // $this->authorize('update', $course);
+        return $course->update($request);
     }
 
     public function deleteCourse($id) {
