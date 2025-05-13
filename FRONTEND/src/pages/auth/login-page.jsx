@@ -6,9 +6,10 @@ import { useAuth } from "../../context/authContext";
 import { useNavigate } from "react-router-dom";
 import { ROLES } from "../../constants/role";
 import { NavLink } from "react-router-dom";
+import { InputText } from "../../components/Input";
 
 function LoginPage() {
-    const { login, loading, errors, authUser, user } = useAuth();
+    const { login, loading, errors, setErrors, authUser, user } = useAuth();
     const navigate = useNavigate();
 
     const [credentials, setCredentials] = useState({
@@ -24,6 +25,7 @@ function LoginPage() {
     };
 
     useEffect(() => {
+        setErrors({});
         if (authUser && user) {
             switch (user.role_id) {
                 case ROLES.ADMIN:
@@ -52,12 +54,12 @@ function LoginPage() {
                 <form className={styles.form} onSubmit={handleSubmit}>
                     <div className={styles.formGroup}>
                         <label htmlFor="email_address">Email address</label>
-                        <input type="email" name="email_address" value={credentials.email_address} onChange={handleChange} placeholder="Type your email address" />
+                        <InputText type={"email"} name={"email_address"} value={credentials.email_address} onChange={handleChange} placeholder={"Type your email address"} />
                         {errors?.email_address && <p className="text-sm text-red-500 mt-1">&nbsp;{errors.email_address}</p>}
                     </div>
                     <div className={styles.formGroup}>
                         <label htmlFor="password">Password</label>
-                        <input type="password" name="password" value={credentials.password} onChange={handleChange} placeholder="Type your password" />
+                        <InputText type={"password"} name={"password"} value={credentials.password} onChange={handleChange} placeholder={"Type your password"} />
                         {errors?.password && <p className="text-sm text-red-500 mt-2">&nbsp;{errors.password}</p>}
                     </div>
                     <a href="#" className={styles.forgotLink}>Forgot Password?</a>

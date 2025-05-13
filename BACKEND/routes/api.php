@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\instructor\ClassroomController;
-use App\Http\Controllers\instructor\CourseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\instructor\CourseController;
+use App\Http\Controllers\instructor\ModuleController;
+use App\Http\Controllers\instructor\ClassroomController;
 
 Route::controller(AuthController::class)->group(function () {
     Route::post('/login', 'login');
@@ -34,6 +35,15 @@ Route::middleware(['auth:sanctum'])->group(function () {
             Route::post('/i/create-class', 'createClass');
             Route::post('/i/edit-class/{class_id}', 'fetchClasses');
             Route::post('/i/edit-status-class/{class_id}', 'fetchClasses');
+        });
+        Route::controller(ModuleController::class)->group(function () {
+            Route::get('/i/module/{module_id}', 'fetchClassModuleItem');
+            Route::post('/i/create-module', 'createModule');
+            Route::post('/i/edit-module/{module_id}', 'editModule');
+            Route::post('/i/delete-module/{module_id}', 'deleteModule');
+            Route::post('/i/create-module-item', 'createModuleItem');
+            Route::post('/i/edit-module-item/{item_id}', 'editModuleItem');
+            Route::post('/i/delete-module-item/{item_id}', 'deleteModuleItem');
         });
         
     });

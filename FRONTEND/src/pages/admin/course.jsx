@@ -1,8 +1,11 @@
 import style from "../../styles/page.module.css";
+import PageTemplate from "../page-template";
 
 function AdminCourseTab() {
     return (
-        <p className={style.title} >Courses</p>
+        <PageTemplate title="Course">
+            <div>asd</div>
+        </PageTemplate>
     )
 }
 export default AdminCourseTab;

@@ -4,7 +4,7 @@
   /* font-family: system-ui, Avenir, Helvetica, Arial, sans-serif; */
   /* font-weight: 400; */
   font-family: "Open Sans", sans-serif, "Departure Mono";
-  font-size: clamp(1rem, 1.2vw, 1rem);
+  font-size: clamp(.9rem, 1.2vw, 1rem);
   line-height: 1.4;
 
   --bg-color: #ebeff8;
@@ -30,6 +30,9 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
 }
 
 /* * {

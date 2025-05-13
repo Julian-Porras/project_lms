@@ -35,7 +35,7 @@ function Header({ resetSubmenus, isOpenSidebar, setOpen }) {
                     <img src="/src/assets/images/react.svg" className="w-6" alt="" />
                     <p className={style.headerTitle}>LMS</p>
                 </div>
-                <FaBars className="text-xl cursor-pointer" onClick={ () =>
+                <FaBars className="text-lg cursor-pointer" onClick={ () =>
                     setOpen(isOpenSidebar ? false : true)
                 } />
             </div>

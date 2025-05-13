@@ -14,39 +14,9 @@ const adminRouter = [
     meta: { label: "Dashboard", role: ROLES.ADMIN, icon: LuLayoutDashboard },
   },
   {
+    path: "courses",
     meta: { label: "Courses", role: ROLES.ADMIN, icon: LuBookMarked },
-    children: [
-      {
-        path: "sub1",
-        element: (<ProtectedRoute role={ROLES.ADMIN}><AdminCourseTab /></ProtectedRoute>),
-        meta: { label: "Submenu 1" },
-      },
-      {
-        path: "sub2",
-        element: (<ProtectedRoute role={ROLES.ADMIN}><AdminCourseTab /></ProtectedRoute>),
-        meta: { label: "Submenu 2" },
-      },
-      {
-        path: "sub3",
-        element: (<ProtectedRoute role={ROLES.ADMIN}><AdminCourseTab /></ProtectedRoute>),
-        meta: { label: "Submenu 3" },
-      },
-      {
-        path: "sub4",
-        element: (<ProtectedRoute role={ROLES.ADMIN}><AdminCourseTab /></ProtectedRoute>),
-        meta: { label: "Submenu 4" },
-      },
-      {
-        path: "sub5",
-        element: (<ProtectedRoute role={ROLES.ADMIN}><AdminCourseTab /></ProtectedRoute>),
-        meta: { label: "Submenu 5" },
-      },
-      {
-        path: "sub6",
-        element: (<ProtectedRoute role={ROLES.ADMIN}><AdminCourseTab /></ProtectedRoute>),
-        meta: { label: "Submenu 6" },
-      },
-    ],
+    element: <ProtectedRoute role={ROLES.ADMIN}><AdminCourseTab /></ProtectedRoute>,
   },
   {
     meta: { label: "Custom", role: ROLES.ADMIN, icon: FaUsers },

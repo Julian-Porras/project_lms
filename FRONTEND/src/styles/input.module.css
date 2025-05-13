@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+.textInput {
+  padding: 0.6rem .8rem;
+  border: 1px solid #ccc;
+  border-radius: var(--border-radius);
+  font-size: .9rem;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+.textInput:focus {
+  border-color: var(--secondary-color);
+}
