@@ -9,7 +9,6 @@ class ModuleItemModel extends Model
     protected $table = 'tbl_module_item';
     protected $fillable = [
         'id',
-        'user_id',
         'classroom_id',
         'course_id',
         'module_id',

@@ -7,16 +7,13 @@ use App\Models\ModuleItemModel;
 
 class ModuleService
 {
-    public function createModule($request)
+    public function createModule(array $data)
     {
-        return ModuleModel::create($request->all());
+        return ModuleModel::create($data);
     }
-    public function updateModule($module_id, $request)
+    public function updateModule($module_id, array $data)
     {
-        return ModuleModel::where('id', $module_id)->update([
-            'module_name'   => $request->module_name,
-            'is_visible'    => $request->is_visible,
-        ]);
+        return ModuleModel::where('id', $module_id)->update($data);
     }
     public function deleteModule($module_id)
     {
@@ -26,11 +23,11 @@ class ModuleService
     {
         return ModuleItemModel::where('id', $item_id)->first()->load('module:module_name');
     }
-    public function createModuleItem($request)
+    public function createModuleItem(array $data)
     {
-        return ModuleItemModel::create($request);
+        return ModuleItemModel::create($data);
     }
-    public function updateModuleItem($item_id, $request)
+    public function updateModuleItem($item_id, array $request)
     {
         $module_item = ModuleItemModel::find($item_id);
         return $module_item->update($request);

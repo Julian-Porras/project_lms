@@ -63,10 +63,5 @@ class AuthController extends Controller
         $request->user()->tokens()->delete();
         return response()->json(['message' => 'Logout successful'], 200);
     }
-
-    public function getUser()
-    {
-        $user = User::find(auth('sanctum')->user()->id);
-        return response()->json($user, 200);
-    }
+ 
 }

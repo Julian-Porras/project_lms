@@ -39,16 +39,16 @@ class ClassroomService
             ->first();
     }
 
-    public function createClassroom($request)
+    public function createClassroom(array $data)
     {
-        return ClassroomModel::create($request);
+        return ClassroomModel::create($data);
     }
 
-    public function updateClassroom($class_id, $request)
+    public function updateClassroom($class_id, array $data)
     {
         $classroom = ClassroomModel::find($class_id);
-        $this->authorize('update', $classroom);
-        return $classroom->update($request);
+        // $this->authorize('update', $classroom);
+        return $classroom->update($data);
     }
 
     public function deleteClassroom($id)

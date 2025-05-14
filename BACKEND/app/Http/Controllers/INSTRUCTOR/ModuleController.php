@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\instructor;
 
-use App\Models\ModuleModel;
 use Illuminate\Http\Request;
-use App\Models\ModuleItemModel;
 use App\Services\ModuleService;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\CreateModuleItemRequest;
+use App\Http\Requests\CreateModuleRequest;
+use App\Http\Requests\UpdateModuleItemRequest;
+use App\Http\Requests\UpdateModuleRequest;
 
 class ModuleController extends Controller
 {
@@ -20,94 +21,41 @@ class ModuleController extends Controller
         $item = $this->moduleService->getModuleItemById($item_id);
         return response()->json($item, 200);
     }
-    public function createModule(Request $request)
+
+    public function createModule(CreateModuleRequest $request, $class_id)
     {
         $user = auth('sanctum')->user();
-        $validator = Validator::make($request->all(), [
-            'classroom_id'  => 'required',
-            'module_name'   => 'required',
-            'is_visible'    => 'required|boolean',
-        ]);
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-        try {
-            $request->merge(['user_id' => $user->id]);
-            $this->moduleService->createModule($request);
-            return response()->json(['message' => 'Module created successfully'], 201);
-        } catch (\Exception $e) {
-            // return response()->json(['error' => $e], 500);
-            return response()->json(['error' => 'Failed to create classroom'], 500);
-        }
+        $this->moduleService->createModule(array_merge($request->validated(), ['user_id' => $user->id, 'classroom_id' => $class_id]));
+        return response()->json(['message' => 'Module created successfully'], 201);
     }
-    public function editModule(Request $request, $module_id)
+
+    public function editModule(UpdateModuleRequest $request, $module_id)
     {
-        $validator = Validator::make($request->all(), [
-            'module_name'   => 'required',
-            'is_visible'    => 'required|boolean',
-        ]);
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-        try {
-            $this->moduleService->updateModule($module_id, $request);
-            return response()->json(['message' => 'Module updated successfully'], 200);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Failed to update module'], 500);
-        }
+        $this->moduleService->updateModule($module_id, $request->validated());
+        return response()->json(['message' => 'Module updated successfully'], 200);
     }
+
     public function deleteModule($module_id)
     {
-        try {
-            $this->moduleService->deleteModule($module_id);
-            return response()->json(['message' => 'Module deleted successfully'], 200);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Failed to delete module'], 500);
-        }
+        $this->moduleService->deleteModule($module_id);
+        return response()->json(['message' => 'Module deleted successfully'], 200);
     }
-    public function createModuleItem(Request $request)
+
+    public function createModuleItem(CreateModuleItemRequest $request, $class_id)
     {
-        $user = auth('sanctum')->user();
-        $validator = Validator::make($request->all(), [
-            'classroom_id'  => 'required',
-            'module_id'     => 'required',
-            'item_name'     => 'required',
-            'item_type'     => 'required',
-        ]);
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-        try {
-            $request->merge(['user_id' => $user->id]);
-            $this->moduleService->createModuleItem($request);
-            return response()->json(['message' => 'Module item created successfully'], 200);
-        } catch (\Throwable $th) {
-            return response()->json(['error' => 'Failed to create module item'], 500);
-        }
+        $this->moduleService->createModuleItem(array_merge($request->validated(), ['classroom_id' => $class_id]));
+        return response()->json(['message' => 'Module item created successfully'], 200);
     }
-    public function editModuleItem(Request $request, $item_id)
+
+    public function editModuleItem(UpdateModuleItemRequest $request, $item_id)
     {
-        $validator = Validator::make($request->all(), [
-            'item_name'     => 'required',
-            'item_type'     => 'required',
-        ]);
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-        try {
-            $this->moduleService->updateModuleItem($item_id, $request);
-            return response()->json(['message' => 'Module item updated successfully'], 200);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Failed to update module item'], 500);
-        }
+        $this->moduleService->updateModuleItem($item_id, $request->validated());
+        return response()->json(['message' => 'Module item updated successfully'], 200);
     }
+
     public function deleteModuleItem($item_id)
     {
-        try {
-            $this->moduleService->deleteModuleItem($item_id);
-            return response()->json(['message' => 'Module item deleted successfully'], 200);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Failed to delete module item'], 500);
-        }
+        $this->moduleService->deleteModuleItem($item_id);
+        return response()->json(['message' => 'Module item deleted successfully'], 200);
     }
 }
