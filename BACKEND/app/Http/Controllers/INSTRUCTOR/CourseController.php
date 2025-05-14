@@ -20,7 +20,8 @@ class CourseController extends Controller
 
     public function fetchCourses(Request $request)
     {
-        $courses = $this->courseService->getAllCourses($request);
+        $userId = auth('sanctum')->user()->id;
+        $courses = $this->courseService->getAllCourses($request, $userId);
         return response()->json($courses, 200);
     }
 

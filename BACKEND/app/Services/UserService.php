@@ -11,7 +11,7 @@ class UserService
     {
         $search = trim($request->search);
         $limit = trim($request->limit);
-        $role = trim($request->role);
+        $role = trim($request->role_id);
         return User::when($search, function ($query) use ($search) {
             $query->where(function ($q) use ($search) {
                 $q->where('username', 'like', "%{$search}%")

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\RoleEnum;
 use App\Http\Requests\CreateUserRequest;
 use Illuminate\Http\Request;
 use App\Services\UserService;
@@ -14,6 +15,8 @@ class UserController extends Controller
 
     public function fetchUsers(Request $request)
     {
+        $role = RoleEnum::STUDENT->value;
+        $request->merge(['role_id' => $role]);
         $users = $this->userService->getAllUsers($request);
         return response()->json($users, 200);
     }

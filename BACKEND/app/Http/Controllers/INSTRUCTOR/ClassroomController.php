@@ -14,7 +14,6 @@ class ClassroomController extends Controller
 {
     public function __construct(
         protected ClassroomService $classroomService,
-        protected ClassroomLogsModel $classroomLogsModel,
     ) {}
 
     public function fetchClasses(Request $request)
