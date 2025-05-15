@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\instructor\CourseController;
 use App\Http\Controllers\instructor\ModuleController;
@@ -16,8 +17,16 @@ Route::controller(AuthController::class)->group(function () {
 Route::middleware(['auth:sanctum'])->group(function () {
     // Auth routes
     Route::controller(AuthController::class)->group(function () {
-        Route::get('/userinfo', 'getUser');
         Route::post('/logout', 'logout');
+    });
+
+    // User routes
+    Route::controller(UserController::class)->group(function () {
+        Route::get('/user', 'fetchUsers');
+        Route::get('/user-info', 'fetchUserInfo');
+        Route::post('/user-create', 'createUser');
+        Route::get('/user/{user_id}', 'fetchUser');
+        Route::post('/user-edit/{user_id}', 'editUser');
     });
 
     // Admin routes

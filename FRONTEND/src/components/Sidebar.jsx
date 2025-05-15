@@ -6,6 +6,7 @@ import instructorRouter from "../router/instructorRouter";
 import studentRouter from "../router/studentRouter";
 import style from "../styles/sidebar.module.css"
 import { FaAngleDown } from "react-icons/fa";
+import developerRouter from "../router/developerRouter";
 
 function Sidebar({ isOpenSubmenu, toggleSubmenu, resetSubmenus, isOpenSidebar }) {
     let sidebarHeader = null;
@@ -19,7 +20,7 @@ function Sidebar({ isOpenSubmenu, toggleSubmenu, resetSubmenus, isOpenSidebar })
         sidebarHeader = 'Administrator account';
     }
     else if (user?.role_id === ROLES.DEVELOPER) {
-        routes = instructorRouter;
+        routes = developerRouter;
         sidebarHeader = 'Developer account';
     }
     else if (user?.role_id === ROLES.INSTRUCTOR) {

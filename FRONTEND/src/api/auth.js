@@ -15,7 +15,7 @@ export const registerApi = async (credentials) => {
 };
 
 export const userInfoApi = async () => {
-    const response = await AxiosAuth.get("/api/userinfo");
+    const response = await AxiosAuth.get("/api/user-info");
     return response.data;
 };
 

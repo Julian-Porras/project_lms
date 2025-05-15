@@ -20,6 +20,13 @@ class UserController extends Controller
         $users = $this->userService->getAllUsers($request);
         return response()->json($users, 200);
     }
+    
+    public function fetchUserInfo()
+    {
+        $user_id = auth('sanctum')->user()->id;
+        $user = $this->userService->getUserById($user_id);
+        return response()->json($user, 200);
+    }
 
     public function createUser(CreateUserRequest $request)
     {
