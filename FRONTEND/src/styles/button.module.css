@@ -21,6 +21,15 @@
     background-color: var(--accent-color);
 }
 
+.buttonCreate {
+    background-color: var(--secondary-color);
+    padding: 0.5rem 1.2rem;
+    font-size: 1rem;
+}
+.buttonCreate:hover {
+    background-color: var(--accent-color);
+}
+
 .buttonPrimary {
     background-color: var(--primary-color);
 }
@@ -34,8 +43,13 @@
 }
 
 .buttonCancel {
-    background-color: var(--cancel-color);
-    color: #2E2E2E;
+    color: white;
+    background-color: var(--danger-color);
+    padding: 0.5rem 1.2rem;
+    font-size: 1rem;
+}
+.buttonCancel:hover {
+    background-color: var(--light-danger-color);
 }
 
 .buttonRed {

@@ -11,7 +11,7 @@ class CreateCourseRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,6 +24,7 @@ class CreateCourseRequest extends FormRequest
         return [
             'user_id'           => 'nullable',
             'course_name'       => 'required', 
+            'status'            => 'required', 
         ];
     }
 }

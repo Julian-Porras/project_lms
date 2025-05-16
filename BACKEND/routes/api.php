@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\developer\CourseController as DevCourseController;
+use App\Http\Controllers\developer\ClassroomController as DevClassroomController;
 use App\Http\Controllers\instructor\CourseController;
 use App\Http\Controllers\instructor\ModuleController;
 use App\Http\Controllers\instructor\ClassroomController;
@@ -31,6 +33,23 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     // Admin routes
     Route::middleware(['is_Admin'])->group(function () {});
+
+    // Developer routes
+    Route::middleware(['is_Developer'])->group(function () {
+        Route::controller(DevCourseController::class)->group(function () {
+            Route::get('/d/course', 'fetchCourses');
+            Route::get('/d/course/{course_id}', 'fetchCourse');
+            Route::post('/d/create-course', 'createCourse');
+            Route::post('/d/edit-course/{course_id}', 'editCourse');
+        });
+        Route::controller(DevClassroomController::class)->group(function () {
+            Route::get('/d/class', 'fetchClasses');
+            Route::get('/d/class/{class_id}', 'fetchClass');
+            Route::post('/d/create-class', 'createClass');
+            Route::post('/d/edit-class/{class_id}', 'editClass');
+            Route::post('/d/edit-status-class/{class_id}', 'editStatusClass');
+        });
+    });
 
     // Instructor routes
     Route::middleware(['is_Instructor'])->group(function () {

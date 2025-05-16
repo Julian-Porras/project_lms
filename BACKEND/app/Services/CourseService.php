@@ -11,6 +11,7 @@ class CourseService
     public function getAllCourses($request, $userId)
     {
         $search = trim($request->search);
+        $limit = $request->limit;
         $status = strtolower($request->status);
         return CourseModel::when($search, function ($query) use ($search) {
             $query->where(function ($q) use ($search) {
@@ -24,7 +25,7 @@ class CourseService
             ->when($userId, function ($query) use ($userId) {
                 $query->where('user_id', $userId);
             })
-            ->paginate($request->limit ?? PaginateEnum::TEN->value);
+            ->paginate($limit ?? PaginateEnum::TEN->value);
     }
 
     public function getAllCoursesByStatus($request)

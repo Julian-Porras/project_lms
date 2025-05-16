@@ -13,6 +13,10 @@ function ButtonAccent({ children }) {
     return <button className={`${styles.btn} ${styles.buttonAccent}`}>{children}</button>;
 }
 
+function ButtonCreate({ children }) {
+    return <button className={`${styles.btn} ${styles.buttonCreate}`}>{children}</button>;
+}
+
 function ButtonPrimary({ children }) {
     return <button className={`${styles.btn} ${styles.buttonPrimary}`}>{children}</button>;
 }
@@ -21,14 +25,15 @@ function ButtonSecondary({ method, children }) {
     return <button onClick={method} className={`${styles.btn} ${styles.buttonSecondary}`}>{children}</button>;
 }
 
-function ButtonCancel({ children }) {
-    return <button className={`${styles.btn} ${styles.buttonCancel}`}>{children}</button>;
+function ButtonCancel({ method, children }) {
+    return <button onClick={method} className={`${styles.btn} ${styles.buttonCancel}`}>{children}</button>;
 }
 
 export {
     ButtonGreen,
     ButtonRed,
     ButtonAccent,
+    ButtonCreate,
     ButtonPrimary,
     ButtonSecondary,
     ButtonCancel
