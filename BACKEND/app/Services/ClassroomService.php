@@ -8,8 +8,6 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class ClassroomService
 {
-    use AuthorizesRequests;
-    
     public function getAllClassrooms($request, $user_id)
     {
         $search = trim($request->search);

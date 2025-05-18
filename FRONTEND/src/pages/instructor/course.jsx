@@ -37,7 +37,7 @@ function InstructorCourseTab() {
     };
 
     const fetchCourses = async () => {
-        const res = await getCoursesApi(1, 10, 'active'); // page, limit, status
+        const res = await getCoursesApi(1, 10, 'all'); // page, limit, status
         if (res) setCourses(res.data); 
         setPageLoading(false);
     };
@@ -71,7 +71,7 @@ function InstructorCourseTab() {
                     </div>
                 ) : courses.length > 0 ? (
                     courses.map((course) => (
-                        <ClassCard key={course.id}>
+                        <ClassCard route={course.id} key={course.id}>
                             <p>{course.course_name}</p>
                         </ClassCard>
                     ))
@@ -95,8 +95,10 @@ function InstructorCourseTab() {
                     <div className="flex flex-col gap-2 ">
                         <label htmlFor="status">Status:</label>
                         <SelectOptions
-                            options={["Active", "Not Active"]}
-                            values={["active", "not-active"]}
+                            id="status"
+                            options={[{ id: 'active', name: "Open" }, { id: 'not-active', name: "Close" }]}
+                            getOptionLabel={(option) => option.name}
+                            getOptionValue={(option) => option.id}
                             name="status"
                             selected={credentials.status}
                             setSelected={(value) => setCredentials({ ...credentials, status: value })}

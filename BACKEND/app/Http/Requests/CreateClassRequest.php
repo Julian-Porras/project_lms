@@ -25,13 +25,14 @@ class CreateClassRequest extends FormRequest
             'user_id'           => 'nullable',
             'course_id'         => 'required',
             'classroom_name'    => 'required',
-            'classroom_code'    => 'required|unique:classrooms,classroom_code',
+            'classroom_code'    => 'required|unique:tbl_classroom,classroom_code',
         ];
     }
     public function messages(): array
     {
         return [
-            'classroom_code.unique' => 'The classroom code is invalid.',
+            'classroom_code.unique' => 'The classroom code is invalid, try another one.',
+            'course_id.required' => 'The course/subject field is required.',
         ];
     }
 }

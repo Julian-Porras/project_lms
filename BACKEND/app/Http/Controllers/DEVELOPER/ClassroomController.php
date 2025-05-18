@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\developer;
 
 use Illuminate\Http\Request;
-use App\Services\ClassroomService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateClassRequest;
 use App\Http\Requests\UpdateClassRequest;
-use Illuminate\Support\Facades\Validator;
+use App\Services\ClassroomService;
 
 class ClassroomController extends Controller
 {
@@ -31,8 +30,8 @@ class ClassroomController extends Controller
     public function createClass(CreateClassRequest $request)
     {
         $user = auth('sanctum')->user();
-        $this->classroomService->createClassroom(array_merge($request->validated(), ['user_id' => $user->id]));
-        return response()->json(['message' => 'Classroom created successfully'], 201);
+        $class = $this->classroomService->createClassroom(array_merge($request->validated(), ['user_id' => $user->id]));
+        return response()->json(['message' => 'Classroom created successfully', 'class' => $class], 201);
     }
 
     public function editClass($class_id, UpdateClassRequest $request)

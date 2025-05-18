@@ -1,3 +1,4 @@
+import { NavLink, useResolvedPath } from "react-router-dom";
 import styles from "../styles/card.module.css";
 
 function LoginCard({ children }) {
@@ -24,11 +25,12 @@ function ContainerCard({ children }) {
     )
 }
 
-function ClassCard({ children }) {
+function ClassCard({ route, children }) {
+    const base = useResolvedPath(".").pathname;
     return (
-        <div className={styles.containerCard}>
+        <NavLink to={`${base}/${route}`} className={styles.containerCard}>
                 <div>{children}</div>
-        </div>
+        </NavLink>
     )
 }
 

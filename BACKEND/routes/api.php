@@ -38,6 +38,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::middleware(['is_Developer'])->group(function () {
         Route::controller(DevCourseController::class)->group(function () {
             Route::get('/d/course', 'fetchCourses');
+            Route::get('/d/course/status', 'fetchCoursesByStatus');
             Route::get('/d/course/{course_id}', 'fetchCourse');
             Route::post('/d/create-course', 'createCourse');
             Route::post('/d/edit-course/{course_id}', 'editCourse');

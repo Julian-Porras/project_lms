@@ -21,6 +21,12 @@ class CourseController extends Controller
         return response()->json($courses, 200);
     }
 
+    function fetchCoursesByStatus(Request $request)
+    {
+        $courses = $this->courseService->getAllCoursesByStatus($request);
+        return response()->json($courses, 200);
+    }
+
     public function fetchCourse($course_id)
     {
         $course = $this->courseService->getCourseById($course_id);
@@ -30,8 +36,8 @@ class CourseController extends Controller
     public function createCourse(CreateCourseRequest $request)
     {
         $user = auth('sanctum')->user();
-        $this->courseService->createCourse(array_merge($request->validated(), ['user_id' => $user->id]));
-        return response()->json(['message' => 'Course created successfully'], 201);
+        $course = $this->courseService->createCourse(array_merge($request->validated(), ['user_id' => $user->id]));
+        return response()->json(['message' => 'Course created successfully', 'course' => $course], 201);
     }
     
     public function editCourse($course_id, UpdateCourseRequest $request)

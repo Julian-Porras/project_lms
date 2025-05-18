@@ -3,12 +3,13 @@ import { FaGear, FaArrowRightFromBracket } from "react-icons/fa6";
 import { FaBars  } from "react-icons/fa";
 import { useAuth } from "../context/authContext";
 import { useState, useRef, useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 function Header({ resetSubmenus, isOpenSidebar, setOpen }) {
     const { user, logout } = useAuth();
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const dropdownRef = useRef(null);
+    const location = useLocation();
     const base = location.pathname.split("/")[1];
 
     const handleClickOutside = (e) => {

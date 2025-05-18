@@ -31,15 +31,13 @@ class CourseService
     public function getAllCoursesByStatus($request)
     {
         $search = trim($request->search);
-        $status = strtolower($request->status);
+        $status = strtolower($request->status) || StatusEnum::ACTIVE->value;
         return CourseModel::when($search, function ($query) use ($search) {
             $query->where(function ($q) use ($search) {
                 $q->where('course_name', 'like', "%{$search}%");
             });
         })
-            ->when($status, function ($query, $status) {
-                $query->where('status', $status ?? StatusEnum::ACTIVE->value);
-            })
+            ->where('status', $status)
             ->get();
     }
 

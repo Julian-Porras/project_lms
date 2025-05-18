@@ -36,11 +36,11 @@ export default function useInstructoApi() {
     };
 
     // ****************** class api ******************
-    const fetchClassesApi = async (page, limit, search, status) => {
+    const fetchClassesApi = async (page, limit) => {
         setLoading(true);
         setErrors({});
         try {
-            const response = await AxiosAuth.get(`/api/i/class?page=${page}$limit=${limit}&search=${search}$status=${status}`);
+            const response = await AxiosAuth.get(`/api/i/class?page=${page}$limit=${limit}`);
             return response.data;
         } catch (err) {
             const status = err.response?.status;
