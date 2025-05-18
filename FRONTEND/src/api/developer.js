@@ -78,8 +78,6 @@ export default function useDeveloperApi() {
         }
     }
 
-
-
     // ****************** class api ******************
     const fetchClassesApi = async (page, limit) => {
         setLoading(true);
@@ -117,7 +115,6 @@ export default function useDeveloperApi() {
         }
     };
 
-
     const createClassApi = async (credentials) => {
         setLoading(true);
         setErrors({});
@@ -135,7 +132,6 @@ export default function useDeveloperApi() {
             setLoading(false);
         }
     };
-
 
     return {
         errors,
