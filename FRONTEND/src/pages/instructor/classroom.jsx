@@ -9,6 +9,7 @@ import { InputText } from "../../components/Input";
 import ToastSuccesful from "../../components/Toast";
 import useDeveloperApi from "../../api/developer";
 import SelectOptions from "../../components/select";
+import { LoadingPage } from "../../components/Loading";
 
 
 function InstructorClassroomTab() {
@@ -42,7 +43,7 @@ function InstructorClassroomTab() {
     };
 
     const fetchClasses = async () => {
-        const classroom = await fetchClassesApi(1, 10); 
+        const classroom = await fetchClassesApi(1, 10);
         if (classroom) setClasses(classroom.data);
         setPageLoading(false);
     };
@@ -79,11 +80,8 @@ function InstructorClassroomTab() {
             </div>
             <DividerThin />
             <div className="flex flex-row flex-wrap gap-4 pt-5">
-                {pageLoading ? (
-                    <div className="flex flex-row items-center justify-center w-full h-full">
-                        <p className="text-lg text-gray-500">Loading...</p>
-                    </div>
-                ) : classes.length > 0 ? (
+                {pageLoading ? <LoadingPage />
+                : classes.length > 0 ? (
                     classes.map((classroom) => (
                         <ClassCard route={classroom.id} key={classroom.id}>
                             <p>{classroom.classroom_name}</p>

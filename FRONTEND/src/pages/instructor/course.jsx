@@ -9,6 +9,7 @@ import { InputText } from "../../components/Input";
 import SelectOptions from "../../components/select";
 import useDeveloperApi from "../../api/developer";
 import ToastSuccesful from "../../components/Toast";
+import { LoadingPage } from "../../components/Loading";
 
 
 function InstructorCourseTab() {
@@ -65,11 +66,9 @@ function InstructorCourseTab() {
             </div>
             <DividerThin />
             <div className="flex flex-row flex-wrap gap-4 pt-5">
-                {pageLoading ? (
-                    <div className="flex flex-row items-center justify-center w-full h-full">
-                        <p className="text-lg text-gray-500">Loading...</p>
-                    </div>
-                ) : courses.length > 0 ? (
+                {pageLoading ? 
+                    <LoadingPage />
+                : courses.length > 0 ? (
                     courses.map((course) => (
                         <ClassCard route={course.id} key={course.id}>
                             <p>{course.course_name}</p>

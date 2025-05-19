@@ -7,7 +7,7 @@ const ProtectedRoute = ({ children, role }) => {
   const { user, authUser, token, loading } = useAuth();
 
   if (!authUser || !token) return <Navigate to="/" replace />;
-  if (loading || !user) return <LoadingPage />;
+  if (loading || !user) return <></>;
   if (role && user.role_id !== role) {
 
     switch (user.role_id) {

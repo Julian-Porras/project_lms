@@ -4,7 +4,7 @@ import styles from "../styles/card.module.css";
 function LoginCard({ children }) {
     return (
         <div className={styles.loginCard}>
-                <div>{children}</div>
+            <div>{children}</div>
         </div>
     )
 }
@@ -12,7 +12,7 @@ function LoginCard({ children }) {
 function RegisterCard({ children }) {
     return (
         <div className={styles.registerCard}>
-                <div>{children}</div>
+            <div>{children}</div>
         </div>
     )
 }
@@ -20,7 +20,7 @@ function RegisterCard({ children }) {
 function ContainerCard({ children }) {
     return (
         <div className={styles.containerCard}>
-                <div>{children}</div>
+            <div>{children}</div>
         </div>
     )
 }
@@ -29,9 +29,16 @@ function ClassCard({ route, children }) {
     const base = useResolvedPath(".").pathname;
     return (
         <NavLink to={`${base}/${route}`} className={styles.containerCard}>
-                <div>{children}</div>
+            <div>{children}</div>
         </NavLink>
     )
 }
 
-export { LoginCard, RegisterCard, ContainerCard, ClassCard };
+function ClassModuleCard({ children }) {
+    return (
+        <div className={styles.containerCard}>
+            <div>{children}</div>
+        </div>
+    )
+}
+export { LoginCard, RegisterCard, ContainerCard, ClassCard, ClassModuleCard };

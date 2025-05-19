@@ -30,7 +30,7 @@ const developerRouter = [
         meta: { label: "Classroom", role: ROLES.DEVELOPER, icon: FaDesktop },
     },
     {
-        path: "classroom/:id",
+        path: "classroom/:class_id",
         element: <ProtectedRoute role={ROLES.DEVELOPER}><ClassModulePage /></ProtectedRoute>
     },
     {
