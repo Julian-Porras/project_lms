@@ -16,17 +16,11 @@ class ModuleController extends Controller
         protected ModuleService $moduleService,
     ) {}
 
-    public function fetchClassModuleItem($item_id)
-    {
-        $item = $this->moduleService->getModuleItemById($item_id);
-        return response()->json($item, 200);
-    }
-
-    public function createModule(CreateModuleRequest $request, $class_id)
+    public function createModule(CreateModuleRequest $request)
     {
         $user = auth('sanctum')->user();
-        $this->moduleService->createModule(array_merge($request->validated(), ['user_id' => $user->id, 'classroom_id' => $class_id]));
-        return response()->json(['message' => 'Module created successfully'], 201);
+        $module = $this->moduleService->createModule(array_merge($request->validated(), ['user_id' => $user->id]));
+        return response()->json(['message' => 'Module created successfully', 'module' => $module], 201);
     }
 
     public function editModule(UpdateModuleRequest $request, $module_id)
@@ -41,9 +35,16 @@ class ModuleController extends Controller
         return response()->json(['message' => 'Module deleted successfully'], 200);
     }
 
-    public function createModuleItem(CreateModuleItemRequest $request, $class_id)
+    public function fetchModuleItem($item_id)
     {
-        $this->moduleService->createModuleItem(array_merge($request->validated(), ['classroom_id' => $class_id]));
+        $item = $this->moduleService->getModuleItemById($item_id);
+        return response()->json($item, 200);
+    }
+
+    public function createModuleItem(CreateModuleItemRequest $request)
+    {
+        $user = auth('sanctum')->user();
+        $this->moduleService->createModuleItem(array_merge($request->validated(), ['user_id' => $user->id]));
         return response()->json(['message' => 'Module item created successfully'], 200);
     }
 

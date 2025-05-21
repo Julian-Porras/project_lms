@@ -12,8 +12,8 @@ function SelectOptions({
     <select
       name={name}
       id={id}
-      value={selected}
-      onChange={(e) => setSelected(e.target.value)}
+      value={String(selected)}
+      onChange={(e) => setSelected(e.target.value === "true")}
       className="w-45 border border-[var(--light-gray-color)] text-sm rounded-sm p-2 focus:outline-none focus:ring-1 focus:ring-[var(--secondary-color)]"
     >
       <option value="" disabled>

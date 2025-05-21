@@ -133,6 +133,77 @@ export default function useDeveloperApi() {
         }
     };
 
+    // ****************** module api ******************
+
+    const createClassModuleApi = async (credentials) => {
+        setLoading(true);
+        setErrors({});
+        try {
+            const response = await AxiosAuth.post(`/api/d/create-module`, credentials);
+            return response.data;
+        } catch (err) {
+            const status = err.response?.status;
+            setErrors(
+                status === 422 || status === 401
+                    ? err.response.data.errors
+                    : { general: "Something went wrong" }
+            );
+        } finally {
+            setLoading(false);
+        }
+    };
+    const editModuleApi = async (module_id, credentials) => {
+        setLoading(true);
+        setErrors({});
+        try {
+            const response = await AxiosAuth.post(`/api/d/edit-module/${module_id}`, credentials);
+            return response.data;
+        } catch (err) {
+            const status = err.response?.status;
+            setErrors(
+                status === 422 || status === 401
+                    ? err.response.data.errors
+                    : { general: "Something went wrong" }
+            );
+        } finally {
+            setLoading(false);
+        }
+    }
+    const deleteModuleApi = async (module_id) => {
+        setLoading(true);
+        setErrors({});
+        try {
+        const response = await AxiosAuth.post(`/api/d/delete-module/${module_id}`);
+        return response.data;
+        } catch (err) {
+            const status = err.response?.status;
+            setErrors(
+                status === 422 || status === 401
+                    ? err.response.data.errors
+                    : { general: "Something went wrong" }
+            );
+        } finally {
+            setLoading(false);
+        }
+    }
+    const fetchModuleItemApi = async (item_id) => {
+        const response = await AxiosAuth.get(`/api/d/module/${item_id}`);
+        return response.data;
+    };
+    const createModuleItemApi = async (credentials) => {
+        const response = await AxiosAuth.post(`/api/d/module/create-item`, credentials);
+        return response.data;
+    };
+    const editModuleItemApi = async (item_id, credentials) => {
+        const response = await AxiosAuth.post(`/api/d/module/edit-item/${item_id}`, credentials);
+        return response.data;
+    }
+    const deleteModuleItemApi = async (item_id) => {
+        const response = await AxiosAuth.post(`/api/d/module/delete-item/${item_id}`);
+        return response.data;
+    }
+
+    // ****************** student api ******************
     return {
         errors,
         loading,
@@ -145,5 +216,12 @@ export default function useDeveloperApi() {
         fetchClassesApi,
         fetchClassApi,
         createClassApi,
+        createClassModuleApi,
+        editModuleApi,
+        deleteModuleApi,
+        fetchModuleItemApi,
+        createModuleItemApi,
+        editModuleItemApi,
+        deleteModuleItemApi,
     };
 }

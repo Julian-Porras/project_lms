@@ -36,7 +36,7 @@ function ClassCard({ route, children }) {
 
 function ClassModuleCard({ children }) {
     return (
-        <div className={styles.containerCard}>
+        <div className={styles.ModuleCard}>
             <div>{children}</div>
         </div>
     )

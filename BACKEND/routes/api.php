@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\developer\CourseController as DevCourseController;
 use App\Http\Controllers\developer\ClassroomController as DevClassroomController;
+use App\Http\Controllers\developer\ModuleController as DevModuleController;
 use App\Http\Controllers\instructor\CourseController;
 use App\Http\Controllers\instructor\ModuleController;
 use App\Http\Controllers\instructor\ClassroomController;
@@ -49,6 +50,15 @@ Route::middleware(['auth:sanctum'])->group(function () {
             Route::post('/d/create-class', 'createClass');
             Route::post('/d/edit-class/{class_id}', 'editClass');
             Route::post('/d/edit-status-class/{class_id}', 'editStatusClass');
+        });
+        Route::controller(DevModuleController::class)->group(function () {
+            Route::post('/d/create-module', 'createModule');
+            Route::post('/d/edit-module/{module_id}', 'editModule');
+            Route::post('/d/delete-module/{module_id}', 'deleteModule');
+            Route::get('/d/module/{module_id}', 'fetchModuleItem');
+            Route::post('/d/create-item', 'createModuleItem');
+            Route::post('/d/edit-item/{item_id}', 'editModuleItem');
+            Route::post('/d/delete-item/{item_id}', 'deleteModuleItem');
         });
     });
 

@@ -46,18 +46,14 @@ function InstructorClassroomTab() {
         const classroom = await fetchClassesApi(1, 10);
         if (classroom) setClasses(classroom.data);
         setPageLoading(false);
-    };
-
-    const fetchCourses = async () => {
         const courses = await getCoursesByStatusApi();
         if (courses) setCourses(courses);
-    }
+    };
 
     useEffect(() => {
         setPageLoading(true);
         setErrors({});
         fetchClasses();
-        fetchCourses();
     }, []);
 
     useEffect(() => {
@@ -79,19 +75,19 @@ function InstructorClassroomTab() {
                 <ButtonSecondary method={() => setIsOpen(true)}> <FaPlus />Create Classroom</ButtonSecondary>
             </div>
             <DividerThin />
-            <div className="flex flex-row flex-wrap gap-4 pt-5">
+            <div className={style.gridWrapper}>
                 {pageLoading ? <LoadingPage />
-                : classes.length > 0 ? (
-                    classes.map((classroom) => (
-                        <ClassCard route={classroom.id} key={classroom.id}>
-                            <p>{classroom.classroom_name}</p>
-                        </ClassCard>
-                    ))
-                ) : (
-                    <div className="flex flex-row items-center justify-center w-full h-full">
-                        <p className="text-lg text-gray-500">No classroom found</p>
-                    </div>
-                )}
+                    : classes.length > 0 ? (
+                        classes.map((classroom) => (
+                            <ClassCard route={classroom.id} key={classroom.id}>
+                                <p>{classroom.classroom_name}</p>
+                            </ClassCard>
+                        ))
+                    ) : (
+                        <div className="flex flex-row items-center justify-center w-full h-full">
+                            <p className="text-lg text-gray-500">No classroom found</p>
+                        </div>
+                    )}
             </div>
             <Modal
                 isOpen={isOpen}

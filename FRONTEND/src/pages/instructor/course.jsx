@@ -11,7 +11,6 @@ import useDeveloperApi from "../../api/developer";
 import ToastSuccesful from "../../components/Toast";
 import { LoadingPage } from "../../components/Loading";
 
-
 function InstructorCourseTab() {
     const [isOpen, setIsOpen] = useState(false);
     const [courses, setCourses] = useState([]);
@@ -65,7 +64,7 @@ function InstructorCourseTab() {
                 <ButtonSecondary method={() => setIsOpen(true)}> <FaPlus />Create Course</ButtonSecondary>
             </div>
             <DividerThin />
-            <div className="flex flex-row flex-wrap gap-4 pt-5">
+            <div className={style.gridWrapper}>
                 {pageLoading ? 
                     <LoadingPage />
                 : courses.length > 0 ? (

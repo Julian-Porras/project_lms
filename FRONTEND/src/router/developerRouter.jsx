@@ -1,14 +1,16 @@
 import InstructorDashboard from "../pages/instructor/dashboard";
 import InstructorClassroomTab from "../pages/instructor/classroom";
 import { ROLES } from "../constants/role";
+import React from "react";
 import ProtectedRoute from "../components/ProtectedRoute";
 import { FaTachometerAlt, FaBook, FaUsers, FaDesktop } from "react-icons/fa";
 import { LuLayoutDashboard, LuBookMarked } from "react-icons/lu";
 import SettingsPage from "../pages/settings";
-import InstructorCourseTab from "../pages/instructor/course";
+// import InstructorCourseTab from "../pages/instructor/course";
 import ClassModulePage from "../pages/instructor/class-modules";
 import CourseModulePage from "../pages/instructor/course-modules";
 
+const InstructorCourseTab = React.lazy(() => import("../pages/instructor/course"));
 const developerRouter = [
     {
         path: "dashboard",

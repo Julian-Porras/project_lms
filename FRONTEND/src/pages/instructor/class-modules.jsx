@@ -4,18 +4,44 @@ import useDeveloperApi from "../../api/developer";
 import { FaPlus } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import ToastSuccesful from "../../components/Toast";
-import { ButtonSecondary } from "../../components/Button";
+import { ButtonCancel, ButtonCreate, ButtonSecondary } from "../../components/Button";
 import { DividerThin } from "../../components/Divider";
 import { LoadingPage } from "../../components/Loading";
+import { Modal } from "../../components/Modal";
+import { InputText } from "../../components/Input";
+import SelectOptions from "../../components/select";
+import { ClassModuleCard } from "../../components/Card";
 
 function ClassModulePage() {
-    const { fetchClassApi, errors, loading, setErrors } = useDeveloperApi();
+    const { createClassModuleApi, fetchClassApi, errors, loading, setErrors } = useDeveloperApi();
+    const { class_id } = useParams();
     const [pageLoading, setPageLoading] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
     const [modules, setModules] = useState([]);
     const [classes, setClasses] = useState({});
     const [message, setMessage] = useState("");
     const [toastShow, setToastShow] = useState(false);
-    const { class_id } = useParams();
+
+    const [credentials, setCredentials] = useState({
+        classroom_id: class_id,
+        module_name: "",
+        is_visible: true,
+    });
+
+    const handleChange = (e) => {
+        setCredentials({ ...credentials, [e.target.name]: e.target.value });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const res = await createClassModuleApi(credentials);
+        if (res) {
+            setIsOpen(false);
+            setToastShow(true);
+            setMessage(res.message);
+            setModules((prev) => [...prev, res.module]);
+        }
+    };
 
     const fetchClassModules = async () => {
         const classroom = await fetchClassApi(class_id);
@@ -40,15 +66,14 @@ function ClassModulePage() {
                 <ButtonSecondary method={() => setIsOpen(true)}> <FaPlus />Create Module</ButtonSecondary>
             </div>
             <DividerThin />
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-4 pt-5">
                 {pageLoading ? 
                     <LoadingPage />
                 : modules.length > 0 ? (
                     modules.map((module) => (
-                        <div key={module.id} className="p-4 border rounded-lg shadow-md">
-                            <h2 className="text-lg font-semibold">{module.module_name}</h2>
-                            <p>{module.description}</p>
-                        </div>
+                        <ClassModuleCard key={module.id} >
+                            <p className={style.moduleTitle}>{module.module_name}</p>
+                        </ClassModuleCard>
                     ))
                 )
                 : (
@@ -57,7 +82,45 @@ function ClassModulePage() {
                     </div>
                 )}
             </div>
-            
+            <Modal
+                isOpen={isOpen}
+                onClose={() => setIsOpen(false)}
+                title="Create Module"
+            >
+                <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-2">
+                        <label htmlFor="module_name">Module name:</label>
+                        <InputText type={"text"} name={"module_name"} value={credentials.module_name} onChange={handleChange} placeholder={"type module name"} />
+                        {errors?.module_name && <p className="text-sm text-red-500 mt-1">&nbsp;{errors.module_name}</p>}
+                    </div>
+                    <div className="flex flex-col gap-2">
+                        <label htmlFor="is_visible">Visibility:</label>
+                        <SelectOptions
+                            options={[{ id: true, name: "Visible" }, { id: false, name: "Hidden" }]}
+                            getOptionLabel={(option => option.name)}
+                            getOptionValue={(option => option.id)}
+                            name="is_visible"
+                            id="is_visible"
+                            selected={credentials.is_visible}
+                            setSelected={(e) => setCredentials({ ...credentials, is_visible: e })}
+                            placeholder="Select visibility"
+                        />
+                        {errors?.is_visible && (
+                            <p className="text-sm text-red-500 mt-1">
+                                &nbsp;{errors?.is_visible}
+                            </p>
+                        )}
+                    </div>
+                    <div className="flex flex-row gap-4 items-center justify-end mt-10">
+                        <ButtonCreate type="submit" disabled={loading} >
+                            {loading ? "Creating..." : "Create module"}
+                        </ButtonCreate>
+                        <ButtonCancel type="button" method={() => setIsOpen(false)} >
+                            {"Cancel"}
+                        </ButtonCancel>
+                    </div>
+                </form>
+            </Modal>
         </>
     );
 }

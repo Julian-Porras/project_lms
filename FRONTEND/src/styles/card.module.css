@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 .loginCard {
   background-color: var(--card-bg);
   padding: 2rem;
@@ -14,9 +16,23 @@
   width: 32rem;
 }
 
-.containerCard{
+.containerCard {
   padding: 1rem;
   background-color: var(--card-bg);
   border-radius: var(--border-radius);
   box-shadow: 0 2px 24px rgba(0, 0, 0, 0.1);
+  max-width: 200px;
+  width: 100%;
+  box-sizing: border-box;
+}
+.containerCard:hover {
+  box-shadow: 0 4px 38px rgba(0, 0, 0, 0.2);
+}
+
+.ModuleCard {
+  @apply rounded-lg shadow-lg;
+  padding: 1rem;
+  background-color: var(--card-bg);
+  width: 100%;
+  box-sizing: border-box;
 }
