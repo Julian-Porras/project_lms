@@ -8,7 +8,8 @@ import MainLayout from "../layouts/mainLayout";
 import AdminLoginPage from "../pages/auth/admin-login-page";
 import ForgotPassPage from "../pages/auth/forgot-pass";
 import RegisterPage from "../pages/auth/register-page";
-import developerRouter from "./developerRouter";
+import { developerRouter } from "./developerRouter";
+
 
 const router = createBrowserRouter([
   {

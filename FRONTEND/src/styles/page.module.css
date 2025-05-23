@@ -1,5 +1,4 @@
 @import "tailwindcss";
-
 .title {
     color: var(--text-color);
     font-size: 1.4rem;
@@ -12,5 +11,5 @@
 }
 
 .moduleTitle{
-    @apply text-md font-semibold ;
+    @apply text-base font-semibold m-2;
 }

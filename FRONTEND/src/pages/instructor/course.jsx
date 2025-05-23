@@ -8,8 +8,8 @@ import { Modal } from "../../components/Modal";
 import { InputText } from "../../components/Input";
 import SelectOptions from "../../components/select";
 import useDeveloperApi from "../../api/developer";
-import ToastSuccesful from "../../components/Toast";
 import { LoadingPage } from "../../components/Loading";
+import { ToastSuccesful } from "../../components/Toast";
 
 function InstructorCourseTab() {
     const [isOpen, setIsOpen] = useState(false);
@@ -32,13 +32,13 @@ function InstructorCourseTab() {
         if (res) {
             setIsOpen(false);
             setToastShow(true);
-            
+
         }
     };
 
     const fetchCourses = async () => {
         const res = await getCoursesApi(1, 10, 'all'); // page, limit, status
-        if (res) setCourses(res.data); 
+        if (res) setCourses(res.data);
         setPageLoading(false);
     };
     useEffect(() => {
@@ -65,19 +65,19 @@ function InstructorCourseTab() {
             </div>
             <DividerThin />
             <div className={style.gridWrapper}>
-                {pageLoading ? 
+                {pageLoading ?
                     <LoadingPage />
-                : courses.length > 0 ? (
-                    courses.map((course) => (
-                        <ClassCard route={course.id} key={course.id}>
-                            <p>{course.course_name}</p>
-                        </ClassCard>
-                    ))
-                ) : (
-                    <div className="flex flex-row items-center justify-center w-full h-full">
-                        <p className="text-lg text-gray-500">No courses found</p>
-                    </div>
-                )}
+                    : courses.length > 0 ? (
+                        courses.map((course) => (
+                            <ClassCard route={course.id} key={course.id}>
+                                <p>{course.course_name}</p>
+                            </ClassCard>
+                        ))
+                    ) : (
+                        <div className="flex flex-row items-center justify-center w-full h-full">
+                            <p className="text-lg text-gray-500">No courses found</p>
+                        </div>
+                    )}
             </div>
             <Modal
                 isOpen={isOpen}

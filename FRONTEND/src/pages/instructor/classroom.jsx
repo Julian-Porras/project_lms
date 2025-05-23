@@ -6,7 +6,7 @@ import { FaPlus } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import { Modal } from "../../components/Modal";
 import { InputText } from "../../components/Input";
-import ToastSuccesful from "../../components/Toast";
+import { ToastSuccesful } from "../../components/Toast";
 import useDeveloperApi from "../../api/developer";
 import SelectOptions from "../../components/select";
 import { LoadingPage } from "../../components/Loading";
@@ -79,7 +79,7 @@ function InstructorClassroomTab() {
                 {pageLoading ? <LoadingPage />
                     : classes.length > 0 ? (
                         classes.map((classroom) => (
-                            <ClassCard route={classroom.id} key={classroom.id}>
+                            <ClassCard route={`${classroom.id}/m`} key={classroom.id}>
                                 <p>{classroom.classroom_name}</p>
                             </ClassCard>
                         ))

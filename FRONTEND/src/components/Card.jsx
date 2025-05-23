@@ -37,8 +37,17 @@ function ClassCard({ route, children }) {
 function ClassModuleCard({ children }) {
     return (
         <div className={styles.ModuleCard}>
-            <div>{children}</div>
+            {children}
         </div>
     )
 }
-export { LoginCard, RegisterCard, ContainerCard, ClassCard, ClassModuleCard };
+
+function ModuleNavCard({ children }) {
+    return (
+        <div className={styles.moduleNav}>
+            {children}
+        </div>
+    )
+}
+
+export { LoginCard, RegisterCard, ContainerCard, ClassCard, ClassModuleCard, ModuleNavCard };

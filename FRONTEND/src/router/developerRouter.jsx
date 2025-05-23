@@ -6,11 +6,24 @@ import ProtectedRoute from "../components/ProtectedRoute";
 import { FaTachometerAlt, FaBook, FaUsers, FaDesktop } from "react-icons/fa";
 import { LuLayoutDashboard, LuBookMarked } from "react-icons/lu";
 import SettingsPage from "../pages/settings";
-// import InstructorCourseTab from "../pages/instructor/course";
+import InstructorCourseTab from "../pages/instructor/course";
 import ClassModulePage from "../pages/instructor/class-modules";
 import CourseModulePage from "../pages/instructor/course-modules";
 
-const InstructorCourseTab = React.lazy(() => import("../pages/instructor/course"));
+// const InstructorCourseTab = React.lazy(() => import("../pages/instructor/course"));
+const devModulerouter = [
+    {
+        path: "classroom/:class_id/m",
+        element: <ProtectedRoute role={ROLES.DEVELOPER}><ClassModulePage /></ProtectedRoute>,
+        meta: { label: "Modules" },
+    },
+    {
+        path: "classroom/:class_id/p",
+        element: <ProtectedRoute role={ROLES.DEVELOPER}><ClassModulePage /></ProtectedRoute>,
+        meta: { label: "People" },
+    },
+];
+
 const developerRouter = [
     {
         path: "dashboard",
@@ -23,7 +36,7 @@ const developerRouter = [
         meta: { label: "Course", role: ROLES.DEVELOPER, icon: LuBookMarked },
     },
     {
-        path: "course/:id",
+        path: "course/:course_id",
         element: <ProtectedRoute role={ROLES.DEVELOPER}><CourseModulePage /></ProtectedRoute>
     },
     {
@@ -32,13 +45,11 @@ const developerRouter = [
         meta: { label: "Classroom", role: ROLES.DEVELOPER, icon: FaDesktop },
     },
     {
-        path: "classroom/:class_id",
-        element: <ProtectedRoute role={ROLES.DEVELOPER}><ClassModulePage /></ProtectedRoute>
+        children: devModulerouter,
     },
     {
-      path: "settings",
-      element: <SettingsPage />,
-    },  
+        path: "settings",
+        element: <SettingsPage />,
+    },
 ];
-
-export default developerRouter;
+export { developerRouter, devModulerouter };

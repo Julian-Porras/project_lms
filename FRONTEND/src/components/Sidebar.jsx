@@ -6,7 +6,7 @@ import instructorRouter from "../router/instructorRouter";
 import studentRouter from "../router/studentRouter";
 import style from "../styles/sidebar.module.css"
 import { FaAngleDown } from "react-icons/fa";
-import developerRouter from "../router/developerRouter";
+import { developerRouter } from "../router/developerRouter";
 
 function Sidebar({ isOpenSubmenu, toggleSubmenu, resetSubmenus, isOpenSidebar }) {
     let sidebarHeader = null;
