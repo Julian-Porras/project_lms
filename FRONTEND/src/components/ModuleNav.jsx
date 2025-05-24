@@ -1,7 +1,7 @@
 import { NavLink, useLocation } from "react-router-dom";
 import { ROLES } from "../constants/role";
 import { useAuth } from "../context/authContext";
-import { devModulerouter } from "../router/developerRouter";
+import { devModuleRouter } from "../router/developerRouter";
 import { ModuleNavCard } from "./Card";
 import style from "../styles/sidebar.module.css";
 import { useParams } from "react-router-dom";
@@ -13,7 +13,7 @@ function ModuleNav() {
     const base = location.pathname.split("/")[1];
     let routes = [];
     if (user?.role_id === ROLES.DEVELOPER) {
-        routes = devModulerouter;
+        routes = devModuleRouter;
     }
     return (
         <ModuleNavCard>

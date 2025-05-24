@@ -3,45 +3,55 @@
 .sidebarOpen {
     @apply w-58 p-2;
 }
+
 .sidebarClosed {
     @apply w-0 opacity-0 p-0;
 }
+
 .sidebarAside {
-    transition: all 0.1s ease-in-out ;
+    transition: all 0.1s ease-in-out;
     @apply h-screen border-r border-gray-200 pt-22 flex flex-col whitespace-nowrap;
     background-color: var(--bg-color-default);
     overflow-y: auto;
     scrollbar-width: thin;
 }
+
 .sidebarHead {
     font-size: .8rem;
     margin: .6rem;
     @apply text-gray-400;
     text-transform: uppercase;
 }
+
 .navContainer {
-    @apply flex flex-col gap-2 overflow-y-auto p-1 ;
+    @apply flex flex-col gap-2 overflow-y-auto p-1;
     overflow-x: hidden;
 }
+
 .navLink {
     @apply flex items-center gap-3 px-4 py-3 rounded-sm;
     font-size: 1rem;
     cursor: pointer;
 }
+
 .navActive {
     @apply text-white shadow;
     background-color: var(--secondary-color);
 }
+
 .navNotActive {
     @apply hover:bg-gray-300;
 }
+
 .dropdownIcon {
     transition: transform 0.3s ease;
     margin-left: auto;
 }
+
 .rotateIcon {
     transform: rotate(180deg);
 }
+
 .subMenu {
     display: flex;
     flex-direction: column;
@@ -50,6 +60,7 @@
     overflow: hidden;
     transition: 0.3s ease, padding 0.3s ease;
 }
+
 .subMenuOpen {
     background-color: var(--bg-color);
     border-radius: var(--border-radius);
@@ -59,12 +70,12 @@
 
 .moduleNavContainer {
     @apply flex flex-col gap-2 overflow-y-auto;
+    font-size: 0.9rem;
     overflow-x: hidden;
 }
 
 .moduleNavLink {
     @apply flex items-center gap-3 px-3 py-2 rounded-sm;
-    font-size: 1rem;
     cursor: pointer;
 }
 
@@ -73,6 +84,7 @@
     color: white;
     transition: all 0.1s ease;
 }
+
 .moduleNavNotActive {
     @apply hover:underline hover:bg-[var(--bg-color)];
     transition: all 0.1s ease;

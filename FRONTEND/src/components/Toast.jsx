@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-function ToastSuccesful({ message, show, setShow, duration = 2000 }) {
+function ToastSuccessful({ message, show, setShow, duration = 2000 }) {
     useEffect(() => {
         if (show) {
             const timer = setTimeout(() => {
@@ -21,4 +21,4 @@ function ToastSuccesful({ message, show, setShow, duration = 2000 }) {
     );
 }
 
-export {ToastSuccesful}
+export {ToastSuccessful}

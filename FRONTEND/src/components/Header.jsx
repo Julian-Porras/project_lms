@@ -4,9 +4,10 @@ import { FaBars  } from "react-icons/fa";
 import { useAuth } from "../context/authContext";
 import { useState, useRef, useEffect } from "react";
 import { NavLink, useLocation } from "react-router-dom";
+import { LogoutModal } from "./Modal";
 
 function Header({ resetSubmenus, isOpenSidebar, setOpen }) {
-    const { user, logout } = useAuth();
+    const { user, logout, loggingOut } = useAuth();
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const dropdownRef = useRef(null);
     const location = useLocation();
@@ -42,7 +43,7 @@ function Header({ resetSubmenus, isOpenSidebar, setOpen }) {
             </div>
             <div className="relative px-4" ref={dropdownRef}>
                 {user && (
-                    <div onClick={() => setDropdownOpen((prev) => !prev)} className="cursor-pointer">
+                    <div onClick={() => setDropdownOpen((prev) => !prev)} className="cursor-pointer hover:underline">
                         <p className={style.profileNav} >{user.last_name}, {user.first_name}</p>
                     </div>
                 )}
@@ -50,10 +51,10 @@ function Header({ resetSubmenus, isOpenSidebar, setOpen }) {
                 {dropdownOpen && user && (
                     <div className={style.dropdownNav}>
                         <div className={style.dropdownTab}>
-                            <strong>{user.first_name} {user.last_name}</strong>
-                            <span className="text-gray-600 text-xs">{user?.email_address}</span>
+                            <span className="text-gray-800 text-base overflow-hidden text-center">{user.first_name} {user.last_name}</span>
+                            <span className="text-gray-600 text-xs overflow-hidden text-center">{user?.email_address}</span>
                         </div>
-                        <div className={style.dropdownTab}>
+                        <div className={`${style.dropdownTab} border-t-1 border-t-gray-200 `}>
                             <NavLink
                                 className="flex flex-row items-center gap-2"
                                 to={`/${base}/settings`}
@@ -67,7 +68,7 @@ function Header({ resetSubmenus, isOpenSidebar, setOpen }) {
                                 <span>Settings</span>
                             </NavLink>
                         </div>
-                        <div className={style.dropdownTab} onClick={handleLogout}>
+                        <div className={`${style.dropdownTab} border-t-1 border-t-gray-200 `} onClick={handleLogout}>
                             <div className="flex flex-row items-center gap-2" >
                                 <FaArrowRightFromBracket />
                                 <span>Sign out</span>
@@ -76,6 +77,7 @@ function Header({ resetSubmenus, isOpenSidebar, setOpen }) {
                     </div>
                 )}
             </div>
+            <LogoutModal isOpen={loggingOut}/>
         </header>
     );
 }

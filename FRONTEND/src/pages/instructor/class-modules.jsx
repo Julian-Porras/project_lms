@@ -3,7 +3,7 @@ import style from "../../styles/page.module.css";
 import useDeveloperApi from "../../api/developer";
 import { FaPlus } from "react-icons/fa";
 import { useParams } from "react-router-dom";
-import { ToastSuccesful } from "../../components/Toast";
+import { ToastSuccessful } from "../../components/Toast";
 import { ButtonCancel, ButtonCreate, ButtonSecondary } from "../../components/Button";
 import { DividerThin } from "../../components/Divider";
 import { LoadingPage } from "../../components/Loading";
@@ -53,7 +53,7 @@ function ClassModulePage() {
         setPageLoading(false);
     }
 
-    useEffect(() => {
+    useEffect((class_id) => {
         if (isOpen) {
             setCredentials({
                 classroom_id: class_id,
@@ -73,7 +73,7 @@ function ClassModulePage() {
         <div className="flex flex-row">
             {pageLoading ? <LoadingPage /> :
                 <>
-                    <ToastSuccesful message={message} show={toastShow} setShow={setToastShow} />
+                    <ToastSuccessful message={message} show={toastShow} setShow={setToastShow} />
                     <ModuleNav />
                     <div className="flex flex-col w-full h-full ml-4">
                         <div className="flex flex-row items-center justify-between " >

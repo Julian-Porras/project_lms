@@ -6,7 +6,7 @@ import { FaPlus } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import { Modal } from "../../components/Modal";
 import { InputText } from "../../components/Input";
-import { ToastSuccesful } from "../../components/Toast";
+import { ToastSuccessful } from "../../components/Toast";
 import useDeveloperApi from "../../api/developer";
 import SelectOptions from "../../components/select";
 import { LoadingPage } from "../../components/Loading";
@@ -76,7 +76,7 @@ function InstructorClassroomTab() {
 
     return (
         <>
-            <ToastSuccesful message={message} show={toastShow} setShow={setToastShow} />
+            <ToastSuccessful message={message} show={toastShow} setShow={setToastShow} />
             <div className="flex flex-row items-center justify-between " >
                 <p className={style.title} >Classroom</p>
                 <ButtonSecondary method={() => setIsOpen(true)}> <FaPlus />Create Classroom</ButtonSecondary>

@@ -9,7 +9,7 @@ import { InputText } from "../../components/Input";
 import SelectOptions from "../../components/select";
 import useDeveloperApi from "../../api/developer";
 import { LoadingPage } from "../../components/Loading";
-import { ToastSuccesful } from "../../components/Toast";
+import { ToastSuccessful } from "../../components/Toast";
 
 function InstructorCourseTab() {
     const [isOpen, setIsOpen] = useState(false);
@@ -72,7 +72,7 @@ function InstructorCourseTab() {
 
     return (
         <>
-            <ToastSuccesful message="Course created successfully!" show={toastShow} setShow={setToastShow} />
+            <ToastSuccessful message="Course created successfully!" show={toastShow} setShow={setToastShow} />
             <div className="flex flex-row items-center justify-between " >
                 <p className={style.title} >Course</p>
                 <ButtonSecondary method={() => setIsOpen(true)}> <FaPlus />Create Course</ButtonSecondary>

@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }) => {
             const bearer = data.token;
             localStorage.setItem("token", bearer);
             setToken((d) => bearer);
-            setErrors((d) => {});
+            setErrors((d) => { });
             const userData = await userInfo();
             switch (userData.role_id) {
                 case ROLES.ADMIN:
@@ -62,7 +62,7 @@ export const AuthProvider = ({ children }) => {
             const bearer = data.token;
             localStorage.setItem("token", bearer);
             setToken((d) => bearer);
-            setErrors((d) => {});
+            setErrors((d) => { });
             const userData = await userInfo();
             switch (userData.role_id) {
                 case ROLES.ADMIN:
@@ -106,14 +106,20 @@ export const AuthProvider = ({ children }) => {
         setLoggingOut((d) => true);
         try {
             await logoutApi();
-        } catch { }
-        finally {
+        } catch (err) {
+            const status = err.response?.status;
+            setErrors(
+                status === 422 || status === 401
+                    ? err.response.data.errors
+                    : { general: "Something went wrong" }
+            )
+        } finally {
             localStorage.clear();
+            setLoggingOut((d) => false);
             setToken((d) => null);
             setAuthUser((d) => false);
             setUser((d) => null);
             navigate("/");
-            setLoggingOut((d) => false);
         }
     };
 

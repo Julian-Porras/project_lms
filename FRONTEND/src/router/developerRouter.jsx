@@ -11,7 +11,7 @@ const ClassModulePage = React.lazy(() => import("../pages/instructor/class-modul
 const CourseModulePage = React.lazy(() => import("../pages/instructor/course-modules"));
 const SettingsPage = React.lazy(() => import("../pages/settings"));
 
-const devModulerouter = [
+const devModuleRouter = [
     {
         path: "classroom/:class_id/n",
         element: <ProtectedRoute role={ROLES.DEVELOPER}><ClassModulePage /></ProtectedRoute>,
@@ -60,11 +60,11 @@ const developerRouter = [
         meta: { label: "Classroom", role: ROLES.DEVELOPER, icon: FaDesktop },
     },
     {
-        children: devModulerouter,
+        children: devModuleRouter,
     },
     {
         path: "settings",
         element: <SettingsPage />,
     },
 ];
-export { developerRouter, devModulerouter };
+export { developerRouter, devModuleRouter };

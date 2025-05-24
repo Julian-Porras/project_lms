@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { OrbitProgress } from "react-loading-indicators";
 
 function Modal({ isOpen, onClose, title, children }) {
     const modalRef = useRef(null);
@@ -33,4 +34,16 @@ function Modal({ isOpen, onClose, title, children }) {
     );
 }
 
-export { Modal };
+function LogoutModal({isOpen}){
+    const modalRef = useRef(null);
+    if (!isOpen) return null;
+    return (
+        <div className="fixed inset-0 z-5 flex items-center justify-center transition-opacity backdrop-blur-[2px] bg-black/10">
+            <div className="bg-white rounded-sm shadow-xl w-fit max-w-md p-6 relative animate-fadeIn flex flex-row items-center gap-4" ref={modalRef}>
+                <OrbitProgress dense color="#134B70" speedPlus={1} style={{ fontSize: "6px" }}/><p>Signing off...</p>
+            </div>
+        </div>
+    );
+}
+
+export { Modal, LogoutModal };
