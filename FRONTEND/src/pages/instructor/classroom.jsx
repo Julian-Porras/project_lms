@@ -65,12 +65,12 @@ function InstructorClassroomTab() {
                 classroom_code: "",
                 status: "active",
             });
+            setErrors({});
         }
     }, [isOpen]);
 
     useAbortEffect(async (signal) => {
         setPageLoading(true);
-        setErrors({});
         fetchClasses(signal);
     }, []);
 

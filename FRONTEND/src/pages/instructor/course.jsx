@@ -10,6 +10,7 @@ import SelectOptions from "../../components/select";
 import useDeveloperApi from "../../api/developer";
 import { LoadingPage } from "../../components/Loading";
 import { ToastSuccessful } from "../../components/Toast";
+import useAbortEffect from "../../hooks/useAbortEffect";
 
 function InstructorCourseTab() {
     const [isOpen, setIsOpen] = useState(false);
@@ -32,15 +33,13 @@ function InstructorCourseTab() {
         if (res) {
             setIsOpen(false);
             setToastShow(true);
-
         }
     };
 
     const fetchCourses = async (signal) => {
         try {
-
-        const res = await getCoursesApi(signal, 1, 10, 'all'); // page, limit, status
-        if (res) setCourses(res.data);
+            const res = await getCoursesApi(signal, 1, 10, 'all'); // page, limit, status
+            if (res) setCourses(res.data);
         } finally {
             if (!signal.aborted) {
                 setPageLoading(false);
@@ -54,20 +53,13 @@ function InstructorCourseTab() {
                 course_name: "",
                 status: "active",
             });
+            setErrors({});
         }
     }, [isOpen]);
 
-    useEffect(() => {
-        const controller = new AbortController();
-        const signal = controller.signal;
-
+    useAbortEffect(async (signal) => {
         setPageLoading(true);
-        setErrors({});
         fetchCourses(signal);
-
-        return () => {
-            controller.abort();
-        };
     }, []);
 
     return (

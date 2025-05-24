@@ -25,9 +25,9 @@ function Modal({ isOpen, onClose, title, children }) {
         <div className="fixed inset-0 z-5 flex items-center justify-center transition-opacity backdrop-blur-[2px] bg-black/10">
             <div className="bg-white rounded-xl shadow-xl w-full max-w-md p-6 relative animate-fadeIn" ref={modalRef}>
                 <button
-                    className="absolute top-4 right-4 text-gray-500 hover:text-black text-xl cursor-pointer"
+                    className="absolute top-6 right-4 px-2 py-0 text-gray-500 hover:text-gray-700 text-2xl cursor-pointer rounded-full hover:bg-gray-100"
                     onClick={onClose}>&times;</button>
-                {title && <h2 className="text-xl font-semibold mb-4">{title}</h2>}
+                {title && <h2 className="text-2xl font-medium mb-8">{title}</h2>}
                 {children}
             </div>
         </div>
