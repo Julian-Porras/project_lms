@@ -1,10 +1,30 @@
+import { useEffect, useState } from "react";
+import { OrbitProgress } from "react-loading-indicators";
+
 function LoadingPage() {
+    const [showSpinner, setShowSpinner] = useState(false);
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setShowSpinner(true);
+        }, 800); // 500ms delay
+        return () => clearTimeout(timer);
+    }, []);
+
     return (
         <div className="flex flex-row items-center justify-center w-full h-full">
-            <p className="text-gray-500">Loading...</p>
+            {showSpinner && (
+                <OrbitProgress
+                    dense
+                    color="#134B70"
+                    speedPlus={1}
+                    style={{ fontSize: "8px" }}
+                    text=""
+                    textColor=""
+                />
+            )}
         </div>
     );
-};
+}
 
 function LoadingButton() {
 

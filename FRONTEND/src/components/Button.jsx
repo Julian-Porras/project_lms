@@ -1,4 +1,3 @@
-import React from "react";
 import styles from '../styles/button.module.css';
 
 function ButtonGreen({ children }) {
@@ -13,8 +12,10 @@ function ButtonAccent({ children }) {
     return <button className={`${styles.btn} ${styles.buttonAccent}`}>{children}</button>;
 }
 
-function ButtonCreate({ children }) {
-    return <button className={`${styles.btn} ${styles.buttonCreate}`}>{children}</button>;
+function ButtonCreate({ isDisable, title }) {
+    return <button disabled={isDisable} className={`${styles.btn} ${styles.buttonCreate}`}>
+        {isDisable ? <span>Creating...</span>  : title}
+    </button>
 }
 
 function ButtonPrimary({ children }) {
@@ -25,8 +26,8 @@ function ButtonSecondary({ method, children }) {
     return <button onClick={method} className={`${styles.btn} ${styles.buttonSecondary}`}>{children}</button>;
 }
 
-function ButtonCancel({ method, children }) {
-    return <button onClick={method} className={`${styles.btn} ${styles.buttonCancel}`}>{children}</button>;
+function ButtonCancel({ method, title }) {
+    return <button onClick={method} className={`${styles.btn} ${styles.buttonCancel}`}>{title || "Cancel"}</button>;
 }
 
 export {

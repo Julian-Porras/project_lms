@@ -13,6 +13,7 @@ class ClassroomModel extends Model
         'course_id',
         'classroom_name',
         'classroom_code',
+        'year_level',
         'status',
         'background',
         'created_at',

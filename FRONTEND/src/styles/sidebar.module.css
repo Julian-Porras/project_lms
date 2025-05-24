@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 .sidebarOpen {
-    @apply w-64 p-2;
+    @apply w-58 p-2;
 }
 .sidebarClosed {
     @apply w-0 opacity-0 p-0;
@@ -20,7 +20,7 @@
     text-transform: uppercase;
 }
 .navContainer {
-    @apply flex flex-col gap-2 overflow-y-auto px-1 ;
+    @apply flex flex-col gap-2 overflow-y-auto p-1 ;
     overflow-x: hidden;
 }
 .navLink {
@@ -31,11 +31,9 @@
 .navActive {
     @apply text-white shadow;
     background-color: var(--secondary-color);
-    transition: all 0.1s ease;
 }
 .navNotActive {
     @apply hover:bg-gray-300;
-    transition: all 0.1s ease;
 }
 .dropdownIcon {
     transition: transform 0.3s ease;
@@ -71,11 +69,11 @@
 }
 
 .moduleNavActive {
-    @apply shadow bg-[var(--secondary-hover-color)] hover:underline;
+    @apply shadow bg-[var(--secondary-color)] hover:underline;
     color: white;
     transition: all 0.1s ease;
 }
 .moduleNavNotActive {
-    @apply hover:underline;
+    @apply hover:underline hover:bg-[var(--bg-color)];
     transition: all 0.1s ease;
 }

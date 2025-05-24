@@ -1,3 +1,4 @@
+import React from "react";
 import AdminDashboard from "../pages/admin/dashboard";
 import AdminCourseTab from "../pages/admin/course";
 import AdminPeopleTab from "../pages/admin/people";

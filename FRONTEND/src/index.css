@@ -1,9 +1,27 @@
 @import "tailwindcss";
-
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('./assets/fonts/JetBrainsMono-Regular.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('./assets/fonts/JetBrainsMono-Bold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('./assets/fonts/JetBrainsMono-Italic.woff2') format('woff2');
+  font-weight: 300;
+  font-style: italic;
+}
 :root {
   /* font-family: system-ui, Avenir, Helvetica, Arial, sans-serif; */
-  /* font-weight: 400; */
+  /* font-weight: 400; */  
   font-family: "Open Sans", sans-serif, "Departure Mono";
+  /* font-family: 'JetBrains Mono', monospace; */
   font-size: clamp(.9rem, 1.2vw, 1rem);
   line-height: 1.4;
 
@@ -12,7 +30,7 @@
   --card-bg: #ffffff;
   --text-color: #2E2E2E;
   --gray-color: #a7a7a7;
-  --light-gray-color: #c5c5c5;
+  --light-gray-color: #2e2e2e3a;
   --primary-color: #201E43;
   --secondary-color: #134B70;
   --secondary-hover-color: #246896;

@@ -4,7 +4,7 @@ import styles from "../styles/card.module.css";
 function LoginCard({ children }) {
     return (
         <div className={styles.loginCard}>
-            <div>{children}</div>
+            {children}
         </div>
     )
 }

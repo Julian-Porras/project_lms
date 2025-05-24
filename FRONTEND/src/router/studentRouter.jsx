@@ -1,3 +1,4 @@
+import React from "react";
 import StudentDashboard from "../pages/student/dashboard";
 import StudentClassroomTab from "../pages/student/classroom";
 import ProtectedRoute from "../components/ProtectedRoute";

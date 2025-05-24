@@ -10,7 +10,6 @@ import { ToastSuccesful } from "../../components/Toast";
 import useDeveloperApi from "../../api/developer";
 import SelectOptions from "../../components/select";
 import { LoadingPage } from "../../components/Loading";
-import useAbortEffect from "../../hooks/useAbortEffect";
 
 
 function InstructorClassroomTab() {
@@ -32,7 +31,7 @@ function InstructorClassroomTab() {
     const handleChange = (e) => {
         setCredentials({ ...credentials, [e.target.name]: e.target.value });
     };
-
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
         const res = await createClassApi(credentials);
@@ -58,6 +57,19 @@ function InstructorClassroomTab() {
     };
 
     useEffect(() => {
+        const controller = new AbortController();
+        const signal = controller.signal;
+
+        setPageLoading(true);
+        setErrors({});
+        fetchClasses(signal);
+
+        return () => {
+            controller.abort();
+        };
+    }, []);
+
+    useEffect(() => {
         if (isOpen) {
             setCredentials({
                 course_id: "",
@@ -67,12 +79,6 @@ function InstructorClassroomTab() {
             });
         }
     }, [isOpen]);
-
-    useAbortEffect(async (signal) => {
-        setPageLoading(true);
-        setErrors({});
-        fetchClasses(signal);
-    }, []);
 
     return (
         <>

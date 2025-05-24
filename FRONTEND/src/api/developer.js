@@ -6,11 +6,13 @@ export default function useDeveloperApi() {
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
 
-    const getCoursesApi = async (page, limit, stats) => {
+    const getCoursesApi = async (signal, page, limit, stats) => {
         setLoading(true);
         setErrors({});
         try {
-            const response = await AxiosAuth.get(`/api/d/course?page=${page}&limit=${limit}&status=${stats}`);
+            const response = await AxiosAuth.get(`/api/d/course?page=${page}&limit=${limit}&status=${stats}`, {
+                signal,
+            });
             return response.data;
         } catch (err) {
             const status = err.response?.status;
@@ -24,11 +26,13 @@ export default function useDeveloperApi() {
         }
     };
 
-    const getCoursesByStatusApi = async () => {
+    const getCoursesByStatusApi = async (signal) => {
         setLoading(true);
         setErrors({});
         try {
-            const response = await AxiosAuth.get(`/api/d/course/status`);
+            const response = await AxiosAuth.get(`/api/d/course/status`, {
+                signal,
+            });
             return response.data;
         } catch (err) {
             const status = err.response?.status;
@@ -62,7 +66,6 @@ export default function useDeveloperApi() {
 
     const createCourseApi = async (credentials) => {
         setLoading(true);
-        setErrors({});
         try {
             const response = await AxiosAuth.post("/api/d/create-course", credentials);
             return response.data;
@@ -79,11 +82,13 @@ export default function useDeveloperApi() {
     }
 
     // ****************** class api ******************
-    const fetchClassesApi = async (page, limit) => {
+    const fetchClassesApi = async (signal, page, limit) => {
         setLoading(true);
         setErrors({});
         try {
-            const response = await AxiosAuth.get(`/api/d/class?page=${page}$limit=${limit}`);
+            const response = await AxiosAuth.get(`/api/d/class?page=${page}&limit=${limit}`, {
+                signal,
+            });
             return response.data;
         } catch (err) {
             const status = err.response?.status;
@@ -117,7 +122,7 @@ export default function useDeveloperApi() {
 
     const createClassApi = async (credentials) => {
         setLoading(true);
-        setErrors({});
+        // setErrors({});
         try {
             const response = await AxiosAuth.post(`/api/d/create-class`, credentials);
             return response.data;
@@ -137,7 +142,7 @@ export default function useDeveloperApi() {
 
     const createClassModuleApi = async (credentials) => {
         setLoading(true);
-        setErrors({});
+        // setErrors({});
         try {
             const response = await AxiosAuth.post(`/api/d/create-module`, credentials);
             return response.data;
@@ -173,8 +178,8 @@ export default function useDeveloperApi() {
         setLoading(true);
         setErrors({});
         try {
-        const response = await AxiosAuth.post(`/api/d/delete-module/${module_id}`);
-        return response.data;
+            const response = await AxiosAuth.post(`/api/d/delete-module/${module_id}`);
+            return response.data;
         } catch (err) {
             const status = err.response?.status;
             setErrors(

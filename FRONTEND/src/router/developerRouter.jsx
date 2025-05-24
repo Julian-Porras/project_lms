@@ -1,26 +1,41 @@
-import InstructorDashboard from "../pages/instructor/dashboard";
-import InstructorClassroomTab from "../pages/instructor/classroom";
-import { ROLES } from "../constants/role";
 import React from "react";
 import ProtectedRoute from "../components/ProtectedRoute";
 import { FaTachometerAlt, FaBook, FaUsers, FaDesktop } from "react-icons/fa";
+import { ROLES } from "../constants/role";
 import { LuLayoutDashboard, LuBookMarked } from "react-icons/lu";
-import SettingsPage from "../pages/settings";
-import InstructorCourseTab from "../pages/instructor/course";
-import ClassModulePage from "../pages/instructor/class-modules";
-import CourseModulePage from "../pages/instructor/course-modules";
 
-// const InstructorCourseTab = React.lazy(() => import("../pages/instructor/course"));
+const InstructorDashboard = React.lazy(() => import("../pages/instructor/dashboard"));
+const InstructorClassroomTab = React.lazy(() => import("../pages/instructor/classroom"));
+const InstructorCourseTab = React.lazy(() => import("../pages/instructor/course"));
+const ClassModulePage = React.lazy(() => import("../pages/instructor/class-modules"));
+const CourseModulePage = React.lazy(() => import("../pages/instructor/course-modules"));
+const SettingsPage = React.lazy(() => import("../pages/settings"));
+
 const devModulerouter = [
+    {
+        path: "classroom/:class_id/n",
+        element: <ProtectedRoute role={ROLES.DEVELOPER}><ClassModulePage /></ProtectedRoute>,
+        meta: { label: "Announcements" },
+    },
     {
         path: "classroom/:class_id/m",
         element: <ProtectedRoute role={ROLES.DEVELOPER}><ClassModulePage /></ProtectedRoute>,
         meta: { label: "Modules" },
     },
     {
+        path: "classroom/:class_id/a",
+        element: <ProtectedRoute role={ROLES.DEVELOPER}><ClassModulePage /></ProtectedRoute>,
+        meta: { label: "Assignments" },
+    },
+    {
         path: "classroom/:class_id/p",
         element: <ProtectedRoute role={ROLES.DEVELOPER}><ClassModulePage /></ProtectedRoute>,
         meta: { label: "People" },
+    },
+    {
+        path: "classroom/:class_id/s",
+        element: <ProtectedRoute role={ROLES.DEVELOPER}><ClassModulePage /></ProtectedRoute>,
+        meta: { label: "Settings" },
     },
 ];
 

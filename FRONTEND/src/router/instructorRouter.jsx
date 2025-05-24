@@ -1,3 +1,4 @@
+import React from "react";
 import InstructorDashboard from "../pages/instructor/dashboard";
 import InstructorClassroomTab from "../pages/instructor/classroom";
 import { ROLES } from "../constants/role";
