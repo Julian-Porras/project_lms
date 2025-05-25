@@ -26,25 +26,31 @@ export default function useDeveloperApi() {
         }
     };
 
-    const getCoursesByStatusApi = async (signal) => {
-        setLoading(true);
-        setErrors({});
-        try {
-            const response = await AxiosAuth.get(`/api/d/course/status`, {
-                signal,
-            });
-            return response.data;
-        } catch (err) {
-            const status = err.response?.status;
-            setErrors(
-                status === 422 || status === 401
-                    ? err.response.data.errors
-                    : { general: "Something went wrong" }
-            );
-        } finally {
-            setLoading(false);
-        }
-    }
+    // const getCoursesByStatusApi = async (signal) => {
+    //     setLoading(true);
+    //     setErrors({});
+    //     try {
+    //         const response = await AxiosAuth.get(`/api/d/course/status`, {
+    //             signal,
+    //         });
+    //         return response.data;
+    //     } catch (err) {
+    //         const status = err.response?.status;
+    //         setErrors(
+    //             status === 422 || status === 401
+    //                 ? err.response.data.errors
+    //                 : { general: "Something went wrong" }
+    //         );
+    //     } finally {
+    //         setLoading(false);
+    //     }
+    // }
+    const getCoursesByStatusApi = async ({ signal }) => {
+        const response = await AxiosAuth.get(`/api/d/course/status`, {
+            signal,
+        });
+        return response.data;
+    };
 
     const getCourseApi = async (course_id) => {
         setLoading(true);
@@ -82,30 +88,31 @@ export default function useDeveloperApi() {
     }
 
     // ****************** class api ******************
-    // const fetchClassesApi = async ({ signal, queryKey }) => {
-    //     const [_key, page, limit] = queryKey;
-    //     const { data } = await AxiosAuth.get(`/api/d/class?page=${page}&limit=${limit}`, { signal });
-    //     return data;
-    // };
-    const fetchClassesApi = async (signal, page, limit) => {
-        setLoading(true);
-        setErrors({});
-        try {
-            const response = await AxiosAuth.get(`/api/d/class?page=${page}&limit=${limit}`, {
-                signal,
-            });
-            return response.data;
-        } catch (err) {
-            const status = err.response?.status;
-            setErrors(
-                status === 422 || status === 401
-                    ? err.response.data.errors
-                    : { general: "Something went wrong" }
-            );
-        } finally {
-            setLoading(false);
-        }
-    }
+    // const fetchClassesApi = async (signal, page, limit) => {
+    //     setLoading(true);
+    //     setErrors({});
+    //     try {
+    //         const response = await AxiosAuth.get(`/api/d/class?page=${page}&limit=${limit}`, {
+    //             signal,
+    //         });
+    //         return response.data;
+    //     } catch (err) {
+    //         const status = err.response?.status;
+    //         setErrors(
+    //             status === 422 || status === 401
+    //                 ? err.response.data.errors
+    //                 : { general: "Something went wrong" }
+    //         );
+    //     } finally {
+    //         setLoading(false);
+    //     }
+    // }
+    const fetchClassesApi = async ({ page = 1, limit = 10, signal }) => {
+        const response = await AxiosAuth.get(`/api/d/class?page=${page}&limit=${limit}`, {
+            signal,
+        });
+        return response.data;
+    };
 
     const fetchClassApi = async (class_id) => {
         setLoading(true);
@@ -126,21 +133,8 @@ export default function useDeveloperApi() {
     };
 
     const createClassApi = async (credentials) => {
-        setLoading(true);
-        // setErrors({});
-        try {
-            const response = await AxiosAuth.post(`/api/d/create-class`, credentials);
-            return response.data;
-        } catch (err) {
-            const status = err.response?.status;
-            setErrors(
-                status === 422 || status === 401
-                    ? err.response.data.errors
-                    : { general: "Something went wrong" }
-            );
-        } finally {
-            setLoading(false);
-        }
+        const response = await AxiosAuth.post(`/api/d/create-class`, credentials);
+        return response.data;
     };
 
     // ****************** module api ******************

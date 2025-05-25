@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('course_id')->constrained('tbl_course')->onDelete('cascade');
             $table->string('classroom_name');
             $table->string('classroom_code')->unique();
-            $table->integer('year_level');
+            $table->integer('year_level')->nullable();
             $table->enum('status', [StatusEnum::ACTIVE->value, StatusEnum::NOTACTIVE->value])->default('active');
             $table->string('background')->nullable();
             $table->timestamps();

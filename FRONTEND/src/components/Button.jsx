@@ -12,9 +12,9 @@ function ButtonAccent({ children }) {
     return <button className={`${styles.btn} ${styles.buttonAccent}`}>{children}</button>;
 }
 
-function ButtonCreate({ isDisable, title }) {
-    return <button disabled={isDisable} className={`${styles.btn} ${styles.buttonCreate}`}>
-        {isDisable ? <span>Creating...</span>  : title}
+function ButtonCreate({ type, isDisable, title }) {
+    return <button type={type} disabled={isDisable} className={`${styles.btn} ${styles.buttonCreate}`}>
+        {title}
     </button>
 }
 
