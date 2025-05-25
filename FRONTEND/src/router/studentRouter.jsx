@@ -1,16 +1,18 @@
-import React from "react";
-import StudentDashboard from "../pages/student/dashboard";
-import StudentClassroomTab from "../pages/student/classroom";
+import React, { lazy } from "react";
 import ProtectedRoute from "../components/ProtectedRoute";
 import { ROLES } from "../constants/role";
-import { FaTachometerAlt, FaBook, FaDesktop } from "react-icons/fa";
-import SettingsPage from "../pages/settings";
+import { FaDesktop } from "react-icons/fa";
+import { LuLayoutDashboard } from "react-icons/lu";
+
+const StudentDashboard = lazy(() => import("../pages/student/dashboard"));
+const StudentClassroomTab = lazy(() => import("../pages/student/classroom"));
+const SettingsPage = lazy(() => import("../pages/settings"));
 
 const studentRouter = [
     {
         path: "dashboard",
         element: <ProtectedRoute role={ROLES.STUDENT}><StudentDashboard /></ProtectedRoute>,
-        meta: { label: "Dashboard", role: ROLES.STUDENT, icon: FaTachometerAlt },
+        meta: { label: "Dashboard", role: ROLES.STUDENT, icon: LuLayoutDashboard },
     },
     {
         path: "classroom",

@@ -10,15 +10,16 @@ import { ToastSuccessful } from "../../components/Toast";
 import useDeveloperApi from "../../api/developer";
 import SelectOptions from "../../components/select";
 import { LoadingPage } from "../../components/Loading";
-
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 function InstructorClassroomTab() {
-    const { fetchClassesApi, getCoursesByStatusApi, createClassApi, errors, loading, setErrors } = useDeveloperApi();
+    const queryClient = useQueryClient();
+    // const { fetchClassesApi, getCoursesByStatusApi, createClassApi, errors, loading, setErrors } = useDeveloperApi();
     const [isOpen, setIsOpen] = useState(false);
-    const [classes, setClasses] = useState([]);
-    const [courses, setCourses] = useState([]);
+    // const [classes, setClasses] = useState([]);
+    // const [courses, setCourses] = useState([]);
     const [message, setMessage] = useState("");
-    const [pageLoading, setPageLoading] = useState(true);
+    // const [pageLoading, setPageLoading] = useState(true);
     const [toastShow, setToastShow] = useState(false);
 
     const [credentials, setCredentials] = useState({
@@ -28,46 +29,83 @@ function InstructorClassroomTab() {
         status: "active",
     });
 
+    const {
+        data: classesData,
+        isLoading: classesLoading,
+        error: classesError,
+    } = useQuery({
+        queryKey: ['classes', 1, 10],
+        queryFn: fetchClassesApi,
+    });
+    
+    const {
+        data: courses,
+        isLoading: coursesLoading,
+        error: coursesError,
+    } = useQuery({
+        queryKey: ['courses'],
+        queryFn: fetchCourses,
+    });
+
+    const createClassMutation = useMutation({
+        mutationFn: createClassApi,
+        onSuccess: (res) => {
+            setToastShow(true);
+            setMessage(res.message);
+            setIsOpen(false);
+            queryClient.invalidateQueries(['classes']); // Refetch class list
+        },
+    });
+
     const handleChange = (e) => {
         setCredentials({ ...credentials, [e.target.name]: e.target.value });
     };
-    
-    const handleSubmit = async (e) => {
+
+    const handleSubmit = (e) => {
         e.preventDefault();
-        const res = await createClassApi(credentials);
-        if (res) {
-            setIsOpen(false);
-            setToastShow(true);
-            setMessage(res.message);
-            setClasses((prevclass) => [...prevclass, res.class]);
-        }
+        createClassMutation.mutate(credentials);
     };
 
-    const fetchClasses = async (signal) => {
-        try {
-            const classroom = await fetchClassesApi(signal, 1, 10);
-            if (classroom) setClasses(classroom.data);
-            const courses = await getCoursesByStatusApi(signal);
-            if (courses) setCourses(courses);
-        } finally {
-            if (!signal.aborted) {
-                setPageLoading(false);
-            }
-        }
-    };
+    // const handleChange = (e) => {
+    //     setCredentials({ ...credentials, [e.target.name]: e.target.value });
+    // };
+    
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     const res = await createClassApi(credentials);
+    //     if (res) {
+    //         setIsOpen(false);
+    //         setToastShow(true);
+    //         setMessage(res.message);
+    //         setClasses((prevclass) => [...prevclass, res.class]);
+    //     }
+    // };
 
-    useEffect(() => {
-        const controller = new AbortController();
-        const signal = controller.signal;
+    // const fetchClasses = async (signal) => {
+    //     try {
+    //         const classroom = await fetchClassesApi(signal, 1, 10);
+    //         if (classroom) setClasses(classroom.data);
+    //         const courses = await getCoursesByStatusApi(signal);
+    //         if (courses) setCourses(courses);
+    //     } finally {
+    //         if (!signal.aborted) {
+    //             setPageLoading(false);
+    //         }
+    //     }
+    // };
 
-        setPageLoading(true);
-        setErrors({});
-        fetchClasses(signal);
+    // useEffect(() => {
+    //     const controller = new AbortController();
+    //     const signal = controller.signal;
 
-        return () => {
-            controller.abort();
-        };
-    }, []);
+    //     setPageLoading(true);
+    //     setErrors({});
+    //     fetchClasses(signal);
+
+    //     return () => {
+    //         controller.abort();
+    //     };
+    // }, []);
 
     useEffect(() => {
         if (isOpen) {
@@ -79,6 +117,10 @@ function InstructorClassroomTab() {
             });
         }
     }, [isOpen]);
+
+    if (classesLoading || coursesLoading) return <div>Loading...</div>;
+    if (classesError || coursesError) return <div>Error loading data.</div>;
+    const classes = classesData?.data ?? [];
 
     return (
         <>

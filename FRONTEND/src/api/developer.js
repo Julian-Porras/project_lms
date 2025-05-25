@@ -82,6 +82,11 @@ export default function useDeveloperApi() {
     }
 
     // ****************** class api ******************
+    // const fetchClassesApi = async ({ signal, queryKey }) => {
+    //     const [_key, page, limit] = queryKey;
+    //     const { data } = await AxiosAuth.get(`/api/d/class?page=${page}&limit=${limit}`, { signal });
+    //     return data;
+    // };
     const fetchClassesApi = async (signal, page, limit) => {
         setLoading(true);
         setErrors({});

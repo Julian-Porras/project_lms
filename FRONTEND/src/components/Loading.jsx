@@ -30,4 +30,10 @@ function LoadingButton() {
 
 }
 
-export { LoadingPage, LoadingButton }
+function LoadingFallbackPage(){
+    return(
+        <div className="bg-[var(--bg-color)] w-full h-full flex"></div>
+    );
+}
+
+export { LoadingPage, LoadingButton,LoadingFallbackPage }

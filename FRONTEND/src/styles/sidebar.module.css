@@ -69,13 +69,13 @@
 }
 
 .moduleNavContainer {
-    @apply flex flex-col gap-2 overflow-y-auto;
+    @apply flex flex-col gap-2 overflow-y-auto p-1;
     font-size: 0.9rem;
     overflow-x: hidden;
 }
 
 .moduleNavLink {
-    @apply flex items-center gap-3 px-3 py-2 rounded-sm;
+    @apply flex items-center gap-3 px-3 py-2 rounded-sm focus:border-0;
     cursor: pointer;
 }
 

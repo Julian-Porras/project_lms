@@ -24,9 +24,7 @@ function ModuleNav() {
                             <div key={route.meta.label} className={style.navGroup}>
                                 <NavLink
                                     to={`/${base}/${route.path.replace(":class_id", class_id)}`}
-                                    className={({ isActive }) =>
-                                        `${style.moduleNavLink} ${isActive ? style.moduleNavActive : style.moduleNavNotActive}`
-                                    }
+                                    className={({ isActive }) => `${style.moduleNavLink} ${isActive ? style.moduleNavActive : style.moduleNavNotActive}`}
                                 >
                                     <span>{route.meta.label}</span>
                                 </NavLink>

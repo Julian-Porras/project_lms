@@ -1,16 +1,18 @@
-import React from "react";
-import InstructorDashboard from "../pages/instructor/dashboard";
-import InstructorClassroomTab from "../pages/instructor/classroom";
+import React, { lazy } from "react";
 import { ROLES } from "../constants/role";
 import ProtectedRoute from "../components/ProtectedRoute";
-import { FaTachometerAlt, FaBook, FaUsers, FaDesktop } from "react-icons/fa";
-import SettingsPage from "../pages/settings";
+import { FaDesktop } from "react-icons/fa";
+import { LuLayoutDashboard, LuBookMarked } from "react-icons/lu";
+
+const InstructorDashboard = lazy(() => import("../pages/instructor/dashboard"));
+const InstructorClassroomTab = lazy(() => import("../pages/instructor/classroom"));
+const SettingsPage = lazy(() => import("../pages/settings"));
 
 const instructorRouter = [
     {
         path: "dashboard",
         element: <ProtectedRoute role={ROLES.INSTRUCTOR}><InstructorDashboard /></ProtectedRoute>,
-        meta: { label: "Dashboard", role: ROLES.INSTRUCTOR, icon: FaTachometerAlt },
+        meta: { label: "Dashboard", role: ROLES.INSTRUCTOR, icon: LuLayoutDashboard },
     },
     {
         path: "classroom",

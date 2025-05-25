@@ -10,7 +10,7 @@ import { LoadingPage } from "../../components/Loading";
 import { Modal } from "../../components/Modal";
 import { InputText } from "../../components/Input";
 import SelectOptions from "../../components/select";
-import { ClassModuleCard, ModuleNavCard } from "../../components/Card";
+import { ClassModuleCard } from "../../components/Card";
 import ModuleNav from "../../components/ModuleNav";
 
 function ClassModulePage() {
