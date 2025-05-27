@@ -22,7 +22,7 @@
   /* font-weight: 400; */  
   font-family: "Open Sans", sans-serif, "Departure Mono";
   /* font-family: 'JetBrains Mono', monospace; */
-  font-size: clamp(.9rem, 1.2vw, 1rem);
+  font-size: .9rem;
   line-height: 1.4;
   letter-spacing:0.5px;
   --bg-color: #ebeff8;

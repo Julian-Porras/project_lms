@@ -23,6 +23,7 @@
   box-shadow: 0 2px 24px rgba(0, 0, 0, 0.1);
   max-width: 200px;
   width: 100%;
+  height: fit-content;
   box-sizing: border-box;
 }
 .containerCard:hover {
