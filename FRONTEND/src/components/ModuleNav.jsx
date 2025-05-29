@@ -1,29 +1,19 @@
 import { NavLink, useLocation } from "react-router-dom";
-import { ROLES } from "../constants/role";
-import { useAuth } from "../context/authContext";
-import { devModuleRouter } from "../router/developerRouter";
 import { ModuleNavCard } from "./Card";
 import style from "../styles/sidebar.module.css";
-import { useParams } from "react-router-dom";
+import ReplaceRouteParams from "../util/route-param";
 
-function ModuleNav() {
-    const { class_id } = useParams();
-    const location = useLocation();
-    const { user } = useAuth();
-    const base = location.pathname.split("/")[1];
-    let routes = [];
-    if (user?.role_id === ROLES.DEVELOPER) {
-        routes = devModuleRouter;
-    }
+function ModuleNavComponent({ ModuleNavData }) {
     return (
         <ModuleNavCard>
             <nav className={style.moduleNavContainer}>
                 {
-                    routes.filter(route => route.meta?.label).map(route => {
+                    ModuleNavData.routes.filter(route => route.meta?.label).map(route => {
+                        const filledPath = ReplaceRouteParams(route.path, { class_id: ModuleNavData.param });
                         return (
                             <div key={route.meta.label} className={style.navGroup}>
                                 <NavLink
-                                    to={`/${base}/${route.path.replace(":class_id", class_id)}`}
+                                    to={`/${ModuleNavData.base}/${filledPath}`}
                                     className={({ isActive }) => `${style.moduleNavLink} ${isActive ? style.moduleNavActive : style.moduleNavNotActive}`}
                                 >
                                     <span>{route.meta.label}</span>
@@ -37,4 +27,4 @@ function ModuleNav() {
     )
 }
 
-export default ModuleNav;
+export default ModuleNavComponent;

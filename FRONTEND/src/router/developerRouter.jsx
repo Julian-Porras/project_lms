@@ -3,14 +3,14 @@ import { FaDesktop } from "react-icons/fa";
 import { ROLES } from "../constants/role";
 import { LuLayoutDashboard, LuBookMarked } from "react-icons/lu";
 
-const InstructorDashboard = lazy(() => import("../pages/instructor/dashboard"));
-const InstructorClassroomTab = lazy(() => import("../pages/instructor/classroom"));
-const InstructorCourseTab = lazy(() => import("../pages/instructor/course"));
-const ClassModulePage = lazy(() => import("../pages/instructor/class-modules"));
-const CourseModulePage = lazy(() => import("../pages/instructor/course-modules"));
+const Dashboard = lazy(() => import("../pages/instructor/dashboard"));
+const ClassroomPage = lazy(() => import("../pages/developer/ClassroomPage"));
+const CoursePage = lazy(() => import("../pages/developer/CoursePage"));
+const ClassModulePage = lazy(() => import("../pages/developer/ClassModulePage"));
+const CourseModulePage = lazy(() => import("../pages/developer/CourseModulePage"));
 const SettingsPage = lazy(() => import("../pages/settings"));
 
-const devModuleRouter = [
+const devClassModuleRouter = [
   {
     path: "classroom/:class_id/n",
     element: <ClassModulePage />,
@@ -38,28 +38,45 @@ const devModuleRouter = [
   },
 ];
 
+const devCourseModuleRouter = [
+  {
+    path: "course/:course_id/m",
+    element: <CourseModulePage />,
+    meta: { label: "Modules" },
+  },
+  {
+    path: "course/:course_id/a",
+    element: <CourseModulePage />,
+    meta: { label: "Assignments" },
+  },
+  {
+    path: "course/:course_id/s",
+    element: <CourseModulePage />,
+    meta: { label: "Settings" },
+  },
+];
+
 const developerRouter = [
   {
     path: "dashboard",
-    element: <InstructorDashboard />,
+    element: <Dashboard />,
     meta: { label: "Dashboard", role: ROLES.DEVELOPER, icon: LuLayoutDashboard },
   },
   {
     path: "course",
-    element: <InstructorCourseTab />,
+    element: <CoursePage />,
     meta: { label: "Course", role: ROLES.DEVELOPER, icon: LuBookMarked },
   },
   {
-    path: "course/:course_id",
-    element: <CourseModulePage />,
-  },
-  {
     path: "classroom",
-    element: <InstructorClassroomTab />,
+    element: <ClassroomPage />,
     meta: { label: "Classroom", role: ROLES.DEVELOPER, icon: FaDesktop },
   },
   {
-    children: devModuleRouter,
+    children: devClassModuleRouter,
+  },
+  {
+    children: devCourseModuleRouter,
   },
   {
     path: "settings",
@@ -67,4 +84,4 @@ const developerRouter = [
   },
 ];
 
-export { developerRouter, devModuleRouter };
+export { developerRouter, devClassModuleRouter, devCourseModuleRouter };

@@ -5,18 +5,17 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import ClassModuleComponent from "../components/ClassModule";
 import ToastMessage from "../../util/toast-message";
 
-
-function ClassModulePage() {
+function DevClassModulePage() {
     const { createClassModuleApi, fetchClassApi } = useDeveloperApi();
     const queryClient = useQueryClient();
-    const { class_id } = useParams();
+    const { course_id } = useParams();
     const [errors, setErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [message, setMessage] = useState("");
     const [toastShow, setToastShow] = useState(false);
     const [toastStatus, setToastStatus] = useState(200);
-    const param = class_id;
+    const param = course_id;
     const [credentials, setCredentials] = useState({
         classroom_id: param,
         module_name: "",
@@ -24,9 +23,9 @@ function ClassModulePage() {
     });
 
     const { data: classData, isLoading: isClassLoading, error: isClassError } = useQuery({
-        queryKey: ["class-module", class_id],
+        queryKey: ["class-module", param],
         queryFn: ({ signal, queryKey }) => {
-            return fetchClassApi(class_id, signal);
+            return fetchClassApi(param, signal);
         },
         keepPreviousData: true,
         refetchOnWindowFocus: false,
@@ -101,4 +100,4 @@ function ClassModulePage() {
     );
 }
 
-export default ClassModulePage;
+export default DevClassModulePage;

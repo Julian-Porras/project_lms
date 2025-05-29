@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import useDeveloperApi from "../../api/developer";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import ClassroomComponent from "../components/classroom";
+import CourseComponent from "../components/Course";
 import { useSearchParams } from "react-router-dom";
 import ToastMessage from "../../util/toast-message";
 
-function InstructorClassroomTab() {
+function DevCoursePage() {
     const queryClient = useQueryClient();
-    const { fetchClassesApi, getCoursesByStatusApi, createClassApi } = useDeveloperApi();
+    const { fetchCoursesApi, createCourseApi } = useDeveloperApi();
     const [errors, setErrors] = useState({});
     const [isOpen, setIsOpen] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -26,39 +26,26 @@ function InstructorClassroomTab() {
         setSearchParams({ page: newPage });
     };
     const [credentials, setCredentials] = useState({
-        course_id: "",
-        classroom_name: "",
-        classroom_code: "",
-        status: "active",
+        course_name: "",
+        status: "",
     });
 
-    const { data: classData, isLoading: isClassesLoading, error: isClassError } = useQuery({
-        queryKey: ["classes", page, limit],
+    const { data: coursesData, isLoading: isCoursesLoading, error: isClassError } = useQuery({
+        queryKey: ["courses", page, limit],
         queryFn: ({ signal, queryKey }) => {
             const [, page, limit] = queryKey;
-            return fetchClassesApi({ page, limit, signal });
+            return fetchCoursesApi({ page, limit, signal });
         },
         keepPreviousData: true,
         // staleTime: 300000, // 5 mins
         refetchOnWindowFocus: false,
     });
 
-    const { data: courseData, isLoading: isCoursesLoading, error: isCourseError } = useQuery({
-        queryKey: ["status", page, limit],
-        queryFn: ({ signal, queryKey }) => {
-            return getCoursesByStatusApi({ signal });
-        },
-        keepPreviousData: true,
-        // staleTime: 300000, // 5 mins
-        // cacheTime: 600000, // 10 mins
-        refetchOnWindowFocus: false,
-    });
-
-    const createClassMutation = useMutation({
-        mutationFn: createClassApi,
+    const createCourseMutation = useMutation({
+        mutationFn: createCourseApi,
         onSuccess: (res) => {
-            queryClient.invalidateQueries({ queryKey: ["classes"] });
-            setMessage(ToastMessage(res, "Class created successfully."));
+            queryClient.invalidateQueries({ queryKey: ["courses"] });
+            setMessage(ToastMessage(res, "Module created successfully."));
             setToastShow(true);
             setToastStatus(200);
             setIsOpen(false);
@@ -83,7 +70,7 @@ function InstructorClassroomTab() {
         e.preventDefault();
         setErrors({});
         setIsSubmitting(true);
-        createClassMutation.mutate(credentials, {
+        createCourseMutation.mutate(credentials, {
             onSettled: () => {
                 setIsSubmitting(false);
             }
@@ -93,13 +80,11 @@ function InstructorClassroomTab() {
     useEffect(() => {
         if (isOpen) {
             setCredentials({
-                course_id: "",
-                classroom_name: "",
-                classroom_code: "",
+                course_name: "",
                 status: "active",
             });
             setErrors({});
-            createClassMutation.reset();
+            createCourseMutation.reset();
         }
     }, [isOpen]);
 
@@ -108,23 +93,21 @@ function InstructorClassroomTab() {
     }, [page]);
 
     useEffect(() => {
-        if (classData?.last_page) {
+        if (coursesData?.last_page) {
             setPageInfo({
-                totalPages: classData.last_page,
-                totalRecords: classData.total,
-                pageSize: classData.per_page,
+                totalPages: coursesData.last_page,
+                totalRecords: coursesData.total,
+                pageSize: coursesData.per_page,
             });
         }
-    }, [classData]);
+    }, [coursesData]);
 
     return (
         <>
-            <ClassroomComponent
+            <CourseComponent
                 errors={errors}
-                isClassesLoading={isClassesLoading}
-                classData={classData?.data}
                 isCoursesLoading={isCoursesLoading}
-                courseData={courseData}
+                coursesData={coursesData?.data}
                 handleChange={handleChange}
                 handleSubmit={handleSubmit}
                 credentials={credentials}
@@ -145,4 +128,4 @@ function InstructorClassroomTab() {
         </>
     )
 }
-export default InstructorClassroomTab;
+export default DevCoursePage;

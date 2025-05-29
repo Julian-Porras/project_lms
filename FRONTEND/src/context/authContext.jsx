@@ -22,6 +22,7 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (credentials) => {
         setLoading((d) => true);
+        setErrors((d) => { });
         try {
             const data = await loginApi(credentials);
             const bearer = data.token;
@@ -56,6 +57,7 @@ export const AuthProvider = ({ children }) => {
 
     const register = async (credentials) => {
         setLoading((d) => true);
+        setErrors((d) => { });
         try {
             const data = await registerApi(credentials);
             console.log(data);

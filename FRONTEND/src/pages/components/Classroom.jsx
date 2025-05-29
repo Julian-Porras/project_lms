@@ -5,7 +5,7 @@ import style from "../../styles/page.module.css";
 import { FaPlus } from "react-icons/fa";
 import { Modal } from "../../components/Modal";
 import { InputText } from "../../components/Input";
-import { ToastSuccessful } from "../../components/Toast";
+import { ToastComponent } from "../../components/Toast";
 import SelectOptions from "../../components/select";
 import { LoadingPage } from "../../components/Loading";
 import PaginationBase from "../../components/Pagination";
@@ -24,6 +24,7 @@ function ClassroomComponent({
     setIsOpen,
     message,
     toastShow,
+    toastStatus,
     setToastShow,
     isSubmitting,
     page,
@@ -34,7 +35,12 @@ function ClassroomComponent({
 }) {
     return (
         <>
-            <ToastSuccessful message={message} show={toastShow} setShow={setToastShow} />
+            <ToastComponent
+                message={message}
+                show={toastShow}
+                setShow={setToastShow}
+                toastStatus={toastStatus}
+            />
             <div className="flex flex-row items-center justify-between " >
                 <p className={style.title} >Classroom</p>
                 <ButtonSecondary method={() => setIsOpen(true)}> <FaPlus />Create Classroom</ButtonSecondary>

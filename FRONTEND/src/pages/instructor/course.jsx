@@ -3,6 +3,7 @@ import useDeveloperApi from "../../api/developer";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import CourseComponent from "../components/Course";
 import { useSearchParams } from "react-router-dom";
+import ToastMessage from "../../util/toast-message";
 
 function InstructorCourseTab() {
     const queryClient = useQueryClient();
@@ -12,6 +13,7 @@ function InstructorCourseTab() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [message, setMessage] = useState("");
     const [toastShow, setToastShow] = useState(false);
+    const [toastStatus, setToastStatus] = useState(200);
     const [searchParams, setSearchParams] = useSearchParams();
     const [limit, setLimit] = useState(5);
     const [pageInfo, setPageInfo] = useState({
@@ -43,11 +45,17 @@ function InstructorCourseTab() {
         mutationFn: createCourseApi,
         onSuccess: (res) => {
             queryClient.invalidateQueries({ queryKey: ["courses"] });
-            setMessage(res.message);
+            setMessage(ToastMessage(res, "Module created successfully."));
             setToastShow(true);
+            setToastStatus(200);
             setIsOpen(false);
         },
         onError: (err) => {
+            if (err.response?.status >= 500) {
+                setMessage(ToastMessage(err));
+                setToastShow(true);
+                setToastStatus(err.response?.status || 500);
+            }
             if (err.response?.data?.errors) {
                 setErrors(err.response.data.errors);
             }
@@ -60,6 +68,7 @@ function InstructorCourseTab() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        setErrors({});
         setIsSubmitting(true);
         createCourseMutation.mutate(credentials, {
             onSettled: () => {
@@ -107,6 +116,7 @@ function InstructorCourseTab() {
                 setIsOpen={setIsOpen}
                 message={message}
                 toastShow={toastShow}
+                toastStatus={toastStatus}
                 setToastShow={setToastShow}
                 isSubmitting={isSubmitting}
                 page={page}

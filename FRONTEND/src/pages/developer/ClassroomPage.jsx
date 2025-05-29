@@ -5,7 +5,7 @@ import ClassroomComponent from "../components/classroom";
 import { useSearchParams } from "react-router-dom";
 import ToastMessage from "../../util/toast-message";
 
-function InstructorClassroomTab() {
+function DevClassroomPage() {
     const queryClient = useQueryClient();
     const { fetchClassesApi, getCoursesByStatusApi, createClassApi } = useDeveloperApi();
     const [errors, setErrors] = useState({});
@@ -145,4 +145,4 @@ function InstructorClassroomTab() {
         </>
     )
 }
-export default InstructorClassroomTab;
+export default DevClassroomPage;

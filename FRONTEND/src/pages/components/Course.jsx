@@ -7,7 +7,7 @@ import { Modal } from "../../components/Modal";
 import { InputText } from "../../components/Input";
 import SelectOptions from "../../components/select";
 import { LoadingPage } from "../../components/Loading";
-import { ToastSuccessful } from "../../components/Toast";
+import { ToastComponent } from "../../components/Toast";
 import PaginationBase from "../../components/Pagination";
 
 function CourseComponent({
@@ -22,6 +22,7 @@ function CourseComponent({
     setIsOpen,
     message,
     toastShow,
+    toastStatus,
     setToastShow,
     isSubmitting,
     page,
@@ -32,7 +33,12 @@ function CourseComponent({
 }) {
     return (
         <>
-            <ToastSuccessful message={message || "Course created successfully!"} show={toastShow} setShow={setToastShow} />
+            <ToastComponent
+                message={message}
+                show={toastShow}
+                setShow={setToastShow}
+                toastStatus={toastStatus}
+            />
             <div className="flex flex-row items-center justify-between " >
                 <p className={style.title} >Course</p>
                 <ButtonSecondary method={() => setIsOpen(true)}> <FaPlus />Create Course</ButtonSecondary>

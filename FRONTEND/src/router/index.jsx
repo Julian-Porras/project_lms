@@ -8,12 +8,11 @@ import MainLayout from "../layouts/mainLayout";
 import { developerRouter } from "./developerRouter";
 import { ROLES } from "../constants/role";
 import ProtectedRoute from "../components/ProtectedRoute";
-import { LoadingFallbackPage } from "../components/Loading";
 
-const AdminLoginPage = React.lazy(() => import("../pages/auth/admin-login-page"));
-const LoginPage = React.lazy(() => import("../pages/auth/login-page"));
-const RegisterPage = React.lazy(() => import("../pages/auth/register-page"));
-const ForgotPassPage = React.lazy(() => import("../pages/auth/forgot-pass"));
+const AdminLoginPage = lazy(() => import("../pages/auth/admin-login-page"));
+const LoginPage = lazy(() => import("../pages/auth/login-page"));
+const RegisterPage = lazy(() => import("../pages/auth/register-page"));
+const ForgotPassPage = lazy(() => import("../pages/auth/forgot-pass"));
 
 const LazyWrapper = (Component) => (
   <Suspense fallback={null}>

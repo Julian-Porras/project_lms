@@ -1,6 +1,6 @@
 import style from "../../styles/page.module.css";
 import { FaPlus } from "react-icons/fa";
-import { ToastSuccessful } from "../../components/Toast";
+import { ToastComponent } from "../../components/Toast";
 import { ButtonCancel, ButtonCreate, ButtonSecondary } from "../../components/Button";
 import { DividerThin } from "../../components/Divider";
 import { LoadingPage } from "../../components/Loading";
@@ -8,7 +8,7 @@ import { Modal } from "../../components/Modal";
 import { InputText } from "../../components/Input";
 import SelectOptions from "../../components/select";
 import { ClassModuleCard } from "../../components/Card";
-import ModuleNav from "../../components/ModuleNav";
+import ModuleNavComponent from "../../components/ModuleNav";
 
 function ClassModuleComponent({
     errors,
@@ -22,13 +22,20 @@ function ClassModuleComponent({
     setIsOpen,
     message,
     toastShow,
+    toastStatus,
     setToastShow,
     isSubmitting,
+    ModuleNavData,
 }) {
     return (
         <div className="flex flex-row h-full">
-            <ToastSuccessful message={message} show={toastShow} setShow={setToastShow} />
-            <ModuleNav />
+            <ToastComponent
+                message={message}
+                show={toastShow}
+                setShow={setToastShow}
+                toastStatus={toastStatus}
+            />
+            <ModuleNavComponent ModuleNavData={ModuleNavData} />
             {isClassLoading ? (<LoadingPage />) :
                 <div className="flex flex-col w-full h-full ml-4">
                     <div className="flex flex-row items-center justify-between " >

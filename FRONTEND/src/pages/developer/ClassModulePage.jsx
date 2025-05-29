@@ -1,27 +1,45 @@
 import { useEffect, useState } from "react";
 import useDeveloperApi from "../../api/developer";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import ClassModuleComponent from "../components/ClassModule";
 import ToastMessage from "../../util/toast-message";
+import { devClassModuleRouter } from "../../router/developerRouter";
+import { useAuth } from "../../context/authContext";
+import { ROLES } from "../../constants/role";
 
-
-function ClassModulePage() {
+function DevClassModulePage() {
     const { createClassModuleApi, fetchClassApi } = useDeveloperApi();
-    const queryClient = useQueryClient();
+    const { user } = useAuth();
     const { class_id } = useParams();
+    const queryClient = useQueryClient();
+    const location = useLocation();
+
+    const param = class_id;
+    const base = location.pathname.split("/")[1];
+    let routes = [];
+
     const [errors, setErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [message, setMessage] = useState("");
     const [toastShow, setToastShow] = useState(false);
     const [toastStatus, setToastStatus] = useState(200);
-    const param = class_id;
     const [credentials, setCredentials] = useState({
         classroom_id: param,
         module_name: "",
         is_visible: true,
     });
+
+    if (user?.role_id === ROLES.DEVELOPER) {
+        routes = devClassModuleRouter;
+    }
+
+    const ModuleNavData  = {
+        base: base, 
+        routes: routes, 
+        param: param,
+    }
 
     const { data: classData, isLoading: isClassLoading, error: isClassError } = useQuery({
         queryKey: ["class-module", class_id],
@@ -97,8 +115,9 @@ function ClassModulePage() {
             toastStatus={toastStatus}
             setToastShow={setToastShow}
             isSubmitting={isSubmitting}
+            ModuleNavData={ModuleNavData}
         />
     );
 }
 
-export default ClassModulePage;
+export default DevClassModulePage;

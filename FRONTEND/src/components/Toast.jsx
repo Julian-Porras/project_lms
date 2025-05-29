@@ -1,4 +1,11 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
+import { Slide } from "@mui/material";
+
+function SlideDownTransition(props) {
+    return <Slide {...props} direction="down" />;
+}
 
 function ToastSuccessful({ message, show, setShow, duration = 2000 }) {
     useEffect(() => {
@@ -21,4 +28,40 @@ function ToastSuccessful({ message, show, setShow, duration = 2000 }) {
     );
 }
 
-export {ToastSuccessful}
+function ToastComponent({ message, show, setShow, duration = 3000, toastStatus = 200 }) {
+    const getSeverity = (toastStatus) => {
+        if (toastStatus >= 200 && toastStatus < 300) return "success";
+        if (toastStatus >= 500) return "error";
+        return "info";
+    };
+
+    useEffect(() => {
+        if (show) {
+            const timer = setTimeout(() => {
+                setShow(false);
+            }, duration);
+            return () => clearTimeout(timer);
+        }
+    }, [show, duration, setShow]);
+
+    return (
+        <Snackbar
+            anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+            open={show}
+            autoHideDuration={duration}
+            onClose={() => setShow(false)}
+            slots={{ transition: SlideDownTransition }}
+        >
+            <Alert
+                onClose={() => setShow(false)}
+                severity={getSeverity(toastStatus)}
+                variant="filled"
+                sx={{ width: "100%" }}
+            >
+                {message}
+            </Alert>
+        </Snackbar>
+    );
+}
+
+export { ToastSuccessful, ToastComponent }
