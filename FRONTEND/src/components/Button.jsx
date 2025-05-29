@@ -18,8 +18,8 @@ function ButtonCreate({ type, isDisable, title }) {
     </button>
 }
 
-function ButtonPrimary({ children }) {
-    return <button className={`${styles.btn} ${styles.buttonPrimary}`}>{children}</button>;
+function ButtonPrimary({ type, method, children, isDisable }) {
+    return <button type={type} onClick={method} disabled={isDisable} className={`${styles.btn} ${styles.buttonPrimary}`}>{children}</button>;
 }
 
 function ButtonSecondary({ method, children }) {

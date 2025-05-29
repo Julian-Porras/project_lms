@@ -91,6 +91,7 @@ function ClassroomComponent({
                             selected={credentials.course_id}
                             setSelected={(e) => setCredentials({ ...credentials, course_id: e })}
                             placeholder="Select course"
+                            isLoading={isCourseLoading}
                         />
                         {errors?.course_id && (
                             <p className="text-sm text-red-500 mt-1">

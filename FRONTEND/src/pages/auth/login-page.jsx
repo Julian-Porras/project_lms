@@ -1,4 +1,3 @@
-import React from "react";
 import styles from '../../styles/login.module.css';
 import { LoginCard } from "../../components/Card";
 import { useState, useEffect } from "react";
@@ -64,10 +63,10 @@ function LoginPage() {
                     </div>
                     <a href="#" className={styles.forgotLink}>Forgot Password?</a>
                     <div className={styles.actions}>
-                        <button type="submit" className={styles.btnPrimary} disabled={loading} >
+                        <button type="submit" className={`${styles.btnPrimary} ${loading && styles.btnPrimaryLoading}`} disabled={loading} >
                             {loading ? "Logging in..." : "Login"}
                         </button>
-                    </div>
+                    </div> 
                     <p className={styles.registerText} >Don't have an account?
                         <NavLink className={styles.forgotLink} to={`/signup`}> Sign up</NavLink>
                     </p>

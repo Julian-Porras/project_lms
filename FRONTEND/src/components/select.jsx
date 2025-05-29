@@ -7,6 +7,7 @@ function SelectOptions({
   selected,
   setSelected,
   placeholder,
+  isLoading = false,
 }) {
   return (
     <select
@@ -19,12 +20,13 @@ function SelectOptions({
         else if (value === "false") setSelected(false);
         else setSelected(value);
       }}
+      disabled={isLoading}
       className="w-45 border border-[var(--light-gray-color)] text-sm rounded-sm p-2 focus:outline-none focus:ring-1 focus:ring-[var(--secondary-color)]"
     >
       <option value="" disabled>
-        {placeholder || "Select an option"}
+        {isLoading ? "Loading..." : (placeholder || "Select an option")}
       </option>
-      {options.map((option, index) => (
+      {!isLoading && options.map((option, index) => (
         <option key={index} value={String(getOptionValue(option))}>
           {getOptionLabel(option)}
         </option>

@@ -6,7 +6,7 @@ export default function useDeveloperApi() {
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
 
-    const fetchCoursesApi = async ({page, limit, signal}) => {
+    const fetchCoursesApi = async ({ page, limit, signal }) => {
         const response = await AxiosAuth.get(`/api/d/course?page=${page}&limit=${limit}`, {
             signal,
         });
@@ -51,22 +51,11 @@ export default function useDeveloperApi() {
         return response.data;
     };
 
-    const fetchClassApi = async (class_id) => {
-        setLoading(true);
-        setErrors({});
-        try {
-            const response = await AxiosAuth.get(`/api/d/class/${class_id}`);
-            return response.data;
-        } catch (err) {
-            const status = err.response?.status;
-            setErrors(
-                status === 422 || status === 401
-                    ? err.response.data.errors
-                    : { general: "Something went wrong" }
-            );
-        } finally {
-            setLoading(false);
-        }
+    const fetchClassApi = async (class_id, signal) => {
+        const response = await AxiosAuth.get(`/api/d/class/${class_id}`, {
+            signal,
+        });
+        return response.data;
     };
 
     const createClassApi = async (credentials) => {
@@ -77,21 +66,8 @@ export default function useDeveloperApi() {
     // ****************** module api ******************
 
     const createClassModuleApi = async (credentials) => {
-        setLoading(true);
-        // setErrors({});
-        try {
-            const response = await AxiosAuth.post(`/api/d/create-module`, credentials);
-            return response.data;
-        } catch (err) {
-            const status = err.response?.status;
-            setErrors(
-                status === 422 || status === 401
-                    ? err.response.data.errors
-                    : { general: "Something went wrong" }
-            );
-        } finally {
-            setLoading(false);
-        }
+        const response = await AxiosAuth.post(`/api/d/create-module`, credentials);
+        return response.data;
     };
     const editModuleApi = async (module_id, credentials) => {
         setLoading(true);
