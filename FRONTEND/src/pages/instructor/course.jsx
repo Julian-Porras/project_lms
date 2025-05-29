@@ -1,50 +1,71 @@
-import { ButtonCancel, ButtonSecondary, ButtonCreate } from "../../components/Button";
-import { ClassCard } from "../../components/Card";
-import { DividerThin } from "../../components/Divider";
-import style from "../../styles/page.module.css";
-import { FaPlus } from "react-icons/fa";
 import { useState, useEffect } from "react";
-import { Modal } from "../../components/Modal";
-import { InputText } from "../../components/Input";
-import SelectOptions from "../../components/select";
 import useDeveloperApi from "../../api/developer";
-import { LoadingPage } from "../../components/Loading";
-import { ToastSuccessful } from "../../components/Toast";
-import useAbortEffect from "../../hooks/useAbortEffect";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import CourseComponent from "../components/Course";
+import { useSearchParams } from "react-router-dom";
 
 function InstructorCourseTab() {
+    const queryClient = useQueryClient();
+    const { fetchCoursesApi, createCourseApi } = useDeveloperApi();
+    const [errors, setErrors] = useState({});
     const [isOpen, setIsOpen] = useState(false);
-    const [courses, setCourses] = useState([]);
-    const [pageLoading, setPageLoading] = useState(true);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [message, setMessage] = useState("");
     const [toastShow, setToastShow] = useState(false);
-    const { createCourseApi, errors, loading, setErrors, getCoursesApi } = useDeveloperApi();
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [limit, setLimit] = useState(5);
+    const [pageInfo, setPageInfo] = useState({
+        totalPages: 0,
+        totalRecords: 0,
+        pageSize: 0,
+    });
+    const page = parseInt(searchParams.get("page")) || 1;
+    const handlePageChange = (newPage) => {
+        setSearchParams({ page: newPage });
+    };
     const [credentials, setCredentials] = useState({
         course_name: "",
         status: "",
+    });
+
+    const { data: coursesData, isLoading: isCoursesLoading, error: isClassError } = useQuery({
+        queryKey: ["courses", page, limit],
+        queryFn: ({ signal, queryKey }) => {
+            const [, page, limit] = queryKey;
+            return fetchCoursesApi({ page, limit, signal });
+        },
+        keepPreviousData: true,
+        // staleTime: 300000, // 5 mins
+        refetchOnWindowFocus: false,
+    });
+
+    const createCourseMutation = useMutation({
+        mutationFn: createCourseApi,
+        onSuccess: (res) => {
+            queryClient.invalidateQueries({ queryKey: ["courses"] });
+            setMessage(res.message);
+            setToastShow(true);
+            setIsOpen(false);
+        },
+        onError: (err) => {
+            if (err.response?.data?.errors) {
+                setErrors(err.response.data.errors);
+            }
+        },
     });
 
     const handleChange = (e) => {
         setCredentials({ ...credentials, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        const res = await createCourseApi(credentials);
-        if (res) {
-            setIsOpen(false);
-            setToastShow(true);
-        }
-    };
-
-    const fetchCourses = async (signal) => {
-        try {
-            const res = await getCoursesApi(signal, 1, 10, 'all'); // page, limit, status
-            if (res) setCourses(res.data);
-        } finally {
-            if (!signal.aborted) {
-                setPageLoading(false);
+        setIsSubmitting(true);
+        createCourseMutation.mutate(credentials, {
+            onSettled: () => {
+                setIsSubmitting(false);
             }
-        }
+        });
     };
 
     useEffect(() => {
@@ -54,67 +75,46 @@ function InstructorCourseTab() {
                 status: "active",
             });
             setErrors({});
+            createCourseMutation.reset();
         }
     }, [isOpen]);
 
-    useAbortEffect(async (signal) => {
-        setPageLoading(true);
-        fetchCourses(signal);
-    }, []);
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }, [page]);
+
+    useEffect(() => {
+        if (coursesData?.last_page) {
+            setPageInfo({
+                totalPages: coursesData.last_page,
+                totalRecords: coursesData.total,
+                pageSize: coursesData.per_page,
+            });
+        }
+    }, [coursesData]);
 
     return (
         <>
-            <ToastSuccessful message="Course created successfully!" show={toastShow} setShow={setToastShow} />
-            <div className="flex flex-row items-center justify-between " >
-                <p className={style.title} >Course</p>
-                <ButtonSecondary method={() => setIsOpen(true)}> <FaPlus />Create Course</ButtonSecondary>
-            </div>
-            <DividerThin />
-            <div className={style.gridWrapper}>
-                {pageLoading ?
-                    <LoadingPage />
-                    : courses.length > 0 ? (
-                        courses.map((course) => (
-                            <ClassCard route={course.id} key={course.id}>
-                                <p>{course.course_name}</p>
-                            </ClassCard>
-                        ))
-                    ) : (
-                        <div className="flex flex-row items-center justify-center w-full h-full">
-                            <p className="text-lg text-gray-500">No courses found</p>
-                        </div>
-                    )}
-            </div>
-            <Modal
+            <CourseComponent
+                errors={errors}
+                isCoursesLoading={isCoursesLoading}
+                coursesData={coursesData?.data}
+                handleChange={handleChange}
+                handleSubmit={handleSubmit}
+                credentials={credentials}
+                setCredentials={setCredentials}
                 isOpen={isOpen}
-                onClose={() => setIsOpen(false)}
-                title="Create Course"
-            >
-                <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                    <div className="flex flex-col gap-2">
-                        <label htmlFor="course_name">Course name:</label>
-                        <InputText type={"text"} name={"course_name"} value={credentials.course_name} onChange={handleChange} placeholder={"type course name"} />
-                        {errors?.course_name && <p className="text-sm text-red-500 mt-1">&nbsp;{errors.course_name}</p>}
-                    </div>
-                    <div className="flex flex-col gap-2 ">
-                        <label htmlFor="status">Status:</label>
-                        <SelectOptions
-                            id="status"
-                            options={[{ id: 'active', name: "Open" }, { id: 'not-active', name: "Close" }]}
-                            getOptionLabel={(option) => option.name}
-                            getOptionValue={(option) => option.id}
-                            name="status"
-                            selected={credentials.status}
-                            setSelected={(value) => setCredentials({ ...credentials, status: value })}
-                        />
-                        {errors?.status && <p className="text-sm text-red-500 mt-1">&nbsp;{errors?.status}</p>}
-                    </div>
-                    <div className="flex flex-row gap-4 items-center justify-end mt-10">
-                        <ButtonCreate type="submit" isDisable={loading} title={"Create course"} />
-                        <ButtonCancel type="button" method={() => setIsOpen(false)} />
-                    </div>
-                </form>
-            </Modal>
+                setIsOpen={setIsOpen}
+                message={message}
+                toastShow={toastShow}
+                setToastShow={setToastShow}
+                isSubmitting={isSubmitting}
+                page={page}
+                setPage={handlePageChange}
+                totalPages={pageInfo.totalPages}
+                totalRecords={pageInfo.totalRecords}
+                pageSize={pageInfo.pageSize}
+            />
         </>
     )
 }

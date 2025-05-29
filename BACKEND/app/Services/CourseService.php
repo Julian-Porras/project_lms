@@ -11,7 +11,7 @@ class CourseService
     public function getAllCourses($request, $userId)
     {
         $search = trim($request->search);
-        $limit = $request->limit;
+        $limit = trim($request->limit);
         $status = strtolower($request->status);
         return CourseModel::when($search, function ($query) use ($search) {
             $query->where(function ($q) use ($search) {
@@ -19,13 +19,11 @@ class CourseService
             });
         })
             ->when($status, function ($query, $status) {
-                if ($status == 'all') return $query;
-                $query->where('status', $status ?? StatusEnum::ACTIVE->value);
+                if ($status == 'all' || $status == null) return $query;
+                $query->where('status', $status);
             })
-            ->when($userId, function ($query) use ($userId) {
-                $query->where('user_id', $userId);
-            })
-            ->paginate($limit ?? PaginateEnum::TEN->value);
+            ->where('user_id', $userId)
+            ->paginate($limit ?? PaginateEnum::FIVE->value);
     }
 
     public function getAllCoursesByStatus($request)

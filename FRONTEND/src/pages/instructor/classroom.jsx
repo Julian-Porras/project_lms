@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import useDeveloperApi from "../../api/developer";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import ClassroomComponent from "../components/classroom";
-import Pagination from "../../components/Pagination";
 import { useSearchParams } from "react-router-dom";
 
 function InstructorClassroomTab() {
@@ -21,7 +20,6 @@ function InstructorClassroomTab() {
         pageSize: 0,
     });
     const page = parseInt(searchParams.get("page")) || 1;
-
     const handlePageChange = (newPage) => {
         setSearchParams({ page: newPage });
     };
@@ -44,13 +42,13 @@ function InstructorClassroomTab() {
     });
 
     const { data: courseData, isLoading: isCoursesLoading, error: isCourseError } = useQuery({
-        queryKey: ["courses", page, limit],
+        queryKey: ["status", page, limit],
         queryFn: ({ signal, queryKey }) => {
             return getCoursesByStatusApi({ signal });
         },
         keepPreviousData: true,
-        staleTime: 300000, // 5 mins
-        cacheTime: 600000, // 10 mins
+        // staleTime: 300000, // 5 mins
+        // cacheTime: 600000, // 10 mins
         refetchOnWindowFocus: false,
     });
 
@@ -99,7 +97,7 @@ function InstructorClassroomTab() {
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: "smooth" });
     }, [page]);
-    
+
     useEffect(() => {
         if (classData?.last_page) {
             setPageInfo({
@@ -115,7 +113,7 @@ function InstructorClassroomTab() {
             <ClassroomComponent
                 errors={errors}
                 isClassesLoading={isClassesLoading}
-                classData={classData}
+                classData={classData?.data}
                 isCoursesLoading={isCoursesLoading}
                 courseData={courseData}
                 handleChange={handleChange}
@@ -134,14 +132,6 @@ function InstructorClassroomTab() {
                 totalRecords={pageInfo.totalRecords}
                 pageSize={pageInfo.pageSize}
             />
-            <footer className="flex h-1/4">asd
-                asd
-                sad
-                asd
-                asd
-                asd
-
-            </footer>
         </>
     )
 }

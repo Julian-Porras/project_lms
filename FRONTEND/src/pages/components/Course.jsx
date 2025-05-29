@@ -3,96 +3,65 @@ import { ClassCard } from "../../components/Card";
 import { DividerThin } from "../../components/Divider";
 import style from "../../styles/page.module.css";
 import { FaPlus } from "react-icons/fa";
-import { useState, useEffect } from "react";
 import { Modal } from "../../components/Modal";
 import { InputText } from "../../components/Input";
 import SelectOptions from "../../components/select";
-import useDeveloperApi from "../../api/developer";
 import { LoadingPage } from "../../components/Loading";
 import { ToastSuccessful } from "../../components/Toast";
+import PaginationBase from "../../components/Pagination";
 
-function InstructorCourseTab() {
-    const [isOpen, setIsOpen] = useState(false);
-    const [courses, setCourses] = useState([]);
-    const [pageLoading, setPageLoading] = useState(true);
-    const [toastShow, setToastShow] = useState(false);
-    const { createCourseApi, errors, loading, setErrors, getCoursesApi } = useDeveloperApi();
-    const [credentials, setCredentials] = useState({
-        course_name: "",
-        status: "",
-    });
-
-    const handleChange = (e) => {
-        setCredentials({ ...credentials, [e.target.name]: e.target.value });
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const res = await createCourseApi(credentials);
-        if (res) {
-            setIsOpen(false);
-            setToastShow(true);
-
-        }
-    };
-
-    const fetchCourses = async (signal) => {
-        try {
-
-        const res = await getCoursesApi(signal, 1, 10, 'all'); // page, limit, status
-        if (res) setCourses(res.data);
-        } finally {
-            if (!signal.aborted) {
-                setPageLoading(false);
-            }
-        }
-    };
-
-    useEffect(() => {
-        if (isOpen) {
-            setCredentials({
-                course_name: "",
-                status: "active",
-            });
-        }
-    }, [isOpen]);
-
-    useEffect(() => {
-        const controller = new AbortController();
-        const signal = controller.signal;
-
-        setPageLoading(true);
-        setErrors({});
-        fetchCourses(signal);
-
-        return () => {
-            controller.abort();
-        };
-    }, []);
-
+function CourseComponent({
+    errors,
+    isCoursesLoading,
+    coursesData,
+    handleChange,
+    handleSubmit,
+    credentials,
+    setCredentials,
+    isOpen,
+    setIsOpen,
+    message,
+    toastShow,
+    setToastShow,
+    isSubmitting,
+    page,
+    totalPages,
+    setPage,
+    totalRecords,
+    pageSize,
+}) {
     return (
         <>
-            <ToastSuccessful message="Course created successfully!" show={toastShow} setShow={setToastShow} />
+            <ToastSuccessful message={message || "Course created successfully!"} show={toastShow} setShow={setToastShow} />
             <div className="flex flex-row items-center justify-between " >
                 <p className={style.title} >Course</p>
                 <ButtonSecondary method={() => setIsOpen(true)}> <FaPlus />Create Course</ButtonSecondary>
             </div>
             <DividerThin />
             <div className={style.gridWrapper}>
-                {pageLoading ?
+                {isCoursesLoading ? (
                     <LoadingPage />
-                    : courses.length > 0 ? (
-                        courses.map((course) => (
-                            <ClassCard route={course.id} key={course.id}>
-                                <p>{course.course_name}</p>
-                            </ClassCard>
-                        ))
-                    ) : (
-                        <div className="flex flex-row items-center justify-center w-full h-full">
-                            <p className="text-lg text-gray-500">No courses found</p>
-                        </div>
-                    )}
+                ) : !isCoursesLoading && coursesData?.length === 0 ? (
+                    <div className="flex flex-row items-center justify-center w-full h-full">
+                        <p className="text-lg text-gray-500">No courses found</p>
+                    </div>
+                ) : (
+                    coursesData?.map((course) => (
+                        <ClassCard route={course.id} key={course.id}>
+                            <p>{course.course_name}</p>
+                        </ClassCard>
+                    ))
+                )}
             </div>
+            {totalPages > 0 && (
+                <PaginationBase
+                    page={page}
+                    totalPages={totalPages}
+                    setPage={setPage}
+                    totalRecords={totalRecords}
+                    pageSize={pageSize}
+                />
+            )}
             <Modal
                 isOpen={isOpen}
                 onClose={() => setIsOpen(false)}
@@ -118,7 +87,8 @@ function InstructorCourseTab() {
                         {errors?.status && <p className="text-sm text-red-500 mt-1">&nbsp;{errors?.status}</p>}
                     </div>
                     <div className="flex flex-row gap-4 items-center justify-end mt-10">
-                        <ButtonCreate type="submit" isDisable={loading} title={"Create course"} />
+                        <ButtonCreate type="submit" isDisable={isSubmitting}
+                            title={isSubmitting ? "Creating..." : "Create course"} />
                         <ButtonCancel type="button" method={() => setIsOpen(false)} />
                     </div>
                 </form>
@@ -126,4 +96,4 @@ function InstructorCourseTab() {
         </>
     )
 }
-export default InstructorCourseTab;
+export default CourseComponent;

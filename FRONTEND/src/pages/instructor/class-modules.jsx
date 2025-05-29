@@ -22,15 +22,15 @@ function ClassModulePage() {
     const [classes, setClasses] = useState({});
     const [message, setMessage] = useState("");
     const [toastShow, setToastShow] = useState(false);
-
+    const param = class_id;
     const [credentials, setCredentials] = useState({
-        classroom_id: class_id,
+        classroom_id: param,
         module_name: "",
         is_visible: true,
     });
 
     const handleChange = (e) => {
-        setCredentials({ ...credentials, [e.target.name]: e.target.value });
+        setCredentials((prev) => ({ ...prev, [e.target.name]: e.target.value, }));
     };
 
     const handleSubmit = async (e) => {
@@ -53,15 +53,16 @@ function ClassModulePage() {
         setPageLoading(false);
     }
 
-    useEffect((class_id) => {
-        if (isOpen) {
-            setCredentials({
-                classroom_id: class_id,
+    useEffect(() => {
+        if (isOpen && param) {
+            setCredentials((prev) => ({
+                ...prev, 
+                classroom_id: param,
                 module_name: "",
                 is_visible: true,
-            });
+            }));
         }
-    }, [isOpen]);
+    }, [isOpen, param]);
 
     useEffect(() => {
         setPageLoading(true);
@@ -70,11 +71,10 @@ function ClassModulePage() {
     }, []);
 
     return (
-        <div className="flex flex-row">
-            {pageLoading ? <LoadingPage /> :
-                <>
-                    <ToastSuccessful message={message} show={toastShow} setShow={setToastShow} />
-                    <ModuleNav />
+        <div className="flex flex-row h-full">
+                <ToastSuccessful message={message} show={toastShow} setShow={setToastShow} />
+                <ModuleNav />
+                {pageLoading ? (<LoadingPage />) :
                     <div className="flex flex-col w-full h-full ml-4">
                         <div className="flex flex-row items-center justify-between " >
                             <p className={style.title} >{classes.classroom_name}</p>
@@ -124,14 +124,14 @@ function ClassModulePage() {
                                     )}
                                 </div>
                                 <div className="flex flex-row gap-4 items-center justify-end mt-10">
-                                    <ButtonCreate type="submit" isDisable={loading} title={"Create module"} />
+                                    <ButtonCreate type="submit" isDisable={loading} 
+                                    title={loading ? "Creating..." : "Create module"} />
                                     <ButtonCancel type="button" method={() => setIsOpen(false)} />
                                 </div>
                             </form>
                         </Modal>
                     </div>
-                </>
-            }
+                }
         </div>
     );
 }

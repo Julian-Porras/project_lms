@@ -8,7 +8,7 @@ function PaginationBase({ page, totalPages, setPage, totalRecords, pageSize }) {
     return (
         <div className="flex flex-col md:flex-row mt-4 justify-between items-center gap-2">
             <p className="text-sm text-gray-600">
-                Page {page} of {totalPages} &nbsp;•&nbsp; Showing {start}–{end} of {totalRecords} results
+                Page {page} of {totalPages}  •  Showing {start} – {end} of {totalRecords} results
             </p>
             <Stack spacing={2}>
                 <Pagination

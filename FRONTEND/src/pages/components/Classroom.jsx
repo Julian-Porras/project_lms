@@ -43,16 +43,16 @@ function ClassroomComponent({
             <div className={style.gridWrapper}>
                 {isClassesLoading ? (
                     <LoadingPage />
-                ) : classData?.data.length > 0 ? (
-                    classData.data.map((classroom) => (
+                ) : !isClassesLoading && classData?.length === 0 ? (
+                    <div className="flex flex-row items-center justify-center w-full h-full">
+                        <p className="text-lg text-gray-500">No classroom found</p>
+                    </div>
+                ) : (
+                    classData?.map((classroom) => (
                         <ClassCard route={`${classroom.id}/m`} key={classroom.id}>
                             <p>{classroom.classroom_name}</p>
                         </ClassCard>
                     ))
-                ) : (
-                    <div className="flex flex-row items-center justify-center w-full h-full">
-                        <p className="text-lg text-gray-500">No classroom found</p>
-                    </div>
                 )}
             </div>
             {totalPages > 0 && (
@@ -60,8 +60,8 @@ function ClassroomComponent({
                     page={page}
                     totalPages={totalPages}
                     setPage={setPage}
-                    totalRecords={totalRecords} 
-                    pageSize={pageSize} 
+                    totalRecords={totalRecords}
+                    pageSize={pageSize}
                 />
             )}
             <Modal
