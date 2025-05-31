@@ -55,7 +55,7 @@ function ToastComponent({ message, show, setShow, duration = 3000, toastStatus =
             <Alert
                 onClose={() => setShow(false)}
                 severity={getSeverity(toastStatus)}
-                variant="filled"
+                variant="outlined"
                 sx={{ width: "100%" }}
             >
                 {message}

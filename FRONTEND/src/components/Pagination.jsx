@@ -6,7 +6,8 @@ function PaginationBase({ page, totalPages, setPage, totalRecords, pageSize }) {
     const end = Math.min(page * pageSize, totalRecords);
 
     return (
-        <div className="flex flex-col md:flex-row mt-4 justify-between items-center gap-2">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-4 ">
+        {/* <div className="flex flex-col md:flex-row justify-center items-center gap-4 bg-white rounded-sm px-4 py-2 shadow-sm"> */}
             <p className="text-sm text-gray-600">
                 Page {page} of {totalPages}  •  Showing {start} – {end} of {totalRecords} results
             </p>
