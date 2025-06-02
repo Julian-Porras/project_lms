@@ -25,25 +25,28 @@
   width: 100%;
   height: fit-content;
   box-sizing: border-box;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 500;
+  font: .9rem;
 }
 .containerCard:hover {
   box-shadow: 0 4px 38px rgba(0, 0, 0, 0.2);
 }
 
 .ModuleCard {
-  @apply rounded-sm shadow-md;
+  @apply rounded-md shadow-sm flex flex-col;
   background-color: var(--card-bg);
   width: 100%;
   box-sizing: border-box;
 }
 
 .moduleNav{
-  @apply top-1;
+  @apply top-1 rounded-sm shadow-sm;
   padding: 1rem;
   padding-bottom: 3rem;
   background-color: var(--card-bg);
   border-radius: var(--border-radius);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   width: 100%;
   height: max-content;
   min-height: 200px;

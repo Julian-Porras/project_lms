@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "../Styles/Toggle.module.css";
+import Switch from '@mui/material/Switch';
 
 function ToggleTheme({ toggleTheme }) {
   return (
@@ -12,4 +13,8 @@ function ToggleTheme({ toggleTheme }) {
   );
 }
 
-export {ToggleTheme};
+function SwitchComponent({handleChange, checked}){
+  <Switch checked={checked} onChange={handleChange} />
+}
+
+export {ToggleTheme, SwitchComponent};

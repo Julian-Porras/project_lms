@@ -6,7 +6,7 @@ function LoadingPage() {
     useEffect(() => {
         const timer = setTimeout(() => {
             setShowSpinner(true);
-        }, 0); // 500ms delay
+        }, 500); // 500ms delay
         return () => clearTimeout(timer);
     }, []);
 

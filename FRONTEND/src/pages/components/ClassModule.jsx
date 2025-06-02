@@ -7,8 +7,10 @@ import { LoadingPage } from "../../components/Loading";
 import { Modal } from "../../components/Modal";
 import { InputText } from "../../components/Input";
 import SelectOptions from "../../components/select";
-import { ClassModuleCard } from "../../components/Card";
+import { ButtonCard } from "../../components/Card";
 import ModuleNavComponent from "../../components/ModuleNav";
+import { ModuleComponent } from "./ModuleComponent";
+import { LuListStart } from "react-icons/lu";
 
 function ClassModuleComponent({
     errors,
@@ -28,7 +30,7 @@ function ClassModuleComponent({
     ModuleNavData,
 }) {
     return (
-        <div className="flex flex-row h-full">
+        <div className="flex flex-row ">
             <ToastComponent
                 message={message}
                 show={toastShow}
@@ -43,12 +45,15 @@ function ClassModuleComponent({
                         <ButtonSecondary method={() => setIsOpen(true)}> <FaPlus />Create Module</ButtonSecondary>
                     </div>
                     <DividerThin />
-                    <div className="flex flex-col gap-4 pt-5">
+                    <div className="flex flex-row items-center justify-end">
+                        <ButtonCard>
+                            <LuListStart size={20} />
+                        </ButtonCard>
+                    </div>
+                    <div className="flex flex-col gap-4 pt-4">
                         {classData?.modules?.length > 0 ? (
                             classData?.modules?.map((module) => (
-                                <ClassModuleCard key={module.id} >
-                                    <p className={style.moduleTitle}>{module.module_name}</p>
-                                </ClassModuleCard>
+                                <ModuleComponent key={module.id} title={module.module_name} />
                             ))
                         ) : (
                             <div className="flex flex-row items-center justify-center w-full h-full">
