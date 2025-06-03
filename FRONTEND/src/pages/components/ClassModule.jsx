@@ -98,7 +98,7 @@ function ClassModuleComponent({
                 <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                     <div className="flex flex-col gap-2">
                         <label htmlFor="module_name">Module name:</label>
-                        <InputText type={"text"} name={"module_name"} value={credentials.module_name} onChange={handleChange} placeholder={"type module name"} />
+                        <InputText type={"text"} name={"module_name"} value={credentials.module_name} onChange={handleChange} placeholder={"Type module name"} />
                         {errors?.module_name && <p className="text-sm text-red-500 mt-1">&nbsp;{errors.module_name}</p>}
                     </div>
                     <div className="flex flex-col gap-2">
@@ -134,7 +134,7 @@ function ClassModuleComponent({
                 <form onSubmit={handleContentSubmit} className="flex flex-col gap-5">
                     <div className="flex flex-col gap-2">
                         <label htmlFor="item_name">Content name:</label>
-                        <InputText type={"text"} name={"item_name"} value={contentCredentials.item_name} onChange={handleContentChange} placeholder={"type module name"} />
+                        <InputText type={"text"} name={"item_name"} value={contentCredentials.item_name} onChange={handleContentChange} placeholder={"Type module name"} />
                         {errors?.item_name && <p className="text-sm text-red-500 mt-1">&nbsp;{errors.item_name}</p>}
                     </div>
                     <div className="flex flex-col items-start gap-2">

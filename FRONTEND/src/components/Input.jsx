@@ -4,6 +4,7 @@ import TextField from '@mui/material/TextField';
 function InputText({ type, name, value, onChange, placeholder }) {
   return (
     <input
+      onKeyUp={value = value.charAt(0).toUpperCase() + value.slice(1).toLowerCase()}
       className={styles.textInput}
       type={type}
       name={name}
