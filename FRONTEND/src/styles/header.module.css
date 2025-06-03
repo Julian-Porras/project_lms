@@ -14,7 +14,7 @@
     color: var(--primary-color);
 }
 .logoContainer{
-    @apply w-62 flex flex-row gap-1 items-center;
+    @apply w-50 flex flex-row gap-1 items-center;
     font-size: 1.2rem;
     font-weight: 600;
 }

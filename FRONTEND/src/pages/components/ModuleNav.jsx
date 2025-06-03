@@ -1,7 +1,7 @@
 import { NavLink, useLocation } from "react-router-dom";
-import { ModuleNavCard } from "./Card";
-import style from "../styles/sidebar.module.css";
-import ReplaceRouteParams from "../util/route-param";
+import { ModuleNavCard, ModuleStatusCard } from "../../components/Card";
+import style from "../../styles/sidebar.module.css";
+import ReplaceRouteParams from "../../util/route-param";
 
 function ModuleNavComponent({ ModuleNavData }) {
     return (
@@ -26,5 +26,12 @@ function ModuleNavComponent({ ModuleNavData }) {
         </ModuleNavCard>
     )
 }
+function ModuleStatusComponent({  }) {
+    return (
+        <ModuleStatusCard>
+            <p className="text-lg">Classroom status</p>
+        </ModuleStatusCard>
+    )
+}
 
-export default ModuleNavComponent;
+export {ModuleNavComponent, ModuleStatusComponent};

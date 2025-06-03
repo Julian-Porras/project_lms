@@ -2,15 +2,16 @@ import style from "../../styles/page.module.css";
 import { FaPlus } from "react-icons/fa";
 import { ToastComponent } from "../../components/Toast";
 import { ButtonCancel, ButtonCreate, ButtonSecondary } from "../../components/Button";
-import { DividerThin } from "../../components/Divider";
+import { DividerDashed, DividerThin } from "../../components/Divider";
 import { LoadingPage } from "../../components/Loading";
 import { Modal } from "../../components/Modal";
 import { InputText } from "../../components/Input";
 import SelectOptions from "../../components/select";
 import { ButtonCard } from "../../components/Card";
-import ModuleNavComponent from "../../components/ModuleNav";
+import { ModuleNavComponent, ModuleStatusComponent } from "./ModuleNav";
 import { ModuleComponent } from "./ModuleComponent";
 import { LuListStart } from "react-icons/lu";
+import { SwitchComponent } from "../../components/Switch";
 
 function ClassModuleComponent({
     errors,
@@ -28,6 +29,15 @@ function ClassModuleComponent({
     setToastShow,
     isSubmitting,
     ModuleNavData,
+    isOpenContent,
+    setOpenContent,
+    isOpenOrder,
+    setOpenOrder,
+    isOpenEdit,
+    setOpenEdit,
+    contentCredentials,
+    setContentCredentials,
+    handleContentChange,
 }) {
     return (
         <div className="flex flex-row ">
@@ -39,21 +49,32 @@ function ClassModuleComponent({
             />
             <ModuleNavComponent ModuleNavData={ModuleNavData} />
             {isClassLoading ? (<LoadingPage />) :
-                <div className="flex flex-col w-full h-full ml-4">
+                <div className="flex flex-col w-full h-full mx-5">
                     <div className="flex flex-row items-center justify-between " >
                         <p className={style.title} >{classData?.classroom_name}</p>
                         <ButtonSecondary method={() => setIsOpen(true)}> <FaPlus />Create Module</ButtonSecondary>
                     </div>
                     <DividerThin />
-                    <div className="flex flex-row items-center justify-end">
+                    <div className="flex flex-row items-center justify-end gap-4">
+                        <SwitchComponent label={"Grouped View"} />
                         <ButtonCard>
                             <LuListStart size={20} />
                         </ButtonCard>
                     </div>
-                    <div className="flex flex-col gap-4 pt-4">
+                    <div className="flex flex-col gap-2 py-3">
                         {classData?.modules?.length > 0 ? (
-                            classData?.modules?.map((module) => (
-                                <ModuleComponent key={module.id} title={module.module_name} />
+                            classData?.modules?.map((module, index) => (
+                                <>
+                                    <ModuleComponent
+                                        key={module.id}
+                                        isVisible={module.is_visible}
+                                        title={module.module_name}
+                                        setOpenContent={setOpenContent}
+                                        setOpenEdit={setOpenEdit}
+                                        contentData={module.module_items}
+                                    />
+                                    {index !== classData.modules.length - 1 && <DividerDashed />}
+                                </>
                             ))
                         ) : (
                             <div className="flex flex-row items-center justify-center w-full h-full">
@@ -97,8 +118,30 @@ function ClassModuleComponent({
                             </div>
                         </form>
                     </Modal>
+                    <Modal
+                        isOpen={isOpenContent}
+                        title="Add Content"
+                        onClose={() => setOpenContent(false)}
+                    >
+
+                    </Modal>
+                    <Modal
+                        isOpen={isOpenEdit}
+                        title="Edit Module"
+                        onClose={() => setOpenEdit(false)}
+                    >
+
+                    </Modal>
+                    <Modal
+                        isOpen={isOpenOrder}
+                        title="Reorder modules"
+                        onClose={() => setOpenOrder(false)}
+                    >
+
+                    </Modal>
                 </div>
             }
+            <ModuleStatusComponent />
         </div>
     );
 }

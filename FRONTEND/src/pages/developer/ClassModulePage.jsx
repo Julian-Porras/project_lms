@@ -22,6 +22,8 @@ function DevClassModulePage() {
     const [errors, setErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
+    const [isOpenContent, setOpenContent] = useState(false);
+    const [isOpenEdit, setOpenEdit] = useState(false);
     const [message, setMessage] = useState("");
     const [toastShow, setToastShow] = useState(false);
     const [toastStatus, setToastStatus] = useState(200);
@@ -30,6 +32,14 @@ function DevClassModulePage() {
         module_name: "",
         is_visible: true,
     });
+    const [contentCredentials, setContentCredentials] = useState({
+        classroom_id: param,
+        module_id: "",
+        item_name: "",
+        item_type: "",
+        is_visible: true,
+    });
+
 
     if (user?.role_id === ROLES.DEVELOPER) {
         routes = devClassModuleRouter;
@@ -75,6 +85,10 @@ function DevClassModulePage() {
         setCredentials((prev) => ({ ...prev, [e.target.name]: e.target.value, }));
     };
 
+    const handleContentChange = (e) => {
+        setContentCredentials((prev) => ({ ...prev, [e.target.name]: e.target.value, }));
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         setErrors({});
@@ -116,6 +130,13 @@ function DevClassModulePage() {
             setToastShow={setToastShow}
             isSubmitting={isSubmitting}
             ModuleNavData={ModuleNavData}
+            isOpenContent={isOpenContent}
+            setOpenContent={setOpenContent}
+            contentCredentials={contentCredentials}
+            setContentCredentials={setContentCredentials}
+            handleContentChange={handleContentChange}
+            isOpenEdit={isOpenEdit}
+            setOpenEdit={setOpenEdit}
         />
     );
 }

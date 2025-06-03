@@ -54,3 +54,17 @@
   position: sticky;
   align-self: flex-start;
 }
+
+.moduleStatus{
+  @apply top-1 rounded-sm shadow-sm;
+  padding: 1rem;
+  padding-bottom: 3rem;
+  background-color: var(--card-bg);
+  border-radius: var(--border-radius);
+  width: 100%;
+  height: max-content;
+  min-height: 200px;
+  max-width: 20rem;
+  position: sticky;
+  align-self: flex-start;
+}

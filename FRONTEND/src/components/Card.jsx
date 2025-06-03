@@ -46,7 +46,7 @@ function ClassModuleCard({ children }) {
 
 function ModuleItemCard({ children }) {
     return (
-        <div className="flex flex-row items-center cursor-pointer gap-2 p-3 pl-8 hover:bg-gray-50 rounded-b-md" >
+        <div className="flex flex-row items-center justify-between gap-2 p-3 pl-8 hover:bg-blue-50 " >
             {children}
         </div>
     )
@@ -60,12 +60,20 @@ function ModuleNavCard({ children }) {
     )
 }
 
-function ButtonCard ({children}){
+function ModuleStatusCard({ children }) {
     return (
-        <div className=" bg-white p-2 rounded-md shadow-sm text-[var(--secondary-color)]">
+        <div className={styles.moduleStatus}>
             {children}
         </div>
     )
 }
 
-export { LoginCard, RegisterCard, ContainerCard, ClassCard, ClassModuleCard, ModuleItemCard, ModuleNavCard, ButtonCard };
+function ButtonCard({ children }) {
+    return (
+        <div className=" bg-white p-2 rounded-md shadow-sm text-gray-500 hover:bg-gray-100 cursor-pointer">
+            {children}
+        </div>
+    )
+}
+
+export { LoginCard, RegisterCard, ContainerCard, ClassCard, ClassModuleCard, ModuleItemCard, ModuleNavCard, ModuleStatusCard, ButtonCard };

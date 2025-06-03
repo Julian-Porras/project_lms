@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreign('course_id')->references('id')->on('tbl_course')->onDelete('cascade');
             $table->string('item_name');
             $table->string('item_type');
+            $table->boolean('is_visible')->default(0);
             $table->timestamps();
         });
     }

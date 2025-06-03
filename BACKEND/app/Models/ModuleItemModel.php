@@ -14,6 +14,7 @@ class ModuleItemModel extends Model
         'module_id',
         'item_name',
         'item_type',
+        'is_visible'
     ];
 
     public function user()
