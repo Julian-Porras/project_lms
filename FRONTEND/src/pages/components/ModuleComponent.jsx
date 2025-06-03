@@ -5,7 +5,15 @@ import { NotPublishedContentStatus, PublishedContentStatus, SettingsIcon } from 
 import styles from "../../styles/content.module.css";
 import { CONTENT } from "../../constants/content";
 
-export function ModuleComponent({ title, isVisible, setOpenContent, setOpenEdit, contentData }) {
+export function ModuleComponent({
+    title,
+    isVisible,
+    setOpenContent,
+    setOpenEdit,
+    contentData,
+    module_id,
+    setModuleId,
+}) {
     return (
         <ClassModuleCard >
             <div className="flex flex-row justify-between items-center p-4 rounded-t-md" >
@@ -21,7 +29,9 @@ export function ModuleComponent({ title, isVisible, setOpenContent, setOpenEdit,
             </div>
             <Divider />
             <ContentComponent contentData={contentData} />
-            <div className="flex flex-row items-center text-gray-600 justify-center cursor-pointer gap-2 p-3 hover:bg-blue-50 rounded-b-md" onClick={() => setOpenContent(true)}>
+            <div className="flex flex-row items-center text-gray-600 justify-center cursor-pointer gap-2 p-3 hover:bg-blue-50 rounded-b-md"
+                onClick={() => { setOpenContent(true); setModuleId(module_id);}}
+            >
                 <LuPlus size={18} /><p>ADD CONTENT</p>
             </div>
         </ClassModuleCard>

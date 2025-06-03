@@ -9,7 +9,7 @@ import { useAuth } from "../../context/authContext";
 import { ROLES } from "../../constants/role";
 
 function DevClassModulePage() {
-    const { createClassModuleApi, fetchClassApi } = useDeveloperApi();
+    const { createClassModuleApi, createModuleItemApi, fetchClassApi } = useDeveloperApi();
     const { user } = useAuth();
     const { class_id } = useParams();
     const queryClient = useQueryClient();
@@ -24,30 +24,30 @@ function DevClassModulePage() {
     const [isOpen, setIsOpen] = useState(false);
     const [isOpenContent, setOpenContent] = useState(false);
     const [isOpenEdit, setOpenEdit] = useState(false);
+    const [moduleId, setModuleId] = useState();
     const [message, setMessage] = useState("");
     const [toastShow, setToastShow] = useState(false);
     const [toastStatus, setToastStatus] = useState(200);
     const [credentials, setCredentials] = useState({
         classroom_id: param,
         module_name: "",
-        is_visible: true,
+        is_visible: "",
     });
     const [contentCredentials, setContentCredentials] = useState({
         classroom_id: param,
-        module_id: "",
+        module_id: null,
         item_name: "",
         item_type: "",
-        is_visible: true,
+        is_visible: "",
     });
-
 
     if (user?.role_id === ROLES.DEVELOPER) {
         routes = devClassModuleRouter;
     }
 
-    const ModuleNavData  = {
-        base: base, 
-        routes: routes, 
+    const ModuleNavData = {
+        base: base,
+        routes: routes,
         param: param,
     }
 
@@ -64,10 +64,31 @@ function DevClassModulePage() {
         mutationFn: createClassModuleApi,
         onSuccess: (res) => {
             queryClient.invalidateQueries({ queryKey: ["class-module"] });
-            setMessage(ToastMessage(res, "Module created successfully."));
+            setMessage(ToastMessage("Module created successfully."));
             setToastShow(true);
             setToastStatus(200);
             setIsOpen(false);
+        },
+        onError: (err) => {
+            if (err.response?.status >= 500) {
+                setMessage(ToastMessage(err));
+                setToastShow(true);
+                setToastStatus(err.response?.status || 500);
+            }
+            if (err.response?.data?.errors) {
+                setErrors(err.response.data.errors);
+            }
+        },
+    });
+
+    const createModuleContentMutation = useMutation({
+        mutationFn: createModuleItemApi,
+        onSuccess: (res) => {
+            queryClient.invalidateQueries({ queryKey: ["class-module"] });
+            setMessage(ToastMessage("Content created successfully."));
+            setToastShow(true);
+            setToastStatus(200);
+            setOpenContent(false);
         },
         onError: (err) => {
             if (err.response?.status >= 500) {
@@ -100,18 +121,45 @@ function DevClassModulePage() {
         });
     };
 
+    const handleContentSubmit = (e) => {
+        e.preventDefault();
+        setErrors({});
+        setIsSubmitting(true);
+        createModuleContentMutation.mutate(contentCredentials, {
+            onSettled: () => {
+                setIsSubmitting(false);
+            }
+        });
+    };
+
     useEffect(() => {
+        if (moduleId !== null) {
+            setContentCredentials(prev => ({
+                ...prev, module_id: moduleId
+            }));
+        }
+
         if (isOpen && param) {
-            setCredentials((prev) => ({
+            setCredentials(prev => ({
                 ...prev,
                 classroom_id: param,
                 module_name: "",
-                is_visible: true,
+                is_visible: "",
             }));
             setErrors({});
             createModuleMutation.reset();
         }
-    }, [isOpen, param]);
+
+        if (isOpenContent) {
+            setErrors({});
+            setContentCredentials(prev => ({
+                ...prev, 
+                item_name: "",
+                is_visible: "",
+            }));
+        }
+        
+    }, [moduleId, isOpen, isOpenContent, param]);
 
     return (
         <ClassModuleComponent
@@ -135,8 +183,11 @@ function DevClassModulePage() {
             contentCredentials={contentCredentials}
             setContentCredentials={setContentCredentials}
             handleContentChange={handleContentChange}
+            handleContentSubmit={handleContentSubmit}
             isOpenEdit={isOpenEdit}
             setOpenEdit={setOpenEdit}
+            setModuleId={setModuleId}
+            moduleId={moduleId}
         />
     );
 }

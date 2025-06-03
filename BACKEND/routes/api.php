@@ -56,9 +56,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
             Route::post('/d/edit-module/{module_id}', 'editModule');
             Route::post('/d/delete-module/{module_id}', 'deleteModule');
             Route::get('/d/module/{module_id}', 'fetchModuleItem');
-            Route::post('/d/create-item', 'createModuleItem');
-            Route::post('/d/edit-item/{item_id}', 'editModuleItem');
-            Route::post('/d/delete-item/{item_id}', 'deleteModuleItem');
+            Route::post('/d/module/create-item', 'createModuleItem');
+            Route::post('/d/module/edit-item/{item_id}', 'editModuleItem');
+            Route::post('/d/module/delete-item/{item_id}', 'deleteModuleItem');
         });
     });
 

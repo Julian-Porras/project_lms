@@ -1,13 +1,13 @@
 import { LuCircleCheckBig, LuCircleDashed, LuEllipsisVertical } from "react-icons/lu";
 import { FaCog } from "react-icons/fa";
 
-export function NotPublishedContentStatus() {
+export function PublishedContentStatus() {
     return (
         <LuCircleCheckBig size={16} className="text-green-500" />
     )
 }
 
-export function PublishedContentStatus() {
+export function NotPublishedContentStatus() {
     return (
         <LuCircleDashed size={16} className="text-gray-500" />
     )

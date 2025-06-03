@@ -27,6 +27,7 @@ class CreateModuleItemRequest extends FormRequest
             'module_id'     => 'required',
             'item_name'     => 'required',
             'item_type'     => 'required',
+            'is_visible'    => 'required',
         ];
     }
 }

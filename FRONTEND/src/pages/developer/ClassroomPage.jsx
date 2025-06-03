@@ -89,7 +89,6 @@ function DevClassroomPage() {
             }
         });
     };
-
     useEffect(() => {
         if (isOpen) {
             setCredentials({
@@ -101,13 +100,11 @@ function DevClassroomPage() {
             setErrors({});
             createClassMutation.reset();
         }
-    }, [isOpen]);
 
-    useEffect(() => {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-    }, [page]);
+        if (page !== undefined) {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
 
-    useEffect(() => {
         if (classData?.last_page) {
             setPageInfo({
                 totalPages: classData.last_page,
@@ -115,7 +112,8 @@ function DevClassroomPage() {
                 pageSize: classData.per_page,
             });
         }
-    }, [classData]);
+    }, [isOpen, page, classData]);
+
 
     return (
         <>
