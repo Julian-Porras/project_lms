@@ -70,21 +70,8 @@ export default function useDeveloperApi() {
         return response.data;
     };
     const editModuleApi = async (module_id, credentials) => {
-        setLoading(true);
-        setErrors({});
-        try {
-            const response = await AxiosAuth.post(`/api/d/edit-module/${module_id}`, credentials);
-            return response.data;
-        } catch (err) {
-            const status = err.response?.status;
-            setErrors(
-                status === 422 || status === 401
-                    ? err.response.data.errors
-                    : { general: "Something went wrong" }
-            );
-        } finally {
-            setLoading(false);
-        }
+        const response = await AxiosAuth.post(`/api/d/edit-module/${module_id}`, credentials);
+        return response.data;
     }
     const deleteModuleApi = async (module_id) => {
         setLoading(true);

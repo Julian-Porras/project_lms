@@ -76,8 +76,14 @@ function CourseComponent({
                 <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                     <div className="flex flex-col gap-2">
                         <label htmlFor="course_name">Course name:</label>
-                        <InputText type={"text"} name={"course_name"} value={credentials.course_name} onChange={handleChange} placeholder={"type course name"} />
-                        {errors?.course_name && <p className="text-sm text-red-500 mt-1">&nbsp;{errors.course_name}</p>}
+                        <InputText
+                            type={"text"}
+                            name={"course_name"}
+                            value={credentials.course_name}
+                            onChange={handleChange}
+                            placeholder={"type course name"}
+                            errors={errors?.course_name}
+                        />
                     </div>
                     <div className="flex flex-col gap-2 ">
                         <label htmlFor="status">Status:</label>
@@ -89,8 +95,8 @@ function CourseComponent({
                             name="status"
                             selected={credentials.status}
                             setSelected={(value) => setCredentials({ ...credentials, status: value })}
+                            errors={errors?.status}
                         />
-                        {errors?.status && <p className="text-sm text-red-500 mt-1">&nbsp;{errors?.status}</p>}
                     </div>
                     <div className="flex flex-row gap-4 items-center justify-end mt-10">
                         <ButtonCreate type="submit" isDisable={isSubmitting}

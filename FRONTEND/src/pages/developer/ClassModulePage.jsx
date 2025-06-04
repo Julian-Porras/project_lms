@@ -9,7 +9,7 @@ import { useAuth } from "../../context/authContext";
 import { ROLES } from "../../constants/role";
 
 function DevClassModulePage() {
-    const { createClassModuleApi, createModuleItemApi, fetchClassApi } = useDeveloperApi();
+    const { createClassModuleApi, editModuleApi, createModuleItemApi, fetchClassApi } = useDeveloperApi();
     const { user } = useAuth();
     const { class_id } = useParams();
     const queryClient = useQueryClient();
@@ -81,6 +81,27 @@ function DevClassModulePage() {
         },
     });
 
+    const editModuleMutation = useMutation({
+        mutationFn: ({ module_id, data }) => editModuleApi(module_id, data),
+        onSuccess: (res) => {
+            queryClient.invalidateQueries({ queryKey: ["class-module"] });
+            setMessage(ToastMessage("Update module successfully."));
+            setToastShow(true);
+            setToastStatus(200);
+            setOpenEdit(false);
+        },
+        onError: (err) => {
+            if (err.response?.status >= 500) {
+                setMessage(ToastMessage(err));
+                setToastShow(true);
+                setToastStatus(err.response?.status || 500);
+            }
+            if (err.response?.data?.errors) {
+                setErrors(err.response.data.errors);
+            }
+        },
+    });
+
     const createModuleContentMutation = useMutation({
         mutationFn: createModuleItemApi,
         onSuccess: (res) => {
@@ -121,6 +142,20 @@ function DevClassModulePage() {
         });
     };
 
+    const handleEditSubmit = (e) => {
+        e.preventDefault();
+        setErrors({});
+        setIsSubmitting(true);
+        editModuleMutation.mutate(
+            { module_id: moduleId, data: credentials },
+            {
+                onSettled: () => {
+                    setIsSubmitting(false);
+                },
+            }
+        );
+    };
+
     const handleContentSubmit = (e) => {
         e.preventDefault();
         setErrors({});
@@ -147,19 +182,28 @@ function DevClassModulePage() {
                 is_visible: "",
             }));
             setErrors({});
+            // createModuleMutation.reset();
+        }
+
+        if (isOpenEdit && param) {
+            setCredentials(prev => ({
+                ...prev,
+                classroom_id: param,
+            }));
+            setErrors({});
             createModuleMutation.reset();
         }
 
         if (isOpenContent) {
             setErrors({});
             setContentCredentials(prev => ({
-                ...prev, 
+                ...prev,
                 item_name: "",
                 is_visible: "",
             }));
         }
-        
-    }, [moduleId, isOpen, isOpenContent, param]);
+
+    }, [moduleId, isOpen, isOpenContent, isOpenEdit, param]);
 
     return (
         <ClassModuleComponent
@@ -187,7 +231,7 @@ function DevClassModulePage() {
             isOpenEdit={isOpenEdit}
             setOpenEdit={setOpenEdit}
             setModuleId={setModuleId}
-            moduleId={moduleId}
+            handleEditSubmit={handleEditSubmit}
         />
     );
 }

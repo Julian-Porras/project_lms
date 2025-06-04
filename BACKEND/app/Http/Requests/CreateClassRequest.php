@@ -32,7 +32,7 @@ class CreateClassRequest extends FormRequest
     {
         return [
             'classroom_code.unique' => 'The classroom code is invalid, try another one.',
-            'course_id.required' => 'The course/subject field is required.',
+            'course_id.required'    => 'The course/subject field is required.',
         ];
     }
 }

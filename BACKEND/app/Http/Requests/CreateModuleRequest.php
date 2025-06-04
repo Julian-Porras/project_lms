@@ -29,4 +29,12 @@ class CreateModuleRequest extends FormRequest
             'is_visible'    => 'required|boolean',
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'module_name.required'  => 'The Module name field is required.',
+            'is_visible.required'   => 'The Module visibility field is required.',
+        ];
+    }
 }

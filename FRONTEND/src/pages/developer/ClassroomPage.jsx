@@ -21,16 +21,16 @@ function DevClassroomPage() {
         totalRecords: 0,
         pageSize: 0,
     });
-    const page = parseInt(searchParams.get("page")) || 1;
-    const handlePageChange = (newPage) => {
-        setSearchParams({ page: newPage });
-    };
     const [credentials, setCredentials] = useState({
         course_id: "",
         classroom_name: "",
         classroom_code: "",
         status: "active",
     });
+    const page = parseInt(searchParams.get("page")) || 1;
+    const handlePageChange = (newPage) => {
+        setSearchParams({ page: newPage });
+    };
 
     const { data: classData, isLoading: isClassesLoading, error: isClassError } = useQuery({
         queryKey: ["classes", page, limit],
@@ -89,6 +89,7 @@ function DevClassroomPage() {
             }
         });
     };
+
     useEffect(() => {
         if (isOpen) {
             setCredentials({
@@ -113,7 +114,6 @@ function DevClassroomPage() {
             });
         }
     }, [isOpen, page, classData]);
-
 
     return (
         <>

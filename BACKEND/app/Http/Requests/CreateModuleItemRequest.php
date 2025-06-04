@@ -30,4 +30,13 @@ class CreateModuleItemRequest extends FormRequest
             'is_visible'    => 'required',
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'item_name.required'    => 'The Content name field is required.',
+            'item_type.required'    => 'The Content type field is required.',
+            'is_visible.required'   => 'The Content visibility field is required.',
+        ];
+    }
 }

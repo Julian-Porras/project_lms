@@ -1,17 +1,33 @@
 import styles from "../styles/input.module.css";
 import TextField from '@mui/material/TextField';
 
-function InputText({ type, name, value, onChange, placeholder }) {
+export const handleKeyUp = (e) => {
+  e.target.value = e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1);
+};
+
+function InputText({
+  type,
+  name,
+  value,
+  onChange,
+  placeholder,
+  caps = false,
+  errors
+}) {
   return (
-    <input
-      onKeyUp={value = value.charAt(0).toUpperCase() + value.slice(1).toLowerCase()}
-      className={styles.textInput}
-      type={type}
-      name={name}
-      value={value}
-      onChange={onChange}
-      placeholder={placeholder}
-    />
+    <div className="flex flex-col gap-2">
+      <input
+        className={styles.textInput}
+        type={type}
+        name={name}
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+        onKeyUp={caps ? handleKeyUp : null}
+        autoComplete="off"
+      />
+      {errors && <p className="text-sm text-red-500 mt-1">&nbsp;{errors}</p>}
+    </div>
   );
 }
 

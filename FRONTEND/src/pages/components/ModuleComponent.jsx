@@ -13,6 +13,7 @@ export function ModuleComponent({
     contentData,
     module_id,
     setModuleId,
+    setCredentials,
 }) {
     return (
         <ClassModuleCard >
@@ -22,7 +23,16 @@ export function ModuleComponent({
                 </div>
                 <div className="flex flex-row items-center gap-4 ">
                     {isVisible ? <LuEye size={19} color="var(--gray-color)" /> : <LuEyeOff size={19} color="var(--gray-color)" />}
-                    <div className="flex flex-row items-center justify-center gap-1 border-green-400 border-1 text-green-500 rounded-sm px-2 py-1 hover:bg-blue-50 cursor-pointer" onClick={() => setOpenEdit(true)} >
+                    <div className="flex flex-row items-center justify-center gap-1 border-green-400 border-1 text-green-500 rounded-sm px-2 py-1 hover:bg-blue-50 cursor-pointer"
+                        onClick={() => {
+                            setOpenEdit(true);
+                            setModuleId(module_id);
+                            setCredentials(prev => ({
+                                ...prev,
+                                module_name: title,
+                                is_visible: isVisible ? true : false,
+                            }));
+                        }}>
                         <LuSquarePen /><p>EDIT</p>
                     </div>
                 </div>
@@ -30,7 +40,7 @@ export function ModuleComponent({
             <Divider />
             <ContentComponent contentData={contentData} />
             <div className="flex flex-row items-center text-gray-600 justify-center cursor-pointer gap-2 p-3 hover:bg-blue-50 rounded-b-md"
-                onClick={() => { setOpenContent(true); setModuleId(module_id);}}
+                onClick={() => { setOpenContent(true); setModuleId(module_id); }}
             >
                 <LuPlus size={18} /><p>ADD CONTENT</p>
             </div>

@@ -41,6 +41,7 @@ function ClassModuleComponent({
     handleContentChange,
     handleContentSubmit,
     setModuleId,
+    handleEditSubmit,
 }) {
     return (
         <div className="flex flex-row ">
@@ -77,6 +78,7 @@ function ClassModuleComponent({
                                         contentData={module.module_items}
                                         module_id={module.id}
                                         setModuleId={setModuleId}
+                                        setCredentials={setCredentials}
                                     />
                                     {index !== classData.modules.length - 1 && <DividerDashed />}
                                 </>
@@ -98,8 +100,15 @@ function ClassModuleComponent({
                 <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                     <div className="flex flex-col gap-2">
                         <label htmlFor="module_name">Module name:</label>
-                        <InputText type={"text"} name={"module_name"} value={credentials.module_name} onChange={handleChange} placeholder={"Type module name"} />
-                        {errors?.module_name && <p className="text-sm text-red-500 mt-1">&nbsp;{errors.module_name}</p>}
+                        <InputText
+                            type={"text"}
+                            name={"module_name"}
+                            caps
+                            value={credentials.module_name}
+                            onChange={handleChange}
+                            placeholder={"Type module name"}
+                            errors={errors?.module_name}
+                        />
                     </div>
                     <div className="flex flex-col gap-2">
                         <label htmlFor="is_visible">Visibility:</label>
@@ -112,12 +121,8 @@ function ClassModuleComponent({
                             selected={credentials.is_visible}
                             setSelected={(e) => setCredentials({ ...credentials, is_visible: e })}
                             placeholder="Select visibility"
+                            errors={errors?.is_visible}
                         />
-                        {errors?.is_visible && (
-                            <p className="text-sm text-red-500 mt-1">
-                                &nbsp;{errors?.is_visible}
-                            </p>
-                        )}
                     </div>
                     <div className="flex flex-row gap-4 items-center justify-end mt-10">
                         <ButtonCreate type="submit" isDisable={isSubmitting}
@@ -132,13 +137,8 @@ function ClassModuleComponent({
                 onClose={() => setOpenContent(false)}
             >
                 <form onSubmit={handleContentSubmit} className="flex flex-col gap-5">
-                    <div className="flex flex-col gap-2">
-                        <label htmlFor="item_name">Content name:</label>
-                        <InputText type={"text"} name={"item_name"} value={contentCredentials.item_name} onChange={handleContentChange} placeholder={"Type module name"} />
-                        {errors?.item_name && <p className="text-sm text-red-500 mt-1">&nbsp;{errors.item_name}</p>}
-                    </div>
                     <div className="flex flex-col items-start gap-2">
-                        <label htmlFor="is_visible">Type:</label>
+                        <label htmlFor="item_type">Type:</label>
                         <SelectOptions
                             options={
                                 Object.entries(CONTENT).map(([key, value]) => ({
@@ -148,17 +148,25 @@ function ClassModuleComponent({
                             }
                             getOptionLabel={(option => option.name)}
                             getOptionValue={(option => option.id)}
-                            name="is_visible"
-                            id="is_visible"
+                            name="item_type"
+                            id="item_type"
                             selected={contentCredentials.item_type}
                             setSelected={(e) => setContentCredentials({ ...contentCredentials, item_type: e })}
                             placeholder="Select content type"
+                            errors={errors?.item_type}
                         />
-                        {errors?.is_visible && (
-                            <p className="text-sm text-red-500 mt-1">
-                                &nbsp;{errors?.is_visible}
-                            </p>
-                        )}
+                    </div>
+                    <div className="flex flex-col gap-2">
+                        <label htmlFor="item_name">Content name:</label>
+                        <InputText
+                            type={"text"}
+                            name={"item_name"}
+                            caps
+                            value={contentCredentials.item_name}
+                            onChange={handleContentChange}
+                            placeholder={"Type module name"}
+                            errors={errors?.item_name}
+                        />
                     </div>
                     <div className="flex flex-col items-start gap-2">
                         <label htmlFor="is_visible">Visibility:</label>
@@ -171,12 +179,8 @@ function ClassModuleComponent({
                             selected={contentCredentials.is_visible}
                             setSelected={(e) => setContentCredentials({ ...contentCredentials, is_visible: e })}
                             placeholder="Select visibility"
+                            errors={errors?.is_visible}
                         />
-                        {errors?.is_visible && (
-                            <p className="text-sm text-red-500 mt-1">
-                                &nbsp;{errors?.is_visible}
-                            </p>
-                        )}
                     </div>
                     <div className="flex flex-row gap-4 items-center justify-end mt-10">
                         <ButtonCreate type="submit" isDisable={isSubmitting}
@@ -191,7 +195,39 @@ function ClassModuleComponent({
                 title="Edit Module"
                 onClose={() => setOpenEdit(false)}
             >
-
+                <form onSubmit={handleEditSubmit} className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-2">
+                        <label htmlFor="module_name">Module name:</label>
+                        <InputText
+                            type={"text"}
+                            name={"module_name"}
+                            caps
+                            value={credentials.module_name}
+                            onChange={handleChange}
+                            placeholder={"Type module name"}
+                            errors={errors?.module_name}
+                        />
+                    </div>
+                    <div className="flex flex-col gap-2">
+                        <label htmlFor="is_visible">Visibility:</label>
+                        <SelectOptions
+                            options={[{ id: true, name: "Visible" }, { id: false, name: "Hidden" }]}
+                            getOptionLabel={(option => option.name)}
+                            getOptionValue={(option => option.id)}
+                            name="is_visible"
+                            id="is_visible"
+                            selected={credentials.is_visible}
+                            setSelected={(e) => setCredentials({ ...credentials, is_visible: e })}
+                            placeholder="Select visibility"
+                            errors={errors?.is_visible}
+                        />
+                    </div>
+                    <div className="flex flex-row gap-4 items-center justify-end mt-10">
+                        <ButtonCreate type="submit" isDisable={isSubmitting}
+                            title={isSubmitting ? "Saving..." : "Save"} />
+                        <ButtonCancel type="button" method={() => setOpenEdit(false)} />
+                    </div>
+                </form>
             </Modal>
             <Modal
                 isOpen={isOpenOrder}

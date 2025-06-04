@@ -78,13 +78,25 @@ function ClassroomComponent({
                 <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                     <div className="flex flex-col gap-2">
                         <label htmlFor="classroom_name">Classroom name:</label>
-                        <InputText type={"text"} name={"classroom_name"} value={credentials.classroom_name} onChange={handleChange} placeholder={"type class name"} />
-                        {errors?.classroom_name && <p className="text-sm text-red-500 mt-1">&nbsp;{errors.classroom_name}</p>}
+                        <InputText
+                            type={"text"}
+                            name={"classroom_name"}
+                            value={credentials.classroom_name}
+                            onChange={handleChange}
+                            placeholder={"type class name"}
+                            errors={errors?.classroom_name}
+                        />
                     </div>
                     <div className="flex flex-col gap-2 ">
                         <label htmlFor="classroom_code">Classroom code:</label>
-                        <InputText type={"text"} name={"classroom_code"} value={credentials.classroom_code} onChange={handleChange} placeholder={"type class code"} />
-                        {errors?.classroom_code && <p className="text-sm text-red-500 mt-1">&nbsp;{errors.classroom_code}</p>}
+                        <InputText
+                            type={"text"}
+                            name={"classroom_code"}
+                            value={credentials.classroom_code}
+                            onChange={handleChange}
+                            placeholder={"type class code"}
+                            errors={errors?.classroom_code}
+                        />
                     </div>
                     <div className="flex flex-col gap-2">
                         <label htmlFor="course_id">Select course/subject:</label>
@@ -98,12 +110,8 @@ function ClassroomComponent({
                             setSelected={(e) => setCredentials({ ...credentials, course_id: e })}
                             placeholder="Select course"
                             isLoading={isCourseLoading}
+                            errors={errors?.course_id}
                         />
-                        {errors?.course_id && (
-                            <p className="text-sm text-red-500 mt-1">
-                                &nbsp;{errors?.course_id}
-                            </p>
-                        )}
                     </div>
                     <div className="flex flex-row gap-4 items-center justify-end mt-10">
                         <ButtonCreate type="submit" isDisable={isSubmitting}

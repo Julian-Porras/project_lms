@@ -70,7 +70,7 @@ function ModuleStatusCard({ children }) {
 
 function ButtonCard({ children }) {
     return (
-        <div className=" bg-white p-2 rounded-md shadow-sm text-gray-500 hover:bg-gray-100 cursor-pointer">
+        <div className=" bg-white p-2 rounded-sm shadow-sm text-gray-500 hover:bg-gray-100 cursor-pointer">
             {children}
         </div>
     )
