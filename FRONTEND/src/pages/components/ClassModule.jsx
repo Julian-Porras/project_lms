@@ -13,6 +13,7 @@ import { ModuleComponent } from "./ModuleComponent";
 import { LuListStart } from "react-icons/lu";
 import { SwitchComponent } from "../../components/Switch";
 import { CONTENT } from "../../constants/content";
+import { Fragment } from "react";
 
 function ClassModuleComponent({
     errors,
@@ -42,6 +43,8 @@ function ClassModuleComponent({
     handleContentSubmit,
     setModuleId,
     handleEditSubmit,
+    groupView,
+    handleViewChange,
 }) {
     return (
         <div className="flex flex-row ">
@@ -60,7 +63,11 @@ function ClassModuleComponent({
                     </div>
                     <DividerThin />
                     <div className="flex flex-row items-center justify-end gap-4">
-                        <SwitchComponent label={"Grouped View"} />
+                        <SwitchComponent
+                            checked={groupView? true : false}
+                            onChange={handleViewChange}
+                            label={"Grouped View"}
+                        />
                         <ButtonCard>
                             <LuListStart size={20} />
                         </ButtonCard>
@@ -68,9 +75,8 @@ function ClassModuleComponent({
                     <div className="flex flex-col gap-2 py-3">
                         {classData?.modules?.length > 0 ? (
                             classData?.modules?.map((module, index) => (
-                                <>
+                                <Fragment key={module.id}>
                                     <ModuleComponent
-                                        key={module.id}
                                         isVisible={module.is_visible}
                                         title={module.module_name}
                                         setOpenContent={setOpenContent}
@@ -79,9 +85,10 @@ function ClassModuleComponent({
                                         module_id={module.id}
                                         setModuleId={setModuleId}
                                         setCredentials={setCredentials}
+                                        groupView={groupView}
                                     />
                                     {index !== classData.modules.length - 1 && <DividerDashed />}
-                                </>
+                                </Fragment>
                             ))
                         ) : (
                             <div className="flex flex-row items-center justify-center w-full h-full">

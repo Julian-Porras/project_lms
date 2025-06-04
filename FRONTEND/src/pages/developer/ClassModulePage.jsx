@@ -24,6 +24,7 @@ function DevClassModulePage() {
     const [isOpen, setIsOpen] = useState(false);
     const [isOpenContent, setOpenContent] = useState(false);
     const [isOpenEdit, setOpenEdit] = useState(false);
+    const [groupView, setGroupView] = useState(false);
     const [moduleId, setModuleId] = useState();
     const [message, setMessage] = useState("");
     const [toastShow, setToastShow] = useState(false);
@@ -40,6 +41,7 @@ function DevClassModulePage() {
         item_type: "",
         is_visible: "",
     });
+console.log(groupView);
 
     if (user?.role_id === ROLES.DEVELOPER) {
         routes = devClassModuleRouter;
@@ -125,6 +127,10 @@ function DevClassModulePage() {
 
     const handleChange = (e) => {
         setCredentials((prev) => ({ ...prev, [e.target.name]: e.target.value, }));
+    };
+
+    const handleViewChange = () => {
+        setGroupView((prev) => (!prev));
     };
 
     const handleContentChange = (e) => {
@@ -232,6 +238,8 @@ function DevClassModulePage() {
             setOpenEdit={setOpenEdit}
             setModuleId={setModuleId}
             handleEditSubmit={handleEditSubmit}
+            groupView={groupView}
+            handleViewChange={handleViewChange}
         />
     );
 }

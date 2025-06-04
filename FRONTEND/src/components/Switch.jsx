@@ -15,12 +15,12 @@ function ToggleTheme({ toggleTheme, label }) {
   );
 }
 
-function SwitchComponent({ handleChange, checked, name, label }) {
+function SwitchComponent({ onChange, checked, name, label }) {
   return (
     <FormControlLabel
       label={label}
       control={
-        <Switch name={name} checked={checked} onChange={handleChange} size="medium" />
+        <Switch name={name} checked={checked} onChange={onChange} size="medium" />
       }
       labelPlacement="start"
     />

@@ -4,6 +4,10 @@
     @apply flex flex-row items-center gap-4 ;
 }
 
+.contentItemWrapperGroup {
+    @apply flex flex-row items-center gap-4 pl-2;
+}
+
 .moduleTitle{
-    
+    font-weight: 600;
 }

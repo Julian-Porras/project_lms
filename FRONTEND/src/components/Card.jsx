@@ -46,7 +46,14 @@ function ClassModuleCard({ children }) {
 
 function ModuleItemCard({ children }) {
     return (
-        <div className="flex flex-row items-center justify-between gap-2 p-3 pl-8 hover:bg-blue-50 " >
+        <NavLink className="flex flex-row items-center justify-between gap-2 p-3 pl-6 hover:bg-blue-50 " >
+            {children}
+        </NavLink>
+    )
+}
+function ModuleHeaderItemCard({ children }) {
+    return (
+        <div className="flex flex-row items-center border-l-3 border-l-[var(--secondary-color)] border-b border-b-gray-200 justify-start text-[var(--secondary-color)] gap-4 p-3 pl-6 bg-gray-100 " >
             {children}
         </div>
     )
@@ -76,4 +83,4 @@ function ButtonCard({ children }) {
     )
 }
 
-export { LoginCard, RegisterCard, ContainerCard, ClassCard, ClassModuleCard, ModuleItemCard, ModuleNavCard, ModuleStatusCard, ButtonCard };
+export { LoginCard, RegisterCard, ContainerCard, ClassCard, ClassModuleCard, ModuleHeaderItemCard, ModuleItemCard, ModuleNavCard, ModuleStatusCard, ButtonCard };
