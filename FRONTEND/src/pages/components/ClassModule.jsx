@@ -68,7 +68,7 @@ function ClassModuleComponent({
                             onChange={handleViewChange}
                             label={"Grouped View"}
                         />
-                        <ButtonCard>
+                        <ButtonCard method={() => setOpenOrder(true)}>
                             <LuListStart size={20} />
                         </ButtonCard>
                     </div>
@@ -241,7 +241,7 @@ function ClassModuleComponent({
                 title="Reorder modules"
                 onClose={() => setOpenOrder(false)}
             >
-
+                
             </Modal>
         </div>
     );

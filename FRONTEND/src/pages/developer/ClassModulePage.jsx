@@ -24,6 +24,7 @@ function DevClassModulePage() {
     const [isOpen, setIsOpen] = useState(false);
     const [isOpenContent, setOpenContent] = useState(false);
     const [isOpenEdit, setOpenEdit] = useState(false);
+    const [isOpenOrder, setOpenOrder] = useState(false);
     const [groupView, setGroupView] = useState(false);
     const [moduleId, setModuleId] = useState();
     const [message, setMessage] = useState("");
@@ -234,6 +235,8 @@ console.log(groupView);
             setContentCredentials={setContentCredentials}
             handleContentChange={handleContentChange}
             handleContentSubmit={handleContentSubmit}
+            isOpenOrder={isOpenOrder}
+            setOpenOrder={setOpenOrder}
             isOpenEdit={isOpenEdit}
             setOpenEdit={setOpenEdit}
             setModuleId={setModuleId}

@@ -75,9 +75,9 @@ function ModuleStatusCard({ children }) {
     )
 }
 
-function ButtonCard({ children }) {
+function ButtonCard({ method, children }) {
     return (
-        <div className=" bg-white p-2 rounded-sm shadow-sm text-gray-500 hover:bg-gray-100 cursor-pointer">
+        <div onClick={method} className=" bg-white p-2 rounded-sm shadow-sm text-gray-500 hover:bg-gray-100 cursor-pointer">
             {children}
         </div>
     )
