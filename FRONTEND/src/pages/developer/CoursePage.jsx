@@ -7,7 +7,7 @@ import ToastMessage from "../../util/toast-message";
 
 function DevCoursePage() {
     const queryClient = useQueryClient();
-    const { fetchCoursesApi, createCourseApi } = useDeveloperApi();
+    const { fetchCourses, createCourse } = useDeveloperApi();
     const [errors, setErrors] = useState({});
     const [isOpen, setIsOpen] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -30,19 +30,18 @@ function DevCoursePage() {
         status: "",
     });
 
-    const { data: coursesData, isLoading: isCoursesLoading, error: isClassError } = useQuery({
+    const { data: coursesData, isLoading: isCoursesLoading, error: isCourseError } = useQuery({
         queryKey: ["courses", page, limit],
         queryFn: ({ signal, queryKey }) => {
             const [, page, limit] = queryKey;
-            return fetchCoursesApi({ page, limit, signal });
+            return fetchCourses({ page, limit, signal });
         },
         keepPreviousData: true,
-        // staleTime: 300000, // 5 mins
         refetchOnWindowFocus: false,
     });
 
     const createCourseMutation = useMutation({
-        mutationFn: createCourseApi,
+        mutationFn: createCourse,
         onSuccess: (res) => {
             queryClient.invalidateQueries({ queryKey: ["courses"] });
             setMessage(ToastMessage(res, "Module created successfully."));

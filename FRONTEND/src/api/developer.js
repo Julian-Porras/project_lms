@@ -1,120 +1,98 @@
-import useAxios from '../hooks/useAxios';
-import { useState } from 'react';
+import ClassroomService from '../services/ClassroomService';
+import CourseService from '../services/CourseService';
+import ModuleContentService from '../services/ModuleContentService';
+import ModuleService from '../services/ModuleService';
 
 export default function useDeveloperApi() {
-    const { AxiosAuth } = useAxios();
-    const [errors, setErrors] = useState({});
-    const [loading, setLoading] = useState(false);
+    const { fetchCoursesApi, fetchCourseApi, fetchCoursesByStatusApi, createCourseApi, editCourseApi } = CourseService();
+    const { fetchClassesApi, fetchClassApi, createClassApi, editClassApi } = ClassroomService();
+    const { createClassModuleApi, editModuleApi, deleteModuleApi } = ModuleService();
+    const { fetchModuleItemApi, createModuleItemApi, editModuleItemApi, deleteModuleItemApi } = ModuleContentService();
 
-    const fetchCoursesApi = async ({ page, limit, signal }) => {
-        const response = await AxiosAuth.get(`/api/d/course?page=${page}&limit=${limit}`, {
-            signal,
-        });
-        return response.data;
+    // ****************** course api ******************
+    const fetchCourses = async ({ page, limit, signal }) => {
+        return await fetchCoursesApi({ page, limit, signal });
     };
 
-    const fetchCoursesByStatusApi = async ({ signal }) => {
-        const response = await AxiosAuth.get(`/api/d/course/status`, {
-            signal,
-        });
-        return response.data;
+    const fetchCoursesByStatus = async ({ signal }) => {
+        return await fetchCoursesByStatusApi({ signal });
     };
 
-    const fetchCourseApi = async (course_id) => {
-        const response = await AxiosAuth.get(`/api/d/course/${course_id}`, {
-            signal,
-        });
-        return response.data;
+    const fetchCourse = async ({ course_id, signal }) => {
+        return await fetchCourseApi({ course_id, signal })
     };
 
-    const createCourseApi = async (credentials) => {
-        const response = await AxiosAuth.post("/api/d/create-course", credentials);
-        return response.data;
+    const createCourse = async (credentials) => {
+        return await createCourseApi(credentials);
+    }
+
+    const editCourse = async ({ course_id, credentials }) => {
+        return await editCourseApi({ course_id, credentials });
     }
 
     // ****************** class api ******************
-    const fetchClassesApi = async ({ page, limit, signal }) => {
-        const response = await AxiosAuth.get(`/api/d/class?page=${page}&limit=${limit}`, {
-            signal,
-        });
-        return response.data;
+    const fetchClasses = async ({ page, limit, signal }) => {
+        return await fetchClassesApi({ page, limit, signal });
     };
 
-    const fetchClassApi = async (class_id, signal) => {
-        const response = await AxiosAuth.get(`/api/d/class/${class_id}`, {
-            signal,
-        });
-        return response.data;
+    const fetchClass = async ({ class_id, signal }) => {
+        return await fetchClassApi({ class_id, signal });
     };
 
-    const createClassApi = async (credentials) => {
-        const response = await AxiosAuth.post(`/api/d/create-class`, credentials);
-        return response.data;
+    const createClass = async (credentials) => {
+        return await createClassApi(credentials);
     };
+
+    const editClass = async ({ class_id, credentials }) => {
+        return await editClassApi({ class_id, credentials });
+    }
 
     // ****************** module api ******************
+    const createClassModule = async (credentials) => {
+        return await createClassModuleApi(credentials);
+    };
 
-    const createClassModuleApi = async (credentials) => {
-        const response = await AxiosAuth.post(`/api/d/create-module`, credentials);
-        return response.data;
+    const editModule = async ({ module_id, credentials }) => {
+        return await editModuleApi({ module_id, credentials });
     };
-    const editModuleApi = async (module_id, credentials) => {
-        const response = await AxiosAuth.post(`/api/d/edit-module/${module_id}`, credentials);
-        return response.data;
-    }
-    const deleteModuleApi = async (module_id) => {
-        setLoading(true);
-        setErrors({});
-        try {
-            const response = await AxiosAuth.post(`/api/d/delete-module/${module_id}`);
-            return response.data;
-        } catch (err) {
-            const status = err.response?.status;
-            setErrors(
-                status === 422 || status === 401
-                    ? err.response.data.errors
-                    : { general: "Something went wrong" }
-            );
-        } finally {
-            setLoading(false);
-        }
-    }
-    const fetchModuleItemApi = async (item_id) => {
-        const response = await AxiosAuth.get(`/api/d/module/${item_id}`);
-        return response.data;
-    };
-    const createModuleItemApi = async (credentials) => {
-        const response = await AxiosAuth.post(`/api/d/module/create-item`, credentials);
-        return response.data;
-    };
-    const editModuleItemApi = async (item_id, credentials) => {
-        const response = await AxiosAuth.post(`/api/d/module/edit-item/${item_id}`, credentials);
-        return response.data;
-    }
-    const deleteModuleItemApi = async (item_id) => {
-        const response = await AxiosAuth.post(`/api/d/module/delete-item/${item_id}`);
-        return response.data;
-    }
 
-    // ****************** student api ******************
+    const deleteModule = async ({ module_id }) => {
+        return await deleteModuleApi({ module_id });
+    };
+
+    // ****************** module content/item api ******************
+    const fetchModuleItem = async ({ item_id }) => {
+        return await fetchModuleItemApi({ item_id });
+    };
+
+    const createModuleItem = async (credentials) => {
+        return await createModuleItemApi(credentials);
+    };
+
+    const editModuleItem = async ({ item_id, credentials }) => {
+        return await editModuleItemApi({ item_id, credentials });
+    };
+
+    const deleteModuleItem = async ({ item_id }) => {
+        return await deleteModuleItemApi({ item_id });
+    };
+
     return {
-        errors,
-        loading,
-        setErrors,
-        setLoading,
-        createCourseApi,
-        fetchCourseApi,
-        fetchCoursesByStatusApi,
-        fetchCoursesApi,
-        fetchClassesApi,
-        fetchClassApi,
-        createClassApi,
-        createClassModuleApi,
-        editModuleApi,
-        deleteModuleApi,
-        fetchModuleItemApi,
-        createModuleItemApi,
-        editModuleItemApi,
-        deleteModuleItemApi,
+        fetchCourses,
+        fetchCoursesByStatus,
+        fetchCourse,
+        createCourse,
+        editCourse,
+        fetchClasses,
+        fetchClass,
+        createClass,
+        editClass,
+        createClassModule,
+        editModule,
+        deleteModule,
+        fetchModuleItem,
+        createModuleItem,
+        editModuleItem,
+        deleteModuleItem
     };
 }

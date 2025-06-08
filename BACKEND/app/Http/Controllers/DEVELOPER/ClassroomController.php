@@ -40,9 +40,4 @@ class ClassroomController extends Controller
         return response()->json(['message' => 'Classroom updated successfully'], 200);
     }
 
-    public function editStatusClass($class_id, UpdateClassRequest $request)
-    {
-        $this->classroomService->updateClassroom($class_id, $request->validated());
-        return response()->json(['message' => 'Classroom updated successfully'], 200);
-    }
 }

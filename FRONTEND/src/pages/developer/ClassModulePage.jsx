@@ -9,7 +9,7 @@ import { useAuth } from "../../context/authContext";
 import { ROLES } from "../../constants/role";
 
 function DevClassModulePage() {
-    const { createClassModuleApi, editModuleApi, createModuleItemApi, fetchClassApi } = useDeveloperApi();
+    const { createClassModule, editModule, createModuleItem, fetchClass } = useDeveloperApi();
     const { user } = useAuth();
     const { class_id } = useParams();
     const queryClient = useQueryClient();
@@ -56,14 +56,14 @@ function DevClassModulePage() {
     const { data: classData, isLoading: isClassLoading, error: isClassError } = useQuery({
         queryKey: ["class-module", class_id],
         queryFn: ({ signal, queryKey }) => {
-            return fetchClassApi(class_id, signal);
+            return fetchClass({ class_id, signal });
         },
         keepPreviousData: true,
         refetchOnWindowFocus: false,
     });
 
     const createModuleMutation = useMutation({
-        mutationFn: createClassModuleApi,
+        mutationFn: createClassModule,
         onSuccess: (res) => {
             queryClient.invalidateQueries({ queryKey: ["class-module"] });
             setMessage(ToastMessage("Module created successfully."));
@@ -84,7 +84,7 @@ function DevClassModulePage() {
     });
 
     const editModuleMutation = useMutation({
-        mutationFn: ({ module_id, data }) => editModuleApi(module_id, data),
+        mutationFn: ({ module_id, data }) => editModule({ module_id, data }),
         onSuccess: (res) => {
             queryClient.invalidateQueries({ queryKey: ["class-module"] });
             setMessage(ToastMessage("Update module successfully."));
@@ -105,7 +105,7 @@ function DevClassModulePage() {
     });
 
     const createModuleContentMutation = useMutation({
-        mutationFn: createModuleItemApi,
+        mutationFn: createModuleItem,
         onSuccess: (res) => {
             queryClient.invalidateQueries({ queryKey: ["class-module"] });
             setMessage(ToastMessage("Content created successfully."));

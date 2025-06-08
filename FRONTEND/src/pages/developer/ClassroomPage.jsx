@@ -7,7 +7,7 @@ import ToastMessage from "../../util/toast-message";
 
 function DevClassroomPage() {
     const queryClient = useQueryClient();
-    const { fetchClassesApi, fetchCoursesByStatusApi, createClassApi } = useDeveloperApi();
+    const { fetchClasses, fetchCoursesByStatus, createClass } = useDeveloperApi();
     const [errors, setErrors] = useState({});
     const [isOpen, setIsOpen] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -36,7 +36,7 @@ function DevClassroomPage() {
         queryKey: ["classes", page, limit],
         queryFn: ({ signal, queryKey }) => {
             const [, page, limit] = queryKey;
-            return fetchClassesApi({ page, limit, signal });
+            return fetchClasses({ page, limit, signal });
         },
         keepPreviousData: true,
         // staleTime: 300000, // 5 mins
@@ -44,9 +44,9 @@ function DevClassroomPage() {
     });
 
     const { data: courseData, isLoading: isCoursesLoading, error: isCourseError } = useQuery({
-        queryKey: ["status", page, limit],
+        queryKey: ["status"],
         queryFn: ({ signal, queryKey }) => {
-            return fetchCoursesByStatusApi({ signal });
+            return fetchCoursesByStatus({ signal });
         },
         keepPreviousData: true,
         // staleTime: 300000, // 5 mins
@@ -55,7 +55,7 @@ function DevClassroomPage() {
     });
 
     const createClassMutation = useMutation({
-        mutationFn: createClassApi,
+        mutationFn: createClass,
         onSuccess: (res) => {
             queryClient.invalidateQueries({ queryKey: ["classes"] });
             setMessage(ToastMessage(res, "Class created successfully."));

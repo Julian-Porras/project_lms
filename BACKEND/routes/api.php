@@ -49,7 +49,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
             Route::get('/d/class/{class_id}', 'fetchClass');
             Route::post('/d/create-class', 'createClass');
             Route::post('/d/edit-class/{class_id}', 'editClass');
-            Route::post('/d/edit-status-class/{class_id}', 'editStatusClass');
         });
         Route::controller(DevModuleController::class)->group(function () {
             Route::post('/d/create-module', 'createModule');
