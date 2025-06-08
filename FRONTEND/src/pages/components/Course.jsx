@@ -53,7 +53,7 @@ function CourseComponent({
                     </div>
                 ) : (
                     coursesData?.map((course) => (
-                        <ClassCard route={course.id} key={course.id}>
+                        <ClassCard route={`${course.id}/m`} key={course.id}>
                             <p>{course.course_name}</p>
                         </ClassCard>
                     ))

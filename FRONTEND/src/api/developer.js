@@ -13,29 +13,18 @@ export default function useDeveloperApi() {
         return response.data;
     };
 
-    const getCoursesByStatusApi = async ({ signal }) => {
+    const fetchCoursesByStatusApi = async ({ signal }) => {
         const response = await AxiosAuth.get(`/api/d/course/status`, {
             signal,
         });
         return response.data;
     };
 
-    const getCourseApi = async (course_id) => {
-        setLoading(true);
-        setErrors({});
-        try {
-            const response = await AxiosAuth.get(`/api/d/course/${course_id}`);
-            return response.data;
-        } catch (err) {
-            const status = err.response?.status;
-            setErrors(
-                status === 422 || status === 401
-                    ? err.response.data.errors
-                    : { general: "Something went wrong" }
-            );
-        } finally {
-            setLoading(false);
-        }
+    const fetchCourseApi = async (course_id) => {
+        const response = await AxiosAuth.get(`/api/d/course/${course_id}`, {
+            signal,
+        });
+        return response.data;
     };
 
     const createCourseApi = async (credentials) => {
@@ -114,8 +103,8 @@ export default function useDeveloperApi() {
         setErrors,
         setLoading,
         createCourseApi,
-        getCourseApi,
-        getCoursesByStatusApi,
+        fetchCourseApi,
+        fetchCoursesByStatusApi,
         fetchCoursesApi,
         fetchClassesApi,
         fetchClassApi,

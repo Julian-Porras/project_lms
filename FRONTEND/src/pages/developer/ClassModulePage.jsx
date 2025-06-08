@@ -42,7 +42,6 @@ function DevClassModulePage() {
         item_type: "",
         is_visible: "",
     });
-console.log(groupView);
 
     if (user?.role_id === ROLES.DEVELOPER) {
         routes = devClassModuleRouter;

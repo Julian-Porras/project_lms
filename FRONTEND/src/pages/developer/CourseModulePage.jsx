@@ -1,29 +1,55 @@
 import { useEffect, useState } from "react";
 import useDeveloperApi from "../../api/developer";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import ClassModuleComponent from "../components/ClassModule";
 import ToastMessage from "../../util/toast-message";
+import CourseModuleComponent from "../components/CourseModule";
+import { useAuth } from "../../context/authContext";
+import { ROLES } from "../../constants/role";
+import { devCourseModuleRouter } from "../../router/developerRouter";
 
-function DevClassModulePage() {
+function DevCourseModulePage() {
     const { createClassModuleApi, fetchClassApi } = useDeveloperApi();
     const queryClient = useQueryClient();
+    const { user } = useAuth();
     const { course_id } = useParams();
+    const location = useLocation();
+
+    const param = course_id;
+    const base = location.pathname.split("/")[1];
+    let routes = [];
+
     const [errors, setErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [message, setMessage] = useState("");
     const [toastShow, setToastShow] = useState(false);
     const [toastStatus, setToastStatus] = useState(200);
-    const param = course_id;
     const [credentials, setCredentials] = useState({
-        classroom_id: param,
+        course_id: param,
         module_name: "",
         is_visible: true,
     });
+    const [contentCredentials, setContentCredentials] = useState({
+        classroom_id: param,
+        module_id: null,
+        item_name: "",
+        item_type: "",
+        is_visible: "",
+    });
+
+    if (user?.role_id === ROLES.DEVELOPER) {
+        routes = devCourseModuleRouter;
+    }
+
+    const ModuleNavData = {
+        base: base,
+        routes: routes,
+        param: param,
+    }
 
     const { data: classData, isLoading: isClassLoading, error: isClassError } = useQuery({
-        queryKey: ["class-module", param],
+        queryKey: ["course-module", param],
         queryFn: ({ signal, queryKey }) => {
             return fetchClassApi(param, signal);
         },
@@ -34,7 +60,7 @@ function DevClassModulePage() {
     const createModuleMutation = useMutation({
         mutationFn: createClassModuleApi,
         onSuccess: (res) => {
-            queryClient.invalidateQueries({ queryKey: ["class-module"] });
+            queryClient.invalidateQueries({ queryKey: ["course-module"] });
             setMessage(ToastMessage(res, "Module created successfully."));
             setToastShow(true);
             setToastStatus(200);
@@ -81,7 +107,7 @@ function DevClassModulePage() {
     }, [isOpen, param]);
 
     return (
-        <ClassModuleComponent
+        <CourseModuleComponent
             errors={errors}
             isClassLoading={isClassLoading}
             classData={classData}
@@ -96,8 +122,9 @@ function DevClassModulePage() {
             toastStatus={toastStatus}
             setToastShow={setToastShow}
             isSubmitting={isSubmitting}
+            ModuleNavData={ModuleNavData}
         />
     );
 }
 
-export default DevClassModulePage;
+export default DevCourseModulePage;

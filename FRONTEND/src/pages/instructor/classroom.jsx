@@ -7,7 +7,7 @@ import ToastMessage from "../../util/toast-message";
 
 function InstructorClassroomTab() {
     const queryClient = useQueryClient();
-    const { fetchClassesApi, getCoursesByStatusApi, createClassApi } = useDeveloperApi();
+    const { fetchClassesApi, fetchCoursesByStatusApi, createClassApi } = useDeveloperApi();
     const [errors, setErrors] = useState({});
     const [isOpen, setIsOpen] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -46,7 +46,7 @@ function InstructorClassroomTab() {
     const { data: courseData, isLoading: isCoursesLoading, error: isCourseError } = useQuery({
         queryKey: ["status", page, limit],
         queryFn: ({ signal, queryKey }) => {
-            return getCoursesByStatusApi({ signal });
+            return fetchCoursesByStatusApi({ signal });
         },
         keepPreviousData: true,
         // staleTime: 300000, // 5 mins
