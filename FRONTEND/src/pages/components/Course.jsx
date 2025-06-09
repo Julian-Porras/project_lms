@@ -9,6 +9,7 @@ import SelectOptions from "../../components/select";
 import { LoadingPage } from "../../components/Loading";
 import { ToastComponent } from "../../components/Toast";
 import PaginationBase from "../../components/Pagination";
+import { CourseModal } from "./ModalComponent";
 
 function CourseComponent({
     errors,
@@ -68,43 +69,18 @@ function CourseComponent({
                     pageSize={pageSize}
                 />
             )}
-            <Modal
-                isOpen={isOpen}
-                onClose={() => setIsOpen(false)}
-                title="Create Course"
-            >
-                <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                    <div className="flex flex-col gap-2">
-                        <label htmlFor="course_name">Course name:</label>
-                        <InputText
-                            type={"text"}
-                            name={"course_name"}
-                            value={credentials.course_name}
-                            onChange={handleChange}
-                            placeholder={"type course name"}
-                            errors={errors?.course_name}
-                        />
-                    </div>
-                    <div className="flex flex-col gap-2 ">
-                        <label htmlFor="status">Status:</label>
-                        <SelectOptions
-                            id="status"
-                            options={[{ id: 'active', name: "Open" }, { id: 'not-active', name: "Close" }]}
-                            getOptionLabel={(option) => option.name}
-                            getOptionValue={(option) => option.id}
-                            name="status"
-                            selected={credentials.status}
-                            setSelected={(value) => setCredentials({ ...credentials, status: value })}
-                            errors={errors?.status}
-                        />
-                    </div>
-                    <div className="flex flex-row gap-4 items-center justify-end mt-10">
-                        <ButtonCreate type="submit" isDisable={isSubmitting}
-                            title={isSubmitting ? "Creating..." : "Create course"} />
-                        <ButtonCancel type="button" method={() => setIsOpen(false)} />
-                    </div>
-                </form>
-            </Modal>
+            <>
+                <CourseModal 
+                    isOpen={isOpen}
+                    setIsOpen={setIsOpen}
+                    credentials={credentials}
+                    setCredentials={setCredentials}
+                    errors={errors}
+                    handleChange={handleChange}
+                    handleSubmit={handleSubmit}
+                    isSubmitting={isSubmitting}
+                />
+            </>
         </>
     )
 }

@@ -9,6 +9,7 @@ import { ToastComponent } from "../../components/Toast";
 import SelectOptions from "../../components/select";
 import { LoadingPage } from "../../components/Loading";
 import PaginationBase from "../../components/Pagination";
+import { ClassroomModal } from "./ModalComponent";
 
 function ClassroomComponent({
     errors,
@@ -70,56 +71,19 @@ function ClassroomComponent({
                     pageSize={pageSize}
                 />
             )}
-            <Modal
-                isOpen={isOpen}
-                onClose={() => setIsOpen(false)}
-                title="Create Classroom"
-            >
-                <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                    <div className="flex flex-col gap-2">
-                        <label htmlFor="classroom_name">Classroom name:</label>
-                        <InputText
-                            type={"text"}
-                            name={"classroom_name"}
-                            value={credentials.classroom_name}
-                            onChange={handleChange}
-                            placeholder={"type class name"}
-                            errors={errors?.classroom_name}
-                        />
-                    </div>
-                    <div className="flex flex-col gap-2 ">
-                        <label htmlFor="classroom_code">Classroom code:</label>
-                        <InputText
-                            type={"text"}
-                            name={"classroom_code"}
-                            value={credentials.classroom_code}
-                            onChange={handleChange}
-                            placeholder={"type class code"}
-                            errors={errors?.classroom_code}
-                        />
-                    </div>
-                    <div className="flex flex-col gap-2">
-                        <label htmlFor="course_id">Select course/subject:</label>
-                        <SelectOptions
-                            options={courseData || []}
-                            getOptionLabel={(course) => course.course_name}
-                            getOptionValue={(course) => course.id}
-                            name="course_id"
-                            id="course_id"
-                            selected={credentials.course_id}
-                            setSelected={(e) => setCredentials({ ...credentials, course_id: e })}
-                            placeholder="Select course"
-                            isLoading={isCourseLoading}
-                            errors={errors?.course_id}
-                        />
-                    </div>
-                    <div className="flex flex-row gap-4 items-center justify-end mt-10">
-                        <ButtonCreate type="submit" isDisable={isSubmitting}
-                            title={isSubmitting ? "Creating..." : "Create classroom"} />
-                        <ButtonCancel type="button" method={() => setIsOpen(false)} />
-                    </div>
-                </form>
-            </Modal>
+            <>
+                <ClassroomModal
+                    isOpen={isOpen}
+                    setIsOpen={setIsOpen}
+                    courseData={courseData}
+                    credentials={credentials}
+                    setCredentials={setCredentials}
+                    errors={errors}
+                    handleChange={handleChange}
+                    handleSubmit={handleSubmit}
+                    isSubmitting={isSubmitting}
+                />
+            </>
         </>
     )
 }

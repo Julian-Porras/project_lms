@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Enums\PaginateEnum;
 use App\Models\ClassroomModel;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Gate;
 
 class ClassroomService
 {
@@ -45,6 +46,7 @@ class ClassroomService
     public function updateClassroom($class_id, array $data)
     {
         $classroom = ClassroomModel::find($class_id);
+        // Gate::authorize('update', $classroom);
         // $this->authorize('update', $classroom);
         return $classroom->update($data);
     }

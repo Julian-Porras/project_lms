@@ -14,6 +14,7 @@ import { LuListStart } from "react-icons/lu";
 import { SwitchComponent } from "../../components/Switch";
 import { CONTENT } from "../../constants/content";
 import { Fragment } from "react";
+import { CreateModuleModal, EditModuleModal, OrderModuleModal } from "./ModalComponent";
 
 function ClassModuleComponent({
     errors,
@@ -64,7 +65,7 @@ function ClassModuleComponent({
                     <DividerThin />
                     <div className="flex flex-row items-center justify-end gap-4">
                         <SwitchComponent
-                            checked={groupView? true : false}
+                            checked={groupView ? true : false}
                             onChange={handleViewChange}
                             label={"Grouped View"}
                         />
@@ -99,150 +100,91 @@ function ClassModuleComponent({
                 </div>
             }
             <ModuleStatusComponent />
-            <Modal
-                isOpen={isOpen}
-                onClose={() => setIsOpen(false)}
-                title="Create Module"
-            >
-                <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                    <div className="flex flex-col gap-2">
-                        <label htmlFor="module_name">Module name:</label>
-                        <InputText
-                            type={"text"}
-                            name={"module_name"}
-                            caps
-                            value={credentials.module_name}
-                            onChange={handleChange}
-                            placeholder={"Type module name"}
-                            errors={errors?.module_name}
-                        />
-                    </div>
-                    <div className="flex flex-col gap-2">
-                        <label htmlFor="is_visible">Visibility:</label>
-                        <SelectOptions
-                            options={[{ id: true, name: "Visible" }, { id: false, name: "Hidden" }]}
-                            getOptionLabel={(option => option.name)}
-                            getOptionValue={(option => option.id)}
-                            name="is_visible"
-                            id="is_visible"
-                            selected={credentials.is_visible}
-                            setSelected={(e) => setCredentials({ ...credentials, is_visible: e })}
-                            placeholder="Select visibility"
-                            errors={errors?.is_visible}
-                        />
-                    </div>
-                    <div className="flex flex-row gap-4 items-center justify-end mt-10">
-                        <ButtonCreate type="submit" isDisable={isSubmitting}
-                            title={isSubmitting ? "Creating..." : "Create module"} />
-                        <ButtonCancel type="button" method={() => setIsOpen(false)} />
-                    </div>
-                </form>
-            </Modal>
-            <Modal
-                isOpen={isOpenContent}
-                title="Add Content"
-                onClose={() => setOpenContent(false)}
-            >
-                <form onSubmit={handleContentSubmit} className="flex flex-col gap-5">
-                    <div className="flex flex-col items-start gap-2">
-                        <label htmlFor="item_type">Type:</label>
-                        <SelectOptions
-                            options={
-                                Object.entries(CONTENT).map(([key, value]) => ({
-                                    id: value,
-                                    name: value.charAt(0).toUpperCase() + value.slice(1).toLowerCase(),
-                                }))
-                            }
-                            getOptionLabel={(option => option.name)}
-                            getOptionValue={(option => option.id)}
-                            name="item_type"
-                            id="item_type"
-                            selected={contentCredentials.item_type}
-                            setSelected={(e) => setContentCredentials({ ...contentCredentials, item_type: e })}
-                            placeholder="Select content type"
-                            errors={errors?.item_type}
-                        />
-                    </div>
-                    <div className="flex flex-col gap-2">
-                        <label htmlFor="item_name">Content name:</label>
-                        <InputText
-                            type={"text"}
-                            name={"item_name"}
-                            caps
-                            value={contentCredentials.item_name}
-                            onChange={handleContentChange}
-                            placeholder={"Type module name"}
-                            errors={errors?.item_name}
-                        />
-                    </div>
-                    <div className="flex flex-col items-start gap-2">
-                        <label htmlFor="is_visible">Visibility:</label>
-                        <SelectOptions
-                            options={[{ id: true, name: "Visible" }, { id: false, name: "Hidden" }]}
-                            getOptionLabel={(option => option.name)}
-                            getOptionValue={(option => option.id)}
-                            name="is_visible"
-                            id="is_visible"
-                            selected={contentCredentials.is_visible}
-                            setSelected={(e) => setContentCredentials({ ...contentCredentials, is_visible: e })}
-                            placeholder="Select visibility"
-                            errors={errors?.is_visible}
-                        />
-                    </div>
-                    <div className="flex flex-row gap-4 items-center justify-end mt-10">
-                        <ButtonCreate type="submit" isDisable={isSubmitting}
-                            title={isSubmitting ? "Creating..." : "Create content"} />
-                        <ButtonCancel type="button" method={() => setOpenContent(false)} />
-                    </div>
-                </form>
+            <>
+                <CreateModuleModal
+                    isOpen={isOpen}
+                    setIsOpen={setIsOpen}
+                    credentials={credentials}
+                    setCredentials={setCredentials}
+                    errors={errors}
+                    handleChange={handleChange}
+                    handleSubmit={handleSubmit}
+                    isSubmitting={isSubmitting}
+                />
+                <EditModuleModal
+                    isOpenEdit={isOpenEdit}
+                    setOpenEdit={setOpenEdit}
+                    credentials={credentials}
+                    setCredentials={setCredentials}
+                    errors={errors}
+                    handleEditSubmit={handleEditSubmit}
+                    handleChange={handleChange}
+                    isSubmitting={isSubmitting}
+                />
+                <OrderModuleModal
+                    isOpenOrder={isOpenOrder}
+                    setOpenOrder={setOpenOrder}
+                />
+                <Modal
+                    isOpen={isOpenContent}
+                    title="Add Content"
+                    onClose={() => setOpenContent(false)}
+                >
+                    <form onSubmit={handleContentSubmit} className="flex flex-col gap-5">
+                        <div className="flex flex-col items-start gap-2">
+                            <label htmlFor="item_type">Type:</label>
+                            <SelectOptions
+                                options={
+                                    Object.entries(CONTENT).map(([key, value]) => ({
+                                        id: value,
+                                        name: value.charAt(0).toUpperCase() + value.slice(1).toLowerCase(),
+                                    }))
+                                }
+                                getOptionLabel={(option => option.name)}
+                                getOptionValue={(option => option.id)}
+                                name="item_type"
+                                id="item_type"
+                                selected={contentCredentials.item_type}
+                                setSelected={(e) => setContentCredentials({ ...contentCredentials, item_type: e })}
+                                placeholder="Select content type"
+                                errors={errors?.item_type}
+                            />
+                        </div>
+                        <div className="flex flex-col gap-2">
+                            <label htmlFor="item_name">Content name:</label>
+                            <InputText
+                                type={"text"}
+                                name={"item_name"}
+                                caps
+                                value={contentCredentials.item_name}
+                                onChange={handleContentChange}
+                                placeholder={"Type module name"}
+                                errors={errors?.item_name}
+                            />
+                        </div>
+                        <div className="flex flex-col items-start gap-2">
+                            <label htmlFor="is_visible">Visibility:</label>
+                            <SelectOptions
+                                options={[{ id: true, name: "Visible" }, { id: false, name: "Hidden" }]}
+                                getOptionLabel={(option => option.name)}
+                                getOptionValue={(option => option.id)}
+                                name="is_visible"
+                                id="is_visible"
+                                selected={contentCredentials.is_visible}
+                                setSelected={(e) => setContentCredentials({ ...contentCredentials, is_visible: e })}
+                                placeholder="Select visibility"
+                                errors={errors?.is_visible}
+                            />
+                        </div>
+                        <div className="flex flex-row gap-4 items-center justify-end mt-10">
+                            <ButtonCreate type="submit" isDisable={isSubmitting}
+                                title={isSubmitting ? "Creating..." : "Create content"} />
+                            <ButtonCancel type="button" method={() => setOpenContent(false)} />
+                        </div>
+                    </form>
 
-            </Modal>
-            <Modal
-                isOpen={isOpenEdit}
-                title="Edit Module"
-                onClose={() => setOpenEdit(false)}
-            >
-                <form onSubmit={handleEditSubmit} className="flex flex-col gap-4">
-                    <div className="flex flex-col gap-2">
-                        <label htmlFor="module_name">Module name:</label>
-                        <InputText
-                            type={"text"}
-                            name={"module_name"}
-                            caps
-                            value={credentials.module_name}
-                            onChange={handleChange}
-                            placeholder={"Type module name"}
-                            errors={errors?.module_name}
-                        />
-                    </div>
-                    <div className="flex flex-col gap-2">
-                        <label htmlFor="is_visible">Visibility:</label>
-                        <SelectOptions
-                            options={[{ id: true, name: "Visible" }, { id: false, name: "Hidden" }]}
-                            getOptionLabel={(option => option.name)}
-                            getOptionValue={(option => option.id)}
-                            name="is_visible"
-                            id="is_visible"
-                            selected={credentials.is_visible}
-                            setSelected={(e) => setCredentials({ ...credentials, is_visible: e })}
-                            placeholder="Select visibility"
-                            errors={errors?.is_visible}
-                        />
-                    </div>
-                    <div className="flex flex-row gap-4 items-center justify-end mt-10">
-                        <ButtonCreate type="submit" isDisable={isSubmitting}
-                            title={isSubmitting ? "Saving..." : "Save"} />
-                        <ButtonCancel type="button" method={() => setOpenEdit(false)} />
-                    </div>
-                </form>
-            </Modal>
-            <Modal
-                isOpen={isOpenOrder}
-                title="Reorder modules"
-                onClose={() => setOpenOrder(false)}
-            >
-                
-            </Modal>
+                </Modal>
+            </>
         </div>
     );
 }
