@@ -1,12 +1,9 @@
 import { ButtonCancel, ButtonSecondary, ButtonCreate } from "../../components/Button";
-import { ClassCard } from "../../components/Card";
+import { ClassCard, ClassCard1 } from "../../components/Card";
 import { DividerThin } from "../../components/Divider";
 import style from "../../styles/page.module.css";
 import { FaPlus } from "react-icons/fa";
-import { Modal } from "../../components/Modal";
-import { InputText } from "../../components/Input";
 import { ToastComponent } from "../../components/Toast";
-import SelectOptions from "../../components/select";
 import { LoadingPage } from "../../components/Loading";
 import PaginationBase from "../../components/Pagination";
 import { ClassroomModal } from "./ModalComponent";
@@ -56,9 +53,11 @@ function ClassroomComponent({
                     </div>
                 ) : (
                     classData?.map((classroom) => (
-                        <ClassCard route={`${classroom.id}/m`} key={classroom.id}>
-                            <p>{classroom.classroom_name}</p>
-                        </ClassCard>
+                        <ClassCard1
+                            route={`${classroom.id}/m`}
+                            key={classroom.id}
+                            name={classroom.classroom_name}
+                        />
                     ))
                 )}
             </div>

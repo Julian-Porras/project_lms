@@ -2,6 +2,7 @@ import { NavLink, useResolvedPath } from "react-router-dom";
 import styles from "../styles/card.module.css";
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
 
 function LoginCard({ children }) {
     return (
@@ -33,6 +34,30 @@ function ClassCard({ route, children }) {
         <NavLink to={`${base}/${route}`} className={styles.containerCard}>
             <div>{children}</div>
         </NavLink>
+    )
+}
+
+function ClassCard1({ route, name, year, students }) {
+    const base = useResolvedPath(".").pathname;
+    return (
+        <Card sx={{ maxWidth: 220, width: "100%", ':hover': { boxShadow: 3 } }}>
+            <NavLink to={`${base}/${route}`} className="flex flex-col justify-center">
+                <div className="w-full h-24 bg-cyan-500">
+                </div>
+                <CardContent className="flex flex-col items-start justify-center">
+                    <Typography gutterBottom variant="h5" component="div" className="uppercase" >
+                        {name}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                        Year Level: {year || "N/A"}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                        Students: {students || "N/A"}
+                    </Typography>
+                </CardContent>
+
+            </NavLink>
+        </Card>
     )
 }
 
@@ -83,4 +108,16 @@ function ButtonCard({ method, children }) {
     )
 }
 
-export { LoginCard, RegisterCard, ContainerCard, ClassCard, ClassModuleCard, ModuleHeaderItemCard, ModuleItemCard, ModuleNavCard, ModuleStatusCard, ButtonCard };
+export {
+    LoginCard,
+    RegisterCard,
+    ContainerCard,
+    ClassCard,
+    ClassCard1,
+    ClassModuleCard,
+    ModuleHeaderItemCard,
+    ModuleItemCard,
+    ModuleNavCard,
+    ModuleStatusCard,
+    ButtonCard
+};

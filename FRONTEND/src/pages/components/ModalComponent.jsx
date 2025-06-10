@@ -24,6 +24,7 @@ export function ClassroomModal({
                 <div className="flex flex-col gap-2">
                     <label htmlFor="classroom_name">Classroom name:</label>
                     <InputText
+                        caps
                         type={"text"}
                         name={"classroom_name"}
                         value={credentials.classroom_name}
