@@ -1,4 +1,7 @@
 import { Modal } from "../../components/Modal"
+import { InputText } from "../../components/Input";
+import SelectOptions from "../../components/Select";
+import { ButtonCreate, ButtonCancel } from "../../components/Button";
 
 export function ClassroomModal({
     isOpen,
