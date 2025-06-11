@@ -12,27 +12,27 @@ const SettingsPage = lazy(() => import("../pages/settings"));
 
 const devClassModuleRouter = [
   {
-    path: "classroom/:class_id/n",
+    path: "classroom/:id/n",
     element: <ClassModulePage />,
     meta: { label: "Announcements" },
   },
   {
-    path: "classroom/:class_id/m",
+    path: "classroom/:id/m",
     element: <ClassModulePage />,
     meta: { label: "Modules" },
   },
   {
-    path: "classroom/:class_id/a",
+    path: "classroom/:id/a",
     element: <ClassModulePage />,
     meta: { label: "Assignments" },
   },
   {
-    path: "classroom/:class_id/p",
+    path: "classroom/:id/p",
     element: <ClassModulePage />,
     meta: { label: "People" },
   },
   {
-    path: "classroom/:class_id/s",
+    path: "classroom/:id/s",
     element: <ClassModulePage />,
     meta: { label: "Settings" },
   },
@@ -40,17 +40,17 @@ const devClassModuleRouter = [
 
 const devCourseModuleRouter = [
   {
-    path: "course/:course_id/m",
+    path: "course/:id/m",
     element: <CourseModulePage />,
     meta: { label: "Modules" },
   },
   {
-    path: "course/:course_id/a",
+    path: "course/:id/a",
     element: <CourseModulePage />,
     meta: { label: "Assignments" },
   },
   {
-    path: "course/:course_id/s",
+    path: "course/:id/s",
     element: <CourseModulePage />,
     meta: { label: "Settings" },
   },

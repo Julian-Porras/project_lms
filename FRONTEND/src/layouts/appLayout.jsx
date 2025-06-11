@@ -1,10 +1,13 @@
 import { Outlet } from "react-router-dom";
 import { AuthProvider } from "../context/authContext";
+import { UIProvider } from "../context/uiContext";
 
 export default function AppLayout() {
   return (
     <AuthProvider>
-      <Outlet />
+      <UIProvider>
+        <Outlet />
+      </UIProvider>
     </AuthProvider>
   );
 }

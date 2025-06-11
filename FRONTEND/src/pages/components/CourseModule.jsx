@@ -6,9 +6,9 @@ import { DividerDashed, DividerThin } from "../../components/Divider";
 import { LoadingPage } from "../../components/Loading";
 import { Modal } from "../../components/Modal";
 import { InputText } from "../../components/Input";
-import SelectOptions from "../../components/select";
+import SelectOptions from "../../components/Select";
 import { ButtonCard } from "../../components/Card";
-import { ModuleNavComponent, ModuleStatusComponent } from "./ModuleNav";
+import { ModuleNavComponent, ModuleStatusComponent } from "./ModuleNavigationComponent";
 import { ModuleComponent } from "./ModuleComponent";
 import { LuListStart } from "react-icons/lu";
 import { SwitchComponent } from "../../components/Switch";
@@ -58,7 +58,7 @@ function CourseModuleComponent({
             {isClassLoading ? (<LoadingPage />) :
                 <div className="flex flex-col w-full h-full mx-5">
                     <div className="flex flex-row items-center justify-between " >
-                        <p className={style.title} >{classData?.classroom_name}</p>
+                        <p className={style.title} >{classData?.course_name}</p>
                         <ButtonSecondary method={() => setIsOpen(true)}> <FaPlus />Create Module</ButtonSecondary>
                     </div>
                     <DividerThin />

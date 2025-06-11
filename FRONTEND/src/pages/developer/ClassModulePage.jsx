@@ -11,11 +11,11 @@ import { ROLES } from "../../constants/role";
 function DevClassModulePage() {
     const { createClassModule, editModule, createModuleItem, fetchClass } = useDeveloperApi();
     const { user } = useAuth();
-    const { class_id } = useParams();
+    const { id } = useParams();
     const queryClient = useQueryClient();
     const location = useLocation();
 
-    const param = class_id;
+    const param = id;
     const base = location.pathname.split("/")[1];
     let routes = [];
 
@@ -54,9 +54,9 @@ function DevClassModulePage() {
     }
 
     const { data: classData, isLoading: isClassLoading, error: isClassError } = useQuery({
-        queryKey: ["class-module", class_id],
+        queryKey: ["class-module", param],
         queryFn: ({ signal, queryKey }) => {
-            return fetchClass({ class_id, signal });
+            return fetchClass({ class_id: param, signal });
         },
         keepPreviousData: true,
         refetchOnWindowFocus: false,

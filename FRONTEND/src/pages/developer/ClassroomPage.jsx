@@ -2,12 +2,17 @@ import { useState, useEffect } from "react";
 import useDeveloperApi from "../../api/developer";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import ClassroomComponent from "../components/classroom";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import ToastMessage from "../../util/toast-message";
+import { ToastComponent } from "../../components/Toast";
+import { useUI } from "../../context/uiContext";
 
 function DevClassroomPage() {
     const queryClient = useQueryClient();
+    const navigate = useNavigate();
+    const { showToast } = useUI();
     const { fetchClasses, fetchCoursesByStatus, createClass } = useDeveloperApi();
+
     const [errors, setErrors] = useState({});
     const [isOpen, setIsOpen] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -57,17 +62,13 @@ function DevClassroomPage() {
     const createClassMutation = useMutation({
         mutationFn: createClass,
         onSuccess: (res) => {
-            queryClient.invalidateQueries({ queryKey: ["classes"] });
-            setMessage(ToastMessage(res, "Class created successfully."));
-            setToastShow(true);
-            setToastStatus(200);
+            // queryClient.invalidateQueries({ queryKey: ["classes"] });
+            showToast(ToastMessage(res, "Class created successfully."), 200)
             setIsOpen(false);
         },
         onError: (err) => {
             if (err.response?.status >= 500) {
-                setMessage(ToastMessage(err));
-                setToastShow(true);
-                setToastStatus(err.response?.status || 500);
+                showToast(ToastMessage(err), err.response?.status || 500);
             }
             if (err.response?.data?.errors) {
                 setErrors(err.response.data.errors);
@@ -84,8 +85,9 @@ function DevClassroomPage() {
         setErrors({});
         setIsSubmitting(true);
         createClassMutation.mutate(credentials, {
-            onSettled: () => {
+            onSettled: (res) => {
                 setIsSubmitting(false);
+                navigate(`${res.class.id}/m`);
             }
         });
     };
@@ -117,6 +119,12 @@ function DevClassroomPage() {
 
     return (
         <>
+            {/* <ToastComponent
+                message={message}
+                show={toastShow}
+                setShow={setToastShow}
+                toastStatus={toastStatus}
+            /> */}
             <ClassroomComponent
                 errors={errors}
                 isClassesLoading={isClassesLoading}

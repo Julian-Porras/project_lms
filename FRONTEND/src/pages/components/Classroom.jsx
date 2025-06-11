@@ -3,7 +3,6 @@ import { ClassCard, ClassCard1 } from "../../components/Card";
 import { DividerThin } from "../../components/Divider";
 import style from "../../styles/page.module.css";
 import { FaPlus } from "react-icons/fa";
-import { ToastComponent } from "../../components/Toast";
 import { LoadingPage } from "../../components/Loading";
 import PaginationBase from "../../components/Pagination";
 import { ClassroomModal } from "./ModalComponent";
@@ -20,10 +19,6 @@ function ClassroomComponent({
     setCredentials,
     isOpen,
     setIsOpen,
-    message,
-    toastShow,
-    toastStatus,
-    setToastShow,
     isSubmitting,
     page,
     totalPages,
@@ -33,12 +28,6 @@ function ClassroomComponent({
 }) {
     return (
         <>
-            <ToastComponent
-                message={message}
-                show={toastShow}
-                setShow={setToastShow}
-                toastStatus={toastStatus}
-            />
             <div className="flex flex-row items-center justify-between " >
                 <p className={style.title} >Classroom</p>
                 <ButtonSecondary method={() => setIsOpen(true)}> <FaPlus />Create Classroom</ButtonSecondary>
