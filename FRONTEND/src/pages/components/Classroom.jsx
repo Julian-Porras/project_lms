@@ -25,6 +25,8 @@ function ClassroomComponent({
     setPage,
     totalRecords,
     pageSize,
+    limit,
+    setLimit,
 }) {
     return (
         <>
@@ -57,6 +59,8 @@ function ClassroomComponent({
                     setPage={setPage}
                     totalRecords={totalRecords}
                     pageSize={pageSize}
+                    limit={limit}
+                    setLimit={setLimit}
                 />
             )}
             <>

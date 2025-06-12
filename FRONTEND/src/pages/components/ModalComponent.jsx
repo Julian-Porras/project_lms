@@ -88,6 +88,7 @@ export function CourseModal({
                 <div className="flex flex-col gap-2">
                     <label htmlFor="course_name">Course name:</label>
                     <InputText
+                        caps
                         type={"text"}
                         name={"course_name"}
                         value={credentials.course_name}

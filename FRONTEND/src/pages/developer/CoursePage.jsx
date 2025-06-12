@@ -2,12 +2,16 @@ import { useState, useEffect } from "react";
 import useDeveloperApi from "../../api/developer";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import CourseComponent from "../components/Course";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import ToastMessage from "../../util/toast-message";
+import { useUI } from "../../context/uiContext";
 
 function DevCoursePage() {
     const queryClient = useQueryClient();
+    const navigate = useNavigate();
     const { fetchCourses, createCourse } = useDeveloperApi();
+    const { showToast } = useUI();
+
     const [errors, setErrors] = useState({});
     const [isOpen, setIsOpen] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -43,17 +47,13 @@ function DevCoursePage() {
     const createCourseMutation = useMutation({
         mutationFn: createCourse,
         onSuccess: (res) => {
-            queryClient.invalidateQueries({ queryKey: ["courses"] });
-            setMessage(ToastMessage(res, "Module created successfully."));
-            setToastShow(true);
-            setToastStatus(200);
+            // queryClient.invalidateQueries({ queryKey: ["courses"] });
+            showToast(ToastMessage(res, "Class created successfully."), 200)
             setIsOpen(false);
         },
         onError: (err) => {
             if (err.response?.status >= 500) {
-                setMessage(ToastMessage(err));
-                setToastShow(true);
-                setToastStatus(err.response?.status || 500);
+                showToast(ToastMessage(err), err.response?.status || 500);
             }
             if (err.response?.data?.errors) {
                 setErrors(err.response.data.errors);
@@ -70,8 +70,9 @@ function DevCoursePage() {
         setErrors({});
         setIsSubmitting(true);
         createCourseMutation.mutate(credentials, {
-            onSettled: () => {
+            onSettled: (res) => {
                 setIsSubmitting(false);
+                navigate(`${res.course.id}/m`);
             }
         });
     };
@@ -123,6 +124,8 @@ function DevCoursePage() {
                 totalPages={pageInfo.totalPages}
                 totalRecords={pageInfo.totalRecords}
                 pageSize={pageInfo.pageSize}
+                limit={limit}
+                setLimit={setLimit}
             />
         </>
     )

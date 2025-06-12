@@ -16,11 +16,8 @@ function DevClassroomPage() {
     const [errors, setErrors] = useState({});
     const [isOpen, setIsOpen] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [message, setMessage] = useState("");
-    const [toastShow, setToastShow] = useState(false);
-    const [toastStatus, setToastStatus] = useState(200);
     const [searchParams, setSearchParams] = useSearchParams();
-    const [limit, setLimit] = useState(5);
+    const [limit, setLimit] = useState(10);
     const [pageInfo, setPageInfo] = useState({
         totalPages: 0,
         totalRecords: 0,
@@ -119,12 +116,6 @@ function DevClassroomPage() {
 
     return (
         <>
-            {/* <ToastComponent
-                message={message}
-                show={toastShow}
-                setShow={setToastShow}
-                toastStatus={toastStatus}
-            /> */}
             <ClassroomComponent
                 errors={errors}
                 isClassesLoading={isClassesLoading}
@@ -137,16 +128,14 @@ function DevClassroomPage() {
                 setCredentials={setCredentials}
                 isOpen={isOpen}
                 setIsOpen={setIsOpen}
-                message={message}
-                toastShow={toastShow}
-                toastStatus={toastStatus}
-                setToastShow={setToastShow}
                 isSubmitting={isSubmitting}
                 page={page}
                 setPage={handlePageChange}
                 totalPages={pageInfo.totalPages}
                 totalRecords={pageInfo.totalRecords}
                 pageSize={pageInfo.pageSize}
+                limit={limit}
+                setLimit={setLimit}
             />
         </>
     )

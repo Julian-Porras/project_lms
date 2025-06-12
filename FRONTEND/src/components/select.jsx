@@ -9,6 +9,7 @@ function SelectOptions({
   placeholder,
   isLoading = false,
   errors,
+  width,
 }) {
   return (
     <div className="flex flex-col gap-2">
@@ -23,11 +24,11 @@ function SelectOptions({
           else setSelected(value);
         }}
         disabled={isLoading}
-        className="w-45 border border-[var(--light-gray-color)] text-sm rounded-sm p-2 focus:outline-none focus:ring-1 focus:ring-[var(--secondary-color)]"
+        className= {`border border-[var(--light-gray-color)] text-sm rounded-sm p-2 focus:outline-none focus:ring-1 focus:ring-[var(--secondary-color)] ` + (width ?? "w-45") + " " + (errors ? "border-red-500" : "")}
       >
-        {(selected === "" || selected === null || selected === undefined) && (
+        {placeholder && (selected === "" || selected === null || selected === undefined) && (
           <option value="" disabled>
-            {isLoading ? "Loading..." : (placeholder || "Select an option")}
+            {isLoading ? "Loading..." : (placeholder ?? "Select an option")}
           </option>
         )}
         {!isLoading && options.map((option, index) => (

@@ -28,6 +28,8 @@ function CourseComponent({
     setPage,
     totalRecords,
     pageSize,
+    limit,
+    setLimit,
 }) {
     return (
         <>
@@ -64,6 +66,8 @@ function CourseComponent({
                     setPage={setPage}
                     totalRecords={totalRecords}
                     pageSize={pageSize}
+                    limit={limit}
+                    setLimit={setLimit}
                 />
             )}
             <>
