@@ -1,6 +1,7 @@
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import SelectOptions from './Select';
+import { LIMIT } from '../constants/limit';
 
 function PaginationBase({ page, totalPages, setPage, totalRecords, pageSize, limit, setLimit }) {
     const start = (page - 1) * pageSize + 1;
@@ -15,9 +16,14 @@ function PaginationBase({ page, totalPages, setPage, totalRecords, pageSize, lim
                     <SelectOptions
                         name="limit"
                         id="limit"
-                        options={[5, 10, 20, 50, 100].map((num) => ({ value: num, label: num }))}
-                        getOptionLabel={(option) => option.label}
-                        getOptionValue={(option) => option.value}
+                        options={
+                            Object.entries(LIMIT).map(([key, value]) => ({
+                                id: value,
+                                name: value,
+                            }))
+                        }
+                        getOptionLabel={(option) => option.name}
+                        getOptionValue={(option) => option.id}
                         selected={limit}
                         setSelected={setLimit}
                         placeholder=""

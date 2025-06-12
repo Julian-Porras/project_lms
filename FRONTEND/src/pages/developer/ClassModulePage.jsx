@@ -84,7 +84,7 @@ function DevClassModulePage() {
     });
 
     const editModuleMutation = useMutation({
-        mutationFn: ({ module_id, data }) => editModule({ module_id, data }),
+        mutationFn: ({ module_id, credentials }) => editModule({ module_id, credentials }),
         onSuccess: (res) => {
             queryClient.invalidateQueries({ queryKey: ["class-module"] });
             setMessage(ToastMessage("Update module successfully."));
@@ -153,7 +153,7 @@ function DevClassModulePage() {
         setErrors({});
         setIsSubmitting(true);
         editModuleMutation.mutate(
-            { module_id: moduleId, data: credentials },
+            { module_id: moduleId, credentials: credentials },
             {
                 onSettled: () => {
                     setIsSubmitting(false);
