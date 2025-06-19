@@ -1,5 +1,5 @@
 # React + Laravel
 
-Fontend: React js + Vite
-
-Backend: Laravel
+Frontend: React js + Vite
+API client: Axios
+Backend: Laravel 
