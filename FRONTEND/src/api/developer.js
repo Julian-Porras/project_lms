@@ -6,7 +6,7 @@ import ModuleService from '../services/ModuleService';
 export default function useDeveloperApi() {
     const { fetchCoursesApi, fetchCourseApi, fetchCoursesByStatusApi, createCourseApi, editCourseApi } = CourseService();
     const { fetchClassesApi, fetchClassApi, createClassApi, editClassApi } = ClassroomService();
-    const { createClassModuleApi, editModuleApi, deleteModuleApi } = ModuleService();
+    const { createModuleApi, editModuleApi, deleteModuleApi } = ModuleService();
     const { fetchModuleItemApi, createModuleItemApi, editModuleItemApi, deleteModuleItemApi } = ModuleContentService();
 
     // ****************** course api ******************
@@ -48,8 +48,8 @@ export default function useDeveloperApi() {
     }
 
     // ****************** module api ******************
-    const createClassModule = async (credentials) => {
-        return await createClassModuleApi(credentials);
+    const createModule = async (credentials) => {
+        return await createModuleApi(credentials);
     };
 
     const editModule = async ({ module_id, credentials }) => {
@@ -87,7 +87,7 @@ export default function useDeveloperApi() {
         fetchClass,
         createClass,
         editClass,
-        createClassModule,
+        createModule,
         editModule,
         deleteModule,
         fetchModuleItem,

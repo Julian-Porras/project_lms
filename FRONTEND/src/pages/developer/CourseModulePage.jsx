@@ -9,7 +9,7 @@ import { ROLES } from "../../constants/role";
 import { devCourseModuleRouter } from "../../router/developerRouter";
 
 function DevCourseModulePage() {
-    const { createClassModule, editModule, createModuleItem, fetchCourse } = useDeveloperApi();
+    const { createModule, editModule, createModuleItem, fetchCourse } = useDeveloperApi();
     const queryClient = useQueryClient();
     const { user } = useAuth();
     const { id } = useParams();
@@ -36,7 +36,7 @@ function DevCourseModulePage() {
         is_visible: true,
     });
     const [contentCredentials, setContentCredentials] = useState({
-        classroom_id: param,
+        course_id: param,
         module_id: null,
         item_name: "",
         item_type: "",
@@ -63,7 +63,7 @@ function DevCourseModulePage() {
     });
 
     const createModuleMutation = useMutation({
-        mutationFn: createClassModule,
+        mutationFn: createModule,
         onSuccess: (res) => {
             queryClient.invalidateQueries({ queryKey: ["course-module"] });
             setMessage(ToastMessage(res, "Module created successfully."));
@@ -86,7 +86,7 @@ function DevCourseModulePage() {
     const editModuleMutation = useMutation({
         mutationFn: ({ module_id, data }) => editModule({ module_id, data }),
         onSuccess: (res) => {
-            queryClient.invalidateQueries({ queryKey: ["class-module"] });
+            queryClient.invalidateQueries({ queryKey: ["course-module"] });
             setMessage(ToastMessage("Update module successfully."));
             setToastShow(true);
             setToastStatus(200);
@@ -107,7 +107,7 @@ function DevCourseModulePage() {
     const createModuleContentMutation = useMutation({
         mutationFn: createModuleItem,
         onSuccess: (res) => {
-            queryClient.invalidateQueries({ queryKey: ["class-module"] });
+            queryClient.invalidateQueries({ queryKey: ["course-module"] });
             setMessage(ToastMessage("Content created successfully."));
             setToastShow(true);
             setToastStatus(200);
@@ -183,7 +183,7 @@ function DevCourseModulePage() {
         if (isOpen && param) {
             setCredentials(prev => ({
                 ...prev,
-                classroom_id: param,
+                course_id: param,
                 module_name: "",
                 is_visible: "",
             }));
@@ -194,7 +194,7 @@ function DevCourseModulePage() {
         if (isOpenEdit && param) {
             setCredentials(prev => ({
                 ...prev,
-                classroom_id: param,
+                course_id: param,
             }));
             setErrors({});
             createModuleMutation.reset();

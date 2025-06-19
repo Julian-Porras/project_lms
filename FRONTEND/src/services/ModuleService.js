@@ -3,7 +3,7 @@ import useAxios from '../hooks/useAxios';
 export default function ModuleService() {
     const { AxiosAuth } = useAxios();
 
-    const createClassModuleApi = async (credentials) => {
+    const createModuleApi = async (credentials) => {
         const response = await AxiosAuth.post(`/api/d/create-module`, credentials);
         return response.data;
     };
@@ -19,7 +19,7 @@ export default function ModuleService() {
     };
 
     return {
-        createClassModuleApi,
+        createModuleApi,
         editModuleApi,
         deleteModuleApi,
     }

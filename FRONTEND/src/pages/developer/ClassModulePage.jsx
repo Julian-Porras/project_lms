@@ -9,7 +9,7 @@ import { useAuth } from "../../context/authContext";
 import { ROLES } from "../../constants/role";
 
 function DevClassModulePage() {
-    const { createClassModule, editModule, createModuleItem, fetchClass } = useDeveloperApi();
+    const { createModule, editModule, createModuleItem, fetchClass } = useDeveloperApi();
     const { user } = useAuth();
     const { id } = useParams();
     const queryClient = useQueryClient();
@@ -63,7 +63,7 @@ function DevClassModulePage() {
     });
 
     const createModuleMutation = useMutation({
-        mutationFn: createClassModule,
+        mutationFn: createModule,
         onSuccess: (res) => {
             queryClient.invalidateQueries({ queryKey: ["class-module"] });
             setMessage(ToastMessage("Module created successfully."));

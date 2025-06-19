@@ -9,7 +9,8 @@ const MainLayout = () => {
     const [isOpenSidebar, setOpen] = useToggle(true);
     return (
         <div className="flex h-screen">
-            <Header resetSubmenus={resetSubmenus}
+            <Header 
+                resetSubmenus={resetSubmenus}
                 isOpenSidebar={isOpenSidebar}
                 setOpen={setOpen}
             />
