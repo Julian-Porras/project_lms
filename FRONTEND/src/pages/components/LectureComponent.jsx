@@ -1,11 +1,37 @@
+import { ButtonSecondary } from "../../components/Button";
+import { DividerThin } from "../../components/Divider";
+import { devClassModuleRouter } from "../../router/developerRouter";
+import { ModuleNavComponent, ModuleStatusComponent } from "./ModuleNavigationComponent";
+import { FaPlus } from "react-icons/fa";
+import style from "../../styles/page.module.css";
+import TextEditor from "../../components/TextEditor";
 
 function LectureComponent({
-
+    content,
+    setContent,
 }) {
+
+    const ModuleNavData = {
+        base: "developer",
+        routes: devClassModuleRouter,
+        param: 1,
+    }
     return (
-        <div className="lecture-component">
-            <h2 className="text-2xl font-bold mb-4">Lecture Component
-            </h2>
+        <div className="flex flex-row h-full">
+            <ModuleNavComponent ModuleNavData={ModuleNavData} />
+            <div className="flex flex-col w-full h-full mx-5">
+                <div className="flex flex-row items-center justify-between " >
+                    <p className={style.title}>Lecture</p>
+                    <ButtonSecondary > <FaPlus />SAVE</ButtonSecondary>
+                </div>
+                <DividerThin />
+
+                <div className="flex flex-col flex-1 h-full gap-2 py-3">
+                    <TextEditor content={content} setContent={setContent} />
+                </div>
+                <div className="flex flex-col gap-2 py-3"></div>
+            </div>
+            <ModuleStatusComponent />
         </div>
     );
 }

@@ -3,13 +3,14 @@ import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import useSubmenu from "../hooks/useSubmenu";
 import useToggle from "../hooks/useToggle";
+import BreadCrumb from "../components/BreadCrumb";
 
 const MainLayout = () => {
     const [isOpenSubmenu, toggleSubmenu, resetSubmenus] = useSubmenu();
     const [isOpenSidebar, setOpen] = useToggle(true);
     return (
         <div className="flex h-screen">
-            <Header 
+            <Header
                 resetSubmenus={resetSubmenus}
                 isOpenSidebar={isOpenSidebar}
                 setOpen={setOpen}
@@ -21,6 +22,7 @@ const MainLayout = () => {
                 isOpenSidebar={isOpenSidebar}
             />
             <main className={`flex-1 p-5 overflow-y-scroll mt-12 `}>
+                <BreadCrumb />
                 <Outlet />
             </main>
         </div>
