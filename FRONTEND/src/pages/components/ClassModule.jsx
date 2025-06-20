@@ -78,6 +78,7 @@ function ClassModuleComponent({
                             classData?.modules?.map((module, index) => (
                                 <Fragment key={module.id}>
                                     <ModuleComponent
+                                        isCourse={module.course_id}
                                         isVisible={module.is_visible}
                                         title={module.module_name}
                                         setOpenContent={setOpenContent}

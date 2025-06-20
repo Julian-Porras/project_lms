@@ -61,7 +61,7 @@ function ClassCard1({ route, name, year, students }) {
     )
 }
 
-function ClassModuleCard({ children }) {
+function ClassModuleCard({  children }) {
     return (
         <div className={styles.ModuleCard}>
             {children}

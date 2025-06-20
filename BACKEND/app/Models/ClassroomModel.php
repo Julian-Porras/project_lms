@@ -32,8 +32,19 @@ class ClassroomModel extends Model
     {
         return $this->hasMany(StudentModel::class, 'classroom_id');
     }
-    public function modules()
+    public function class_modules()
     {
-        return $this->hasMany(ModuleModel::class, 'classroom_id');
+        return $this->hasMany(ModuleModel::class, 'classroom_id', 'id', function ($query) {
+            return $this->hasMany(ModuleItemModel::class, 'module_id', 'id');
+        });
+    }
+    public function course_modules()
+    {
+        return $this->hasMany(ModuleModel::class, 'course_id', 'course_id');
+    }
+
+    public function getModulesAttribute()
+    {
+        return $this->class_modules->merge($this->course_modules);
     }
 }

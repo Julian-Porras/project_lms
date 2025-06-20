@@ -2,6 +2,7 @@ import { lazy } from "react";
 import { FaDesktop } from "react-icons/fa";
 import { ROLES } from "../constants/role";
 import { LuLayoutDashboard, LuBookMarked } from "react-icons/lu";
+import LectureComponent from "../pages/components/LectureComponent";
 
 const Dashboard = lazy(() => import("../pages/instructor/dashboard"));
 const ClassroomPage = lazy(() => import("../pages/developer/ClassroomPage"));
@@ -9,6 +10,13 @@ const CoursePage = lazy(() => import("../pages/developer/CoursePage"));
 const ClassModulePage = lazy(() => import("../pages/developer/ClassModulePage"));
 const CourseModulePage = lazy(() => import("../pages/developer/CourseModulePage"));
 const SettingsPage = lazy(() => import("../pages/settings"));
+
+const devClassContentRouter = [
+  {
+    path: ":id",
+    element: <LectureComponent />,
+  }
+];
 
 const devClassModuleRouter = [
   {
@@ -36,7 +44,12 @@ const devClassModuleRouter = [
     element: <ClassModulePage />,
     meta: { label: "Settings" },
   },
+  {
+    path: "classroom/:id/m",
+    children: devClassContentRouter,
+  },
 ];
+
 
 const devCourseModuleRouter = [
   {
@@ -84,4 +97,4 @@ const developerRouter = [
   },
 ];
 
-export { developerRouter, devClassModuleRouter, devCourseModuleRouter };
+export { developerRouter, devClassModuleRouter, devCourseModuleRouter , devClassContentRouter};

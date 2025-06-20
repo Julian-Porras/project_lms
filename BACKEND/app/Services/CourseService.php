@@ -43,7 +43,7 @@ class CourseService
     {
         return CourseModel::with([
             'modules.module_items' => function ($query) {
-                $query->select('id', 'item_name', 'item_type', 'module_id');
+                $query->select('id', 'item_name', 'item_type', 'module_id', 'is_visible');
             }
         ])
             ->where('id', $course_id)

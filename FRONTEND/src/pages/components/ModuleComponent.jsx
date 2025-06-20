@@ -1,5 +1,5 @@
 import { ClassModuleCard, ModuleHeaderItemCard, ModuleItemCard } from "../../components/Card";
-import { LuAlbum, LuPlus, LuSquarePen, LuEye, LuEyeOff, LuNotebookPen, LuNewspaper, LuRocket, } from "react-icons/lu";
+import { LuAlbum, LuLink2, LuPlus, LuSquarePen, LuEye, LuEyeOff, LuNotebookPen, LuNewspaper, LuRocket, } from "react-icons/lu";
 import Divider from '@mui/material/Divider';
 import { NotPublishedContentStatus, PublishedContentStatus, SettingsIcon } from "../../components/Icon";
 import styles from "../../styles/content.module.css";
@@ -7,6 +7,7 @@ import { CONTENT } from "../../constants/content";
 import { Fragment } from "react";
 
 export function ModuleComponent({
+    isCourse,
     title,
     isVisible,
     setOpenContent,
@@ -22,6 +23,12 @@ export function ModuleComponent({
             <div className="flex flex-row justify-between items-center p-4 rounded-t-md" >
                 <div className="flex flex-row items-center text-xl font-semibold gap-3 uppercase text-[var(--secondary-color)] ">
                     <LuAlbum size={22} /><p className={styles.moduleTitle} >{title}</p>
+                    {isCourse &&
+                        <div className="flex flex-row items-center justify-center gap-2 text-gray-500">
+                            <LuLink2 size={16} />
+                            <p className="text-xs text-gray-500">from course</p>
+                        </div>
+                    }
                 </div>
                 <div className="flex flex-row items-center gap-4 ">
                     {isVisible ? <LuEye size={19} color="var(--gray-color)" /> : <LuEyeOff size={19} color="var(--gray-color)" />}
