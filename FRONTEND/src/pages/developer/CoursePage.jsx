@@ -10,7 +10,7 @@ function DevCoursePage() {
     const queryClient = useQueryClient();
     const navigate = useNavigate();
     const { fetchCourses, createCourse } = useDeveloperApi();
-    const { showToast } = useUI();
+    const { showToast, newBreadcrumb, resetBreadcrumbs } = useUI();
 
     const [errors, setErrors] = useState({});
     const [isOpen, setIsOpen] = useState(false);
@@ -29,6 +29,7 @@ function DevCoursePage() {
     const handlePageChange = (newPage) => {
         setSearchParams({ page: newPage });
     };
+
     const [credentials, setCredentials] = useState({
         course_name: "",
         status: "",
@@ -101,6 +102,11 @@ function DevCoursePage() {
             });
         }
     }, [coursesData]);
+
+    useEffect(() => {
+        resetBreadcrumbs();
+        newBreadcrumb("Courses", "/course", true);
+    }, [newBreadcrumb, resetBreadcrumbs]);
 
     return (
         <>

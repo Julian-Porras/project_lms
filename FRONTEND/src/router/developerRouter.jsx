@@ -67,6 +67,10 @@ const devCourseModuleRouter = [
     element: <CourseModulePage />,
     meta: { label: "Settings" },
   },
+  {
+    path: "course/:id/m",
+    children: devClassContentRouter,
+  },
 ];
 
 const developerRouter = [

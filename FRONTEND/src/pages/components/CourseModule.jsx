@@ -14,6 +14,7 @@ import { LuListStart } from "react-icons/lu";
 import { SwitchComponent } from "../../components/Switch";
 import { CONTENT } from "../../constants/content";
 import { Fragment } from "react";
+import { NavLink, useResolvedPath } from "react-router-dom";
 
 function CourseModuleComponent({
     errors,
@@ -46,6 +47,7 @@ function CourseModuleComponent({
     groupView,
     handleViewChange,
 }) {
+    const base = useResolvedPath(".").pathname;
     return (
         <div className="flex flex-row ">
             <ToastComponent
@@ -86,6 +88,7 @@ function CourseModuleComponent({
                                         setModuleId={setModuleId}
                                         setCredentials={setCredentials}
                                         groupView={groupView}
+                                        base={base}
                                     />
                                     {index !== classData.modules.length - 1 && <DividerDashed />}
                                 </Fragment>

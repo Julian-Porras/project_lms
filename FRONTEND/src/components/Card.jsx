@@ -69,9 +69,9 @@ function ClassModuleCard({  children }) {
     )
 }
 
-function ModuleItemCard({ children }) {
+function ModuleItemCard({ base, route, children }) {
     return (
-        <NavLink className="flex flex-row items-center justify-between gap-2 p-3 pl-6 hover:bg-blue-50 " >
+        <NavLink to={`${base}/${route}`} className="flex flex-row items-center justify-between gap-2 p-3 pl-6 hover:bg-blue-50 " >
             {children}
         </NavLink>
     )

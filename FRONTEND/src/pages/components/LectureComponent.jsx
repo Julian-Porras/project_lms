@@ -19,14 +19,14 @@ function LectureComponent({
     return (
         <div className="flex flex-row h-full">
             <ModuleNavComponent ModuleNavData={ModuleNavData} />
-            <div className="flex flex-col w-full h-full mx-5">
+            <div className="flex flex-col w-full mx-5">
                 <div className="flex flex-row items-center justify-between " >
                     <p className={style.title}>Lecture</p>
                     <ButtonSecondary > <FaPlus />SAVE</ButtonSecondary>
                 </div>
                 <DividerThin />
 
-                <div className="flex flex-col flex-1 h-full gap-2 py-3">
+                <div className="flex flex-col flex-1 gap-2 py-3">
                     <TextEditor content={content} setContent={setContent} />
                 </div>
                 <div className="flex flex-col gap-2 py-3"></div>

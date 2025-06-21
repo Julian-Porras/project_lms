@@ -23,7 +23,6 @@ export default function TextEditor({ content, setContent }) {
                     'codesample', 'charmap', 'searchreplace',
                     'autolink', 'visualblocks', 'wordcount'
                 ].join(' '),
-                autoresize_bottom_margin: 16,
                 content_style: 'body { font-family:Inter,Arial,sans-serif; font-size:14px }'
             }}
         />

@@ -17,6 +17,7 @@ export function ModuleComponent({
     setModuleId,
     setCredentials,
     groupView,
+    base,
 }) {
     return (
         <ClassModuleCard >
@@ -47,7 +48,7 @@ export function ModuleComponent({
                 </div>
             </div>
             <Divider />
-            <ContentComponent groupView={groupView} contentData={contentData} />
+            <ContentComponent groupView={groupView} contentData={contentData} base={base}/>
             <div className="flex flex-row items-center text-gray-600 justify-center cursor-pointer gap-2 p-3 hover:bg-blue-50 rounded-b-md"
                 onClick={() => { setOpenContent(true); setModuleId(module_id); }}
             >
@@ -57,7 +58,7 @@ export function ModuleComponent({
     );
 }
 
-export function ContentComponent({ groupView, contentData }) {
+export function ContentComponent({ groupView, contentData, base }) {
     const lectures = [];
     const assignments = [];
     const quizzes = [];
@@ -94,10 +95,12 @@ export function ContentComponent({ groupView, contentData }) {
                     lectures={lectures}
                     assignments={assignments}
                     quizzes={quizzes}
+                    base={base}
                 />
                 :
                 <ListContentLayout
                     contentData={contentData}
+                    base={base}
                 />
             }
         </div>
@@ -105,12 +108,13 @@ export function ContentComponent({ groupView, contentData }) {
 }
 
 export function ListContentLayout({
-    contentData
+    contentData,
+    base,
 }) {
     return (
         contentData?.map((item) => (
             <Fragment key={item.id}>
-                <ModuleItemCard >
+                <ModuleItemCard route={item.id} base={base} >
                     <div className={styles.contentItemWrapper}>
                         {item.item_type === CONTENT.LECTURE &&
                             <LuNewspaper color="#168f56" size={18} />
@@ -138,6 +142,7 @@ export function GroupContentLayout({
     lectures,
     assignments,
     quizzes,
+    base,
 }) {
     return (
         <>
@@ -149,7 +154,7 @@ export function GroupContentLayout({
                     {
                         lectures?.map((lecture) => (
                             <Fragment key={lecture.id}>
-                                <ModuleItemCard>
+                                <ModuleItemCard route={lecture.id} base={base}>
                                     <div className={styles.contentItemWrapperGroup}>
                                         <p key={lecture.id} className="hover:underline cursor-pointer" >{lecture.name}</p>
                                     </div>
