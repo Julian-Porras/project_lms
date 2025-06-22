@@ -51,7 +51,7 @@ function ClassroomComponent({
                         />
                     ))
                 )}
-            </div>
+                
             {totalPages > 0 && (
                 <PaginationBase
                     page={page}
@@ -63,6 +63,7 @@ function ClassroomComponent({
                     setLimit={setLimit}
                 />
             )}
+            </div>
             <>
                 <ClassroomModal
                     isOpen={isOpen}

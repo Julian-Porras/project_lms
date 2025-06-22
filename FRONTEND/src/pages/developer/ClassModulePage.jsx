@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
 import useDeveloperApi from "../../api/developer";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useResolvedPath, useParams } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import ClassModuleComponent from "../components/ClassModule";
 import ToastMessage from "../../util/toast-message";
 import { devClassModuleRouter } from "../../router/developerRouter";
 import { useAuth } from "../../context/authContext";
 import { ROLES } from "../../constants/role";
+import { useUI } from "../../context/uiContext";
 
 function DevClassModulePage() {
     const { createModule, editModule, createModuleItem, fetchClass } = useDeveloperApi();
+    const { showToast, newBreadcrumb, resetBreadcrumbs } = useUI();
     const { user } = useAuth();
     const { id } = useParams();
     const queryClient = useQueryClient();
@@ -17,6 +19,7 @@ function DevClassModulePage() {
 
     const param = id;
     const base = location.pathname.split("/")[1];
+    const baseBread = useResolvedPath(".").pathname;
     let routes = [];
 
     const [errors, setErrors] = useState({});
@@ -173,6 +176,7 @@ function DevClassModulePage() {
         });
     };
 
+
     useEffect(() => {
         if (moduleId !== null) {
             setContentCredentials(prev => ({
@@ -209,7 +213,14 @@ function DevClassModulePage() {
             }));
         }
 
-    }, [moduleId, isOpen, isOpenContent, isOpenEdit, param]);
+        if (classData && param) {
+            resetBreadcrumbs();
+            newBreadcrumb("Classroom", `/classroom`, false);
+            newBreadcrumb(classData.classroom_name, `/classroom/${param}/m`, true);
+        }
+
+    }, [moduleId, isOpen, isOpenContent, isOpenEdit, param, classData]);
+
 
     return (
         <ClassModuleComponent

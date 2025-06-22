@@ -29,7 +29,6 @@ function LectureComponent({
                 <div className="flex flex-col flex-1 gap-2 py-3">
                     <TextEditor content={content} setContent={setContent} />
                 </div>
-                <div className="flex flex-col gap-2 py-3"></div>
             </div>
             <ModuleStatusComponent />
         </div>
