@@ -8,7 +8,7 @@ function PaginationBase({ page, totalPages, setPage, totalRecords, pageSize, lim
     const end = Math.min(page * pageSize, totalRecords);
 
     return (
-        <div className="flex flex-col md:flex-row justify-between items-center gap-4 my-4">
+        <div className="flex flex-col md:flex-row w-full justify-between items-center gap-4 pt-4 border-t border-gray-300 ">
             {/* <div className="flex flex-col md:flex-row justify-center items-center gap-4 bg-white rounded-sm px-4 py-2 shadow-sm"> */}
             <div className='flex flex-row items-center gap-8 text-sm text-gray-600'>
                 <div className="flex flex-row items-center gap-1">

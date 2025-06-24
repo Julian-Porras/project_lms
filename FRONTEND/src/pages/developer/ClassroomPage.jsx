@@ -10,7 +10,7 @@ import { useUI } from "../../context/uiContext";
 function DevClassroomPage() {
     const queryClient = useQueryClient();
     const navigate = useNavigate();
-    const { showToast } = useUI();
+    const { showToast, newBreadcrumb, resetBreadcrumbs } = useUI();
     const { fetchClasses, fetchCoursesByStatus, createClass } = useDeveloperApi();
 
     const [errors, setErrors] = useState({});
@@ -113,6 +113,11 @@ function DevClassroomPage() {
             });
         }
     }, [isOpen, page, classData]);
+
+    useEffect(() => {
+        resetBreadcrumbs();
+        newBreadcrumb("Classroom", "/classroom", true);
+    }, [newBreadcrumb, resetBreadcrumbs]);
 
     return (
         <>
