@@ -23,7 +23,8 @@ class UpdateModuleItemRequest extends FormRequest
     {
         return [
             'item_name'     => 'required',
-            'item_type'     => 'required',
+            'item_content'  => 'nullable',
+            'is_visible'    => 'required',
         ];
     }
 }

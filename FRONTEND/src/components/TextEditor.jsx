@@ -1,13 +1,14 @@
 import { Editor } from '@tinymce/tinymce-react';
 
-export default function TextEditor({ content, setContent }) {
+export default function TextEditor({ name, content, handleChange }) {
     const editorKey = import.meta.env.VITE_EDITOR_API;
     return (
         <Editor
+            tagName={name}
             apiKey={editorKey}
             value={content}
-            onEditorChange={setContent}
-            initialValue=""
+            onEditorChange={handleChange}
+            initialValue={content}
             init={{
                 height: '100%',
                 menubar: 'edit view insert format tools table help', // ← no “file”

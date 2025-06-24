@@ -27,10 +27,6 @@ function ClassModuleComponent({
     setCredentials,
     isOpen,
     setIsOpen,
-    message,
-    toastShow,
-    toastStatus,
-    setToastShow,
     isSubmitting,
     ModuleNavData,
     isOpenContent,
@@ -51,12 +47,6 @@ function ClassModuleComponent({
     const base = useResolvedPath(".").pathname;
     return (
         <div className="flex flex-row ">
-            <ToastComponent
-                message={message}
-                show={toastShow}
-                setShow={setToastShow}
-                toastStatus={toastStatus}
-            />
             <ModuleNavComponent ModuleNavData={ModuleNavData} />
             {isClassLoading ? (<LoadingPage />) :
                 <div className="flex flex-col w-full h-full mx-5">

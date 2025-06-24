@@ -60,7 +60,7 @@ function DevClassroomPage() {
         mutationFn: createClass,
         onSuccess: (res) => {
             // queryClient.invalidateQueries({ queryKey: ["classes"] });
-            showToast(ToastMessage(res, "Class created successfully."), 200)
+            showToast(ToastMessage(res, "Class created successfully."), 200);
             setIsOpen(false);
         },
         onError: (err) => {

@@ -101,12 +101,10 @@ function DevCoursePage() {
                 pageSize: coursesData.per_page,
             });
         }
-    }, [coursesData]);
-
-    useEffect(() => {
+        
         resetBreadcrumbs();
         newBreadcrumb("Courses", "/course", true);
-    }, [newBreadcrumb, resetBreadcrumbs]);
+    }, [newBreadcrumb, resetBreadcrumbs,coursesData]);
 
     return (
         <>

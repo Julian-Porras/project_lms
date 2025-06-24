@@ -14,6 +14,7 @@ class ModuleItemModel extends Model
         'module_id',
         'item_name',
         'item_type',
+        'item_content',
         'is_visible'
     ];
 

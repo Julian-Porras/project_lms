@@ -12,8 +12,8 @@ function ButtonAccent({ children }) {
     return <button className={`${styles.btn} ${styles.buttonAccent}`}>{children}</button>;
 }
 
-function ButtonCreate({ type, isDisable, title }) {
-    return <button type={type} disabled={isDisable} className={`${styles.btn} ${styles.buttonCreate}`}>
+function ButtonCreate({ type, isDisable, title, method }) {
+    return <button onClick={method} type={type} disabled={isDisable} className={`${styles.btn} ${styles.buttonCreate}`}>
         {title}
     </button>
 }

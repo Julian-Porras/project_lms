@@ -9,12 +9,12 @@ const CoursePage = lazy(() => import("../pages/developer/CoursePage"));
 const ClassModulePage = lazy(() => import("../pages/developer/ClassModulePage"));
 const CourseModulePage = lazy(() => import("../pages/developer/CourseModulePage"));
 const SettingsPage = lazy(() => import("../pages/settings"));
-const LectureComponent = lazy(() => import("../pages/components/LectureComponent"));
+const LecturePage = lazy(() => import("../pages/developer/LecturePage"));
 
 const devClassContentRouter = [
   {
     path: ":id",
-    element: <LectureComponent />,
+    element: <LecturePage />,
   }
 ];
 

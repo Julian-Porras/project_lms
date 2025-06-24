@@ -7,9 +7,11 @@ import ToastMessage from "../../util/toast-message";
 import { devClassModuleRouter } from "../../router/developerRouter";
 import { useAuth } from "../../context/authContext";
 import { ROLES } from "../../constants/role";
+import { useUI } from "../../context/uiContext";
 
 function DevClassModulePage() {
     const { createModule, editModule, createModuleItem, fetchClass } = useDeveloperApi();
+    const { showToast } = useUI();
     const { user } = useAuth();
     const { id } = useParams();
     const queryClient = useQueryClient();
@@ -27,9 +29,6 @@ function DevClassModulePage() {
     const [isOpenOrder, setOpenOrder] = useState(false);
     const [groupView, setGroupView] = useState(false);
     const [moduleId, setModuleId] = useState();
-    const [message, setMessage] = useState("");
-    const [toastShow, setToastShow] = useState(false);
-    const [toastStatus, setToastStatus] = useState(200);
     const [credentials, setCredentials] = useState({
         classroom_id: param,
         module_name: "",
@@ -66,16 +65,12 @@ function DevClassModulePage() {
         mutationFn: createModule,
         onSuccess: (res) => {
             queryClient.invalidateQueries({ queryKey: ["class-module"] });
-            setMessage(ToastMessage("Module created successfully."));
-            setToastShow(true);
-            setToastStatus(200);
+            showToast(ToastMessage(res, "Module created successfully."), 200);
             setIsOpen(false);
         },
         onError: (err) => {
             if (err.response?.status >= 500) {
-                setMessage(ToastMessage(err));
-                setToastShow(true);
-                setToastStatus(err.response?.status || 500);
+                showToast(ToastMessage(err), err.response?.status || 500);
             }
             if (err.response?.data?.errors) {
                 setErrors(err.response.data.errors);
@@ -87,16 +82,12 @@ function DevClassModulePage() {
         mutationFn: ({ module_id, credentials }) => editModule({ module_id, credentials }),
         onSuccess: (res) => {
             queryClient.invalidateQueries({ queryKey: ["class-module"] });
-            setMessage(ToastMessage("Update module successfully."));
-            setToastShow(true);
-            setToastStatus(200);
+            showToast(ToastMessage(res, "Update module successfully."), 200);
             setOpenEdit(false);
         },
         onError: (err) => {
             if (err.response?.status >= 500) {
-                setMessage(ToastMessage(err));
-                setToastShow(true);
-                setToastStatus(err.response?.status || 500);
+                showToast(ToastMessage(err), err.response?.status || 500);
             }
             if (err.response?.data?.errors) {
                 setErrors(err.response.data.errors);
@@ -108,16 +99,12 @@ function DevClassModulePage() {
         mutationFn: createModuleItem,
         onSuccess: (res) => {
             queryClient.invalidateQueries({ queryKey: ["class-module"] });
-            setMessage(ToastMessage("Content created successfully."));
-            setToastShow(true);
-            setToastStatus(200);
+            showToast(ToastMessage(res, "Content created successfully."), 200);
             setOpenContent(false);
         },
         onError: (err) => {
             if (err.response?.status >= 500) {
-                setMessage(ToastMessage(err));
-                setToastShow(true);
-                setToastStatus(err.response?.status || 500);
+                showToast(ToastMessage(err), err.response?.status || 500);
             }
             if (err.response?.data?.errors) {
                 setErrors(err.response.data.errors);
@@ -205,6 +192,7 @@ function DevClassModulePage() {
             setContentCredentials(prev => ({
                 ...prev,
                 item_name: "",
+                item_type: "",
                 is_visible: "",
             }));
         }
@@ -222,10 +210,6 @@ function DevClassModulePage() {
             setCredentials={setCredentials}
             isOpen={isOpen}
             setIsOpen={setIsOpen}
-            message={message}
-            toastShow={toastShow}
-            toastStatus={toastStatus}
-            setToastShow={setToastShow}
             isSubmitting={isSubmitting}
             ModuleNavData={ModuleNavData}
             isOpenContent={isOpenContent}
