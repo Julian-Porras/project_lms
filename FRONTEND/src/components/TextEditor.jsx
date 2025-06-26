@@ -29,32 +29,6 @@ export default function TextEditor({ name, content, handleChange }) {
         toolbar: toolbarOptions,
     };
     return (
-<<<<<<< HEAD
-        <Editor
-            tagName={name}
-            apiKey={editorKey}
-            value={content}
-            onEditorChange={handleChange}
-            initialValue={content}
-            init={{
-                height: '100%',
-                menubar: 'edit view insert format tools table help', // ← no “file”
-                toolbar:
-                    'undo redo | blocks | bold italic underline | ' +
-                    'alignleft aligncenter alignright | bullist numlist | ' +
-                    'link image | codesample table | removeformat',
-                branding: false,
-                promotion: false,
-                resize: false,
-                plugins: [
-                     'lists', 'link', 'image', 'table',
-                    'codesample', 'charmap', 'searchreplace',
-                    'autolink', 'visualblocks', 'wordcount'
-                ].join(' '),
-                content_style: 'body { font-family:Inter,Arial,sans-serif; font-size:14px }'
-            }}
-        />
-=======
         // <Editor
         //     apiKey={editorKey}
         //     value={content}
@@ -83,11 +57,11 @@ export default function TextEditor({ name, content, handleChange }) {
                 preserveWhitespace={false}
                 placeholder='Write something...'
                 modules={modules}
+                // name={name}
+                onChange={(value) => handleChange({ target: { name, value } })}
                 value={content}
-                onChange={setContent}
                 theme="snow"
             />
         </div >
->>>>>>> 9b7c9bcaea7b18dbaf4aa19fd553a5c48e60d666
     );
 }

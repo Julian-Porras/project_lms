@@ -1,5 +1,5 @@
 import { ButtonCancel, ButtonSecondary, ButtonCreate } from "../../components/Button";
-import { ClassCard } from "../../components/Card";
+import { ClassCard, CourseCard } from "../../components/Card";
 import { DividerThin } from "../../components/Divider";
 import style from "../../styles/page.module.css";
 import { FaPlus } from "react-icons/fa";
@@ -53,25 +53,27 @@ function CourseComponent({
                     </div>
                 ) : (
                     coursesData?.map((course) => (
-                        <ClassCard route={`${course.id}/m`} key={course.id}>
-                            <p>{course.course_name}</p>
-                        </ClassCard>
+                        <CourseCard
+                            route={`${course.id}/m`}
+                            key={course.id}
+                            name={course.course_name}
+                        />
                     ))
                 )}
+                {totalPages > 0 && (
+                    <PaginationBase
+                        page={page}
+                        totalPages={totalPages}
+                        setPage={setPage}
+                        totalRecords={totalRecords}
+                        pageSize={pageSize}
+                        limit={limit}
+                        setLimit={setLimit}
+                    />
+                )}
             </div>
-            {totalPages > 0 && (
-                <PaginationBase
-                    page={page}
-                    totalPages={totalPages}
-                    setPage={setPage}
-                    totalRecords={totalRecords}
-                    pageSize={pageSize}
-                    limit={limit}
-                    setLimit={setLimit}
-                />
-            )}
             <>
-                <CourseModal 
+                <CourseModal
                     isOpen={isOpen}
                     setIsOpen={setIsOpen}
                     credentials={credentials}

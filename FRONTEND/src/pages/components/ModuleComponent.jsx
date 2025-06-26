@@ -48,7 +48,7 @@ export function ModuleComponent({
                 </div>
             </div>
             <Divider />
-            <ContentComponent groupView={groupView} contentData={contentData} base={base}/>
+            <ContentComponent groupView={groupView} contentData={contentData} base={base} />
             <div className="flex flex-row items-center text-gray-600 justify-center cursor-pointer gap-2 p-3 hover:bg-blue-50 rounded-b-md"
                 onClick={() => { setOpenContent(true); setModuleId(module_id); }}
             >
@@ -126,6 +126,7 @@ export function ListContentLayout({
                             <LuRocket color="#168f56" size={18} />
                         }
                         <p className=" hover:underline cursor-pointer" >{item.item_name}</p>
+                        {item.course_id ?? <LuLink2 color="#6a7282" size={16} />}
                     </div>
                     <div className={styles.contentItemWrapper}>
                         {item.is_visible ? <PublishedContentStatus /> : <NotPublishedContentStatus />}

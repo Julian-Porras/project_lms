@@ -12,12 +12,13 @@ function InputText({
   onChange,
   placeholder,
   caps = false,
-  errors
+  errors,
+  className,
 }) {
   return (
     <div className="flex flex-col gap-2">
       <input
-        className={styles.textInput}
+        className={styles.textInput + (className ? ` ${className}` : "")}
         type={type}
         name={name}
         value={value}

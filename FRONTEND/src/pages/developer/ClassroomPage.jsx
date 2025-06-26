@@ -40,7 +40,7 @@ function DevClassroomPage() {
             const [, page, limit] = queryKey;
             return fetchClasses({ page, limit, signal });
         },
-        keepPreviousData: true,
+        // keepPreviousData: true,
         // staleTime: 300000, // 5 mins
         refetchOnWindowFocus: false,
     });

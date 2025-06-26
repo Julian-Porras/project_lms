@@ -5,14 +5,19 @@ import { useParams } from "react-router-dom";
 import { useAuth } from "../../context/authContext";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useUI } from "../../context/uiContext";
+import { useEffect, useState } from "react";
+import { ROLES } from "../../constants/role";
+import ToastMessage from "../../util/toast-message";
 
 function LecturePage() {
-    const { editModuleItem } = useDeveloperApi();
+    const { editModuleItem, fetchModuleItem } = useDeveloperApi();
     const queryClient = useQueryClient();
     const { user } = useAuth();
     const { id } = useParams();
+    const { showToast } = useUI();
 
     const param = id;
+    let routes = [];
 
     const [errors, setErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -32,11 +37,20 @@ function LecturePage() {
         param: param,
     }
 
+    const { data: contentData, isLoading: isContentLoading, error: isContentError } = useQuery({
+        queryKey: ["content", param],
+        queryFn: ({ signal, queryKey }) => {
+            return fetchModuleItem({ item_id: param, signal });
+        },
+        // keepPreviousData: true,
+        refetchOnWindowFocus: false,
+    });
+
     const editModuleItemMutation = useMutation({
         mutationFn: ({ item_id, credentials }) => editModuleItem({ item_id, credentials }),
         onSuccess: (res) => {
             // queryClient.invalidateQueries({ queryKey: ["class-module"] });
-            showToast(ToastMessage(res, "Updated successfully."), 200);
+            showToast(ToastMessage("Changes saved successfully."), 200);
         },
         onError: (err) => {
             if (err.response?.status >= 500) {
@@ -66,8 +80,21 @@ function LecturePage() {
         );
     };
 
+    useEffect(() => {
+        if (contentData) {
+            setContent({
+                item_name: contentData.item_name ?? "",
+                item_content: contentData.item_content ?? "",
+                is_visible: contentData.is_visible ?? false,
+            });
+        }
+    }, [contentData]);
+
     return (
         <LectureComponent
+            contentData={contentData}
+            isContentLoading={isContentLoading}
+            isContentError={isContentError}
             errors={errors}
             isSubmitting={isSubmitting}
             content={content}

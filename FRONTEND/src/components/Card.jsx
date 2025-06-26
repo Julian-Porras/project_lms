@@ -28,21 +28,45 @@ function ContainerCard({ children }) {
     )
 }
 
-function ClassCard({ route, children }) {
-    const base = useResolvedPath(".").pathname;
-    return (
-        <NavLink to={`${base}/${route}`} className={styles.containerCard}>
-            <div>{children}</div>
-        </NavLink>
-    )
-}
+// function ClassCard({ route, children }) {
+//     const base = useResolvedPath(".").pathname;
+//     return (
+//         <NavLink to={`${base}/${route}`} className={styles.containerCard}>
+//             <div>{children}</div>
+//         </NavLink>
+//     )
+// }
 
-function ClassCard1({ route, name, year, students }) {
+function ClassCard({ route, name, year, students }) {
     const base = useResolvedPath(".").pathname;
     return (
         <Card sx={{ maxWidth: 220, width: "100%", ':hover': { boxShadow: 3 } }}>
             <NavLink to={`${base}/${route}`} className="flex flex-col justify-center">
                 <div className="w-full h-24 bg-cyan-500">
+                </div>
+                <CardContent className="flex flex-col items-start justify-center">
+                    <Typography gutterBottom variant="h5" component="div" className="uppercase" >
+                        {name}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                        Year Level: {year || "N/A"}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                        Students: {students || "N/A"}
+                    </Typography>
+                </CardContent>
+
+            </NavLink>
+        </Card>
+    )
+}
+
+function CourseCard({ route, name, year, students }) {
+    const base = useResolvedPath(".").pathname;
+    return (
+        <Card sx={{ maxWidth: 220, width: "100%", ':hover': { boxShadow: 3 } }}>
+            <NavLink to={`${base}/${route}`} className="flex flex-col justify-center">
+                <div className="w-full h-24 bg-green-500">
                 </div>
                 <CardContent className="flex flex-col items-start justify-center">
                     <Typography gutterBottom variant="h5" component="div" className="uppercase" >
@@ -113,7 +137,7 @@ export {
     RegisterCard,
     ContainerCard,
     ClassCard,
-    ClassCard1,
+    CourseCard,
     ClassModuleCard,
     ModuleHeaderItemCard,
     ModuleItemCard,

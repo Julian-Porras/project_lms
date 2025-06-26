@@ -41,7 +41,7 @@ function DevCoursePage() {
             const [, page, limit] = queryKey;
             return fetchCourses({ page, limit, signal });
         },
-        keepPreviousData: true,
+        // keepPreviousData: true,
         refetchOnWindowFocus: false,
     });
 

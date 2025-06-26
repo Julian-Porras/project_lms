@@ -1,5 +1,5 @@
 import { ButtonCancel, ButtonSecondary, ButtonCreate } from "../../components/Button";
-import { ClassCard, ClassCard1 } from "../../components/Card";
+import { ClassCard } from "../../components/Card";
 import { DividerThin } from "../../components/Divider";
 import style from "../../styles/page.module.css";
 import { FaPlus } from "react-icons/fa";
@@ -44,25 +44,25 @@ function ClassroomComponent({
                     </div>
                 ) : (
                     classData?.map((classroom) => (
-                        <ClassCard1
+                        <ClassCard
                             route={`${classroom.id}/m`}
                             key={classroom.id}
                             name={classroom.classroom_name}
                         />
                     ))
                 )}
-                
-            {totalPages > 0 && (
-                <PaginationBase
-                    page={page}
-                    totalPages={totalPages}
-                    setPage={setPage}
-                    totalRecords={totalRecords}
-                    pageSize={pageSize}
-                    limit={limit}
-                    setLimit={setLimit}
-                />
-            )}
+
+                {totalPages > 0 && (
+                    <PaginationBase
+                        page={page}
+                        totalPages={totalPages}
+                        setPage={setPage}
+                        totalRecords={totalRecords}
+                        pageSize={pageSize}
+                        limit={limit}
+                        setLimit={setLimit}
+                    />
+                )}
             </div>
             <>
                 <ClassroomModal

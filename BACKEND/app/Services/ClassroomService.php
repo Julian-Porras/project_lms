@@ -53,7 +53,7 @@ class ClassroomService
 
         // Get module_items for all modules
         $moduleItems = DB::table('tbl_module_item')
-            ->select('id', 'item_name', 'item_type', 'module_id', 'is_visible')
+            ->select('id', 'classroom_id', 'course_id', 'item_name', 'item_type', 'module_id', 'is_visible')
             ->whereIn('module_id', $modules->pluck('id')->all())
             ->get()
             ->groupBy('module_id');

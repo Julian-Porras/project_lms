@@ -7,7 +7,7 @@
 }
 
 .gridWrapper {
-    @apply flex flex-row flex-wrap content-start gap-5 p-5 bg-white rounded-md border border-gray-200 min-h-1/5;
+    @apply flex flex-row flex-wrap content-start gap-5 p-5 bg-white rounded-md border border-gray-200 ;
 }
 
 .moduleTitle{
