@@ -2,11 +2,15 @@ import { createContext, useContext, useState, useCallback, useEffect } from "rea
 import { ToastComponent } from "../components/Toast";
 import { ROLES } from "../constants/role";
 import { useAuth } from "./authContext";
+import { usePrompt } from "../hooks/usePrompt";
 
 const UIContext = createContext();
 
 export const UIProvider = ({ children }) => {
   const { user } = useAuth();
+
+  const [isBlocking, setIsBlocking] = useState(false);
+  const [blockMessage, setBlockMessage] = useState("You have unsaved changes. Are you sure you want to leave?");
 
   const [toastShow, setToastShow] = useState(false);
   const [message, setMessage] = useState("");
@@ -59,6 +63,19 @@ export const UIProvider = ({ children }) => {
     [basePath]
   );
 
+
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      if (!isBlocking) return;
+      e.preventDefault();
+      e.returnValue = ""; // Required for Chrome
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+  }, [isBlocking]);
+
+  usePrompt(blockMessage, isBlocking)
   return (
     <UIContext.Provider
       value={{
@@ -68,6 +85,10 @@ export const UIProvider = ({ children }) => {
         setBreadcrumbs,
         resetBreadcrumbs,
         newBreadcrumb,
+        isBlocking,
+        setIsBlocking,
+        blockMessage,
+        setBlockMessage,
       }}
     >
       {children}

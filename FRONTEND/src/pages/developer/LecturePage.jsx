@@ -14,12 +14,13 @@ function LecturePage() {
     const queryClient = useQueryClient();
     const { user } = useAuth();
     const { id } = useParams();
-    const { showToast } = useUI();
+    const { showToast, setIsBlocking } = useUI();
 
     const param = id;
     let routes = [];
 
     const [errors, setErrors] = useState({});
+    const [isDirty, setIsDirty] = useState(true);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [content, setContent] = useState({
         item_name: "",
@@ -88,7 +89,8 @@ function LecturePage() {
                 is_visible: contentData.is_visible ?? false,
             });
         }
-    }, [contentData]);
+        setIsBlocking(true);
+    }, [contentData, isDirty]);
 
     return (
         <LectureComponent

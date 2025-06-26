@@ -126,7 +126,7 @@ export function ListContentLayout({
                             <LuRocket color="#168f56" size={18} />
                         }
                         <p className=" hover:underline cursor-pointer" >{item.item_name}</p>
-                        {item.course_id ?? <LuLink2 color="#6a7282" size={16} />}
+                        {item.course_id && <LuLink2 color="#6a7282" size={16} />}
                     </div>
                     <div className={styles.contentItemWrapper}>
                         {item.is_visible ? <PublishedContentStatus /> : <NotPublishedContentStatus />}
