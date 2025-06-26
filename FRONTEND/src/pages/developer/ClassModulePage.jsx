@@ -11,13 +11,13 @@ import { useUI } from "../../context/uiContext";
 
 function DevClassModulePage() {
     const { createModule, editModule, createModuleItem, fetchClass } = useDeveloperApi();
-    const { showToast, newBreadcrumb, resetBreadcrumbs } = useUI();
+    const { showToast, newBreadcrumb, resetBreadcrumbs, setClassroom } = useUI();
     const { user } = useAuth();
-    const { id } = useParams();
+    const { class_id } = useParams();
     const queryClient = useQueryClient();
     const location = useLocation();
 
-    const param = id;
+    const param = class_id;
     const base = location.pathname.split("/")[1];
     const baseBread = useResolvedPath(".").pathname;
     let routes = [];
@@ -51,6 +51,7 @@ function DevClassModulePage() {
         base: base,
         routes: routes,
         param: param,
+        paramName: 'class_id',
     }
 
     const { data: classData, isLoading: isClassLoading, error: isClassError } = useQuery({
@@ -200,6 +201,7 @@ function DevClassModulePage() {
         }
 
         if (classData && param) {
+            setClassroom(prev => ({ ...prev,className: classData.classroom_name, classId: param}));
             resetBreadcrumbs();
             newBreadcrumb("Classroom", `/classroom`, false);
             newBreadcrumb(classData.classroom_name, `/classroom/${param}/m`, true);

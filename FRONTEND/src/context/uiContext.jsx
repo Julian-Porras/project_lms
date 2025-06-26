@@ -16,6 +16,14 @@ export const UIProvider = ({ children }) => {
   const [message, setMessage] = useState("");
   const [toastStatus, setToastStatus] = useState(200);
   const [breadcrumbs, setBreadcrumbs] = useState([]);
+  const [classroom, setClassroom] = useState({
+    className: "",
+    classId: "",
+  });
+  const [coursePage, setCoursePage] = useState({
+    courseName: "",
+    courseId: "",
+  });
 
   const roleBasePathMap = {
     [ROLES.DEVELOPER]: "/dev",
@@ -62,6 +70,22 @@ export const UIProvider = ({ children }) => {
     },
     [basePath]
   );
+  useEffect(() => {
+    const savedClassroom = localStorage.getItem('classroom');
+    if (savedClassroom) {
+      setClassroom(JSON.parse(savedClassroom));
+    }
+    const savedCourse = localStorage.getItem('course');
+    if (savedCourse) {
+      setCoursePage(JSON.parse(savedCourse));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (classroom?.classId && classroom?.className) {
+      localStorage.setItem('classroom', JSON.stringify(classroom));
+    }
+  }, [classroom]);
 
 
   useEffect(() => {
@@ -89,6 +113,10 @@ export const UIProvider = ({ children }) => {
         setIsBlocking,
         blockMessage,
         setBlockMessage,
+        classroom,
+        setClassroom,
+        coursePage,
+        setCoursePage,
       }}
     >
       {children}

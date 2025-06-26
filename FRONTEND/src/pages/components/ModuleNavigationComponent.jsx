@@ -9,7 +9,7 @@ function ModuleNavComponent({ ModuleNavData }) {
             <nav className={style.moduleNavContainer}>
                 {
                     ModuleNavData.routes.filter(route => route.meta?.label).map(route => {
-                        const filledPath = ReplaceRouteParams(route.path, { id: ModuleNavData.param });
+                        const filledPath = ReplaceRouteParams(route.path, { [ModuleNavData.paramName]: ModuleNavData.param });
                         return (
                             <div key={route.meta.label} className={style.navGroup}>
                                 <NavLink

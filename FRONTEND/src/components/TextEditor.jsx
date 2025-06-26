@@ -57,6 +57,7 @@ export default function TextEditor({ name, content, handleChange }) {
                 preserveWhitespace={false}
                 placeholder='Write something...'
                 modules={modules}
+                // readOnly={true}
                 // name={name}
                 onChange={(value) => handleChange({ target: { name, value } })}
                 value={content}

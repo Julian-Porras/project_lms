@@ -1,10 +1,9 @@
 import { ButtonCreate, ButtonSecondary } from "../../components/Button";
 import { DividerThin } from "../../components/Divider";
 import { ModuleNavComponent, ModuleStatusComponent } from "./ModuleNavigationComponent";
-import { FaPlus } from "react-icons/fa";
-import style from "../../styles/page.module.css";
 import TextEditor from "../../components/TextEditor";
 import { InputText } from "../../components/Input";
+import styles from "../../styles/lecture.module.css";
 
 function LectureComponent({
     contentData,
@@ -31,6 +30,10 @@ function LectureComponent({
                 </div>
                 <DividerThin />
                 <div className="flex flex-col flex-1 gap-2 py-3">
+                    {/* <div
+                        className={`prose max-w-none ${styles.lectureContent}`}
+                        dangerouslySetInnerHTML={{ __html: content?.item_content }}
+                    /> */}
                     <TextEditor name={"item_content"} content={content?.item_content} handleChange={handleChange} />
                 </div>
             </div>

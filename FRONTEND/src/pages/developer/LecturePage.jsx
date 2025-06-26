@@ -13,10 +13,10 @@ function LecturePage() {
     const { editModuleItem, fetchModuleItem } = useDeveloperApi();
     const queryClient = useQueryClient();
     const { user } = useAuth();
-    const { id } = useParams();
-    const { showToast, setIsBlocking } = useUI();
+    const { lecture_id } = useParams();
+    const { showToast, setIsBlocking, newBreadcrumb, resetBreadcrumbs, classroom } = useUI();
 
-    const param = id;
+    const param = lecture_id;
     let routes = [];
 
     const [errors, setErrors] = useState({});
@@ -36,6 +36,7 @@ function LecturePage() {
         base: "developer",
         routes: devClassModuleRouter,
         param: param,
+        paramName: 'lecture_id'
     }
 
     const { data: contentData, isLoading: isContentLoading, error: isContentError } = useQuery({
@@ -50,7 +51,7 @@ function LecturePage() {
     const editModuleItemMutation = useMutation({
         mutationFn: ({ item_id, credentials }) => editModuleItem({ item_id, credentials }),
         onSuccess: (res) => {
-            // queryClient.invalidateQueries({ queryKey: ["class-module"] });
+            queryClient.invalidateQueries({ queryKey: ["content"] });
             showToast(ToastMessage("Changes saved successfully."), 200);
         },
         onError: (err) => {
@@ -89,8 +90,16 @@ function LecturePage() {
                 is_visible: contentData.is_visible ?? false,
             });
         }
-        setIsBlocking(true);
-    }, [contentData, isDirty]);
+        // setIsBlocking(false);
+        
+        if (contentData && param) {
+            resetBreadcrumbs();
+            newBreadcrumb("Classroom", `/classroom`, false);
+            newBreadcrumb(classroom.className, `/classroom/${classroom.classId}/m`, false);
+            newBreadcrumb(contentData.item_name, `/classroom/${classroom.classId}/m/${param}`, true);
+        }   
+
+    }, [contentData, isDirty, param, classroom]);
 
     return (
         <LectureComponent

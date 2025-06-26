@@ -1,0 +1,5 @@
+@import "tailwindcss";
+
+.lectureContent {
+  @apply bg-white p-6 rounded-md shadow-sm;
+}
