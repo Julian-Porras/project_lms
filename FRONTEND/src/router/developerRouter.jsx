@@ -9,12 +9,19 @@ const CoursePage = lazy(() => import("../pages/developer/CoursePage"));
 const ClassModulePage = lazy(() => import("../pages/developer/ClassModulePage"));
 const CourseModulePage = lazy(() => import("../pages/developer/CourseModulePage"));
 const SettingsPage = lazy(() => import("../pages/settings"));
-const LecturePage = lazy(() => import("../pages/developer/LecturePage"));
+const ClassLecturePage = lazy(() => import("../pages/developer/ClassLecturePage"));
+const CourseLecturePage = lazy(() => import("../pages/developer/CourseLecturePage"));
 
 const devClassContentRouter = [
   {
     path: ":lecture_id",
-    element: <LecturePage />,
+    element: <ClassLecturePage />,
+  }
+];
+const devCourseContentRouter = [
+  {
+    path: ":lecture_id",
+    element: <CourseLecturePage />,
   }
 ];
 
@@ -53,23 +60,23 @@ const devClassModuleRouter = [
 
 const devCourseModuleRouter = [
   {
-    path: "course/:id/m",
+    path: "course/:course_id/m",
     element: <CourseModulePage />,
     meta: { label: "Modules" },
   },
   {
-    path: "course/:id/a",
+    path: "course/:course_id/a",
     element: <CourseModulePage />,
     meta: { label: "Assignments" },
   },
   {
-    path: "course/:id/s",
+    path: "course/:course_id/s",
     element: <CourseModulePage />,
     meta: { label: "Settings" },
   },
   {
-    path: "course/:id/m",
-    children: devClassContentRouter,
+    path: "course/:course_id/m",
+    children: devCourseContentRouter,
   },
 ];
 
@@ -101,4 +108,4 @@ const developerRouter = [
   },
 ];
 
-export { developerRouter, devClassModuleRouter, devCourseModuleRouter , devClassContentRouter};
+export { developerRouter, devClassModuleRouter, devCourseModuleRouter , devClassContentRouter, devCourseContentRouter};

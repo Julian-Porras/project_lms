@@ -85,7 +85,10 @@ export const UIProvider = ({ children }) => {
     if (classroom?.classId && classroom?.className) {
       localStorage.setItem('classroom', JSON.stringify(classroom));
     }
-  }, [classroom]);
+    if (coursePage?.courseId && coursePage?.courseName) {
+      localStorage.setItem('course', JSON.stringify(coursePage));
+    }
+  }, [classroom, coursePage]);
 
 
   useEffect(() => {

@@ -14,6 +14,7 @@ function InputText({
   caps = false,
   errors,
   className,
+  isReadOnly,
 }) {
   return (
     <div className="flex flex-col gap-2">
@@ -26,6 +27,8 @@ function InputText({
         placeholder={placeholder}
         onKeyUp={caps ? handleKeyUp : null}
         autoComplete="off"
+        readOnly={isReadOnly}
+        disabled={isReadOnly}
       />
       {errors && <p className="text-sm text-red-500 mt-1">&nbsp;{errors}</p>}
     </div>

@@ -11,7 +11,7 @@ function LoadingPage() {
     }, []);
 
     return (
-        <div className="flex flex-row items-center justify-center w-full h-full">
+        <div className="flex flex-row items-center justify-center w-full">
             {showSpinner && (
                 <OrbitProgress
                     dense

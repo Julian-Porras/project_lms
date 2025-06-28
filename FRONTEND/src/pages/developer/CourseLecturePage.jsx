@@ -1,4 +1,3 @@
-import LectureComponent from "../components/LectureComponent";
 import { devClassModuleRouter } from "../../router/developerRouter";
 import useDeveloperApi from "../../api/developer";
 import { useParams } from "react-router-dom";
@@ -8,13 +7,16 @@ import { useUI } from "../../context/uiContext";
 import { useEffect, useState } from "react";
 import { ROLES } from "../../constants/role";
 import ToastMessage from "../../util/toast-message";
+import { LoadingPage } from "../../components/Loading";
+import CourseLectureComponent from "../components/CourseLectureComponent";
 
-function LecturePage() {
+
+function ClassLecturePage() {
     const { editModuleItem, fetchModuleItem } = useDeveloperApi();
     const queryClient = useQueryClient();
     const { user } = useAuth();
     const { lecture_id } = useParams();
-    const { showToast, setIsBlocking, newBreadcrumb, resetBreadcrumbs, classroom } = useUI();
+    const { showToast, setIsBlocking, newBreadcrumb, resetBreadcrumbs, coursePage } = useUI();
 
     const param = lecture_id;
     let routes = [];
@@ -26,6 +28,7 @@ function LecturePage() {
         item_name: "",
         item_content: "",
         is_visible: false,
+        isCourse: false,
     });
 
     if (user?.role_id === ROLES.DEVELOPER) {
@@ -39,12 +42,11 @@ function LecturePage() {
         paramName: 'lecture_id'
     }
 
-    const { data: contentData, isLoading: isContentLoading, error: isContentError } = useQuery({
+    const { data: contentData, isLoading: isContentLoading } = useQuery({
         queryKey: ["content", param],
-        queryFn: ({ signal, queryKey }) => {
-            return fetchModuleItem({ item_id: param, signal });
-        },
-        // keepPreviousData: true,
+        queryFn: ({ signal }) => fetchModuleItem({ item_id: param, signal }),
+        enabled: !!param, 
+        keepPreviousData: true,
         refetchOnWindowFocus: false,
     });
 
@@ -83,31 +85,26 @@ function LecturePage() {
     };
 
     useEffect(() => {
-        if (contentData) {
-            setContent({
-                item_name: contentData.item_name ?? "",
-                item_content: contentData.item_content ?? "",
-                is_visible: contentData.is_visible ?? false,
-            });
-        }
-        // setIsBlocking(false);
-        
-        if (contentData && param) {
-            resetBreadcrumbs();
-            newBreadcrumb("Classroom", `/classroom`, false);
-            newBreadcrumb(classroom.className, `/classroom/${classroom.classId}/m`, false);
-            newBreadcrumb(contentData.item_name, `/classroom/${classroom.classId}/m/${param}`, true);
-        }   
+        if (!contentData) return;
 
-    }, [contentData, isDirty, param, classroom]);
+        setContent({
+            item_name: contentData.item_name ?? "",
+            item_content: contentData.item_content ?? "",
+            is_visible: contentData.is_visible ?? false,
+            isCourse: contentData.course_id ?? false,
+        });
+
+        resetBreadcrumbs();
+        newBreadcrumb("Course", `/course`, false);
+        newBreadcrumb(coursePage.courseName, `/course/${coursePage.courseId}/m`, false);
+        newBreadcrumb(contentData.item_name, `/course/${coursePage.courseId}/m/${param}`, true);
+    }, [contentData, param]);
 
     return (
-        <LectureComponent
-            contentData={contentData}
-            isContentLoading={isContentLoading}
-            isContentError={isContentError}
+        <CourseLectureComponent
             errors={errors}
             isSubmitting={isSubmitting}
+            isContentLoading={isContentLoading}
             content={content}
             setContent={setContent}
             ModuleNavData={ModuleNavData}
@@ -116,4 +113,4 @@ function LecturePage() {
         />
     );
 }
-export default LecturePage;
+export default ClassLecturePage;

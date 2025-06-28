@@ -2,7 +2,7 @@ import { Editor } from '@tinymce/tinymce-react';
 import ReactQuill from 'react-quill-new';
 import 'react-quill-new/dist/quill.snow.css';
 
-export default function TextEditor({ name, content, handleChange }) {
+export default function TextEditor({ name, content, handleChange, isReadOnly }) {
     const editorKey = import.meta.env.VITE_EDITOR_API;
     const toolbarOptions = [
         ['bold', 'italic', 'underline'],        // toggled buttons
@@ -26,7 +26,7 @@ export default function TextEditor({ name, content, handleChange }) {
     ];
 
     const modules = {
-        toolbar: toolbarOptions,
+        toolbar: isReadOnly ? false : toolbarOptions,
     };
     return (
         // <Editor
@@ -55,9 +55,9 @@ export default function TextEditor({ name, content, handleChange }) {
         <div className="bg-white ">
             <ReactQuill
                 preserveWhitespace={false}
-                placeholder='Write something...'
+                placeholder={!!isReadOnly ? '' : 'Write something...'}
                 modules={modules}
-                // readOnly={true}
+                readOnly={!!isReadOnly}
                 // name={name}
                 onChange={(value) => handleChange({ target: { name, value } })}
                 value={content}

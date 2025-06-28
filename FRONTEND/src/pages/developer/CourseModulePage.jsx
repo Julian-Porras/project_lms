@@ -6,16 +6,18 @@ import ToastMessage from "../../util/toast-message";
 import CourseModuleComponent from "../components/CourseModule";
 import { useAuth } from "../../context/authContext";
 import { ROLES } from "../../constants/role";
+import { useUI } from "../../context/uiContext";
 import { devCourseModuleRouter } from "../../router/developerRouter";
 
 function DevCourseModulePage() {
     const { createModule, editModule, createModuleItem, fetchCourse } = useDeveloperApi();
-    const queryClient = useQueryClient();
+    const { showToast, newBreadcrumb, resetBreadcrumbs, setCoursePage } = useUI();
     const { user } = useAuth();
-    const { id } = useParams();
+    const { course_id } = useParams();
+    const queryClient = useQueryClient();
     const location = useLocation();
 
-    const param = id;
+    const param = course_id;
     const base = location.pathname.split("/")[1];
     let routes = [];
 
@@ -27,9 +29,6 @@ function DevCourseModulePage() {
     const [isOpenOrder, setOpenOrder] = useState(false);
     const [groupView, setGroupView] = useState(false);
     const [moduleId, setModuleId] = useState();
-    const [message, setMessage] = useState("");
-    const [toastShow, setToastShow] = useState(false);
-    const [toastStatus, setToastStatus] = useState(200);
     const [credentials, setCredentials] = useState({
         course_id: param,
         module_name: "",
@@ -51,6 +50,7 @@ function DevCourseModulePage() {
         base: base,
         routes: routes,
         param: param,
+        paramName: 'course_id',
     }
 
     const { data: classData, isLoading: isClassLoading, error: isClassError } = useQuery({
@@ -66,16 +66,12 @@ function DevCourseModulePage() {
         mutationFn: createModule,
         onSuccess: (res) => {
             queryClient.invalidateQueries({ queryKey: ["course-module"] });
-            setMessage(ToastMessage(res, "Module created successfully."));
-            setToastShow(true);
-            setToastStatus(200);
+            showToast(ToastMessage(res, "Module created successfully."), 200);
             setIsOpen(false);
         },
         onError: (err) => {
             if (err.response?.status >= 500) {
-                setMessage(ToastMessage(err));
-                setToastShow(true);
-                setToastStatus(err.response?.status || 500);
+                showToast(ToastMessage(err), err.response?.status || 500);
             }
             if (err.response?.data?.errors) {
                 setErrors(err.response.data.errors);
@@ -87,16 +83,12 @@ function DevCourseModulePage() {
         mutationFn: ({ module_id, data }) => editModule({ module_id, data }),
         onSuccess: (res) => {
             queryClient.invalidateQueries({ queryKey: ["course-module"] });
-            setMessage(ToastMessage("Update module successfully."));
-            setToastShow(true);
-            setToastStatus(200);
+            showToast(ToastMessage(res, "Update module successfully."), 200);
             setOpenEdit(false);
         },
         onError: (err) => {
             if (err.response?.status >= 500) {
-                setMessage(ToastMessage(err));
-                setToastShow(true);
-                setToastStatus(err.response?.status || 500);
+                showToast(ToastMessage(err), err.response?.status || 500);
             }
             if (err.response?.data?.errors) {
                 setErrors(err.response.data.errors);
@@ -108,16 +100,12 @@ function DevCourseModulePage() {
         mutationFn: createModuleItem,
         onSuccess: (res) => {
             queryClient.invalidateQueries({ queryKey: ["course-module"] });
-            setMessage(ToastMessage("Content created successfully."));
-            setToastShow(true);
-            setToastStatus(200);
+            showToast(ToastMessage(res, "Content created successfully."), 200);
             setOpenContent(false);
         },
         onError: (err) => {
             if (err.response?.status >= 500) {
-                setMessage(ToastMessage(err));
-                setToastShow(true);
-                setToastStatus(err.response?.status || 500);
+                showToast(ToastMessage(err), err.response?.status || 500);
             }
             if (err.response?.data?.errors) {
                 setErrors(err.response.data.errors);
@@ -209,7 +197,14 @@ function DevCourseModulePage() {
             }));
         }
 
-    }, [moduleId, isOpen, isOpenContent, isOpenEdit, param]);
+        if (classData && param) {
+            setCoursePage(prev => ({ ...prev,courseName: classData.course_name, courseId: param}));
+            resetBreadcrumbs();
+            newBreadcrumb("Course", `/course`, false);
+            newBreadcrumb(classData.course_name, `/course/${param}/m`, true);
+        }
+
+    }, [moduleId, isOpen, isOpenContent, isOpenEdit, param, classData]);
 
     return (
         <CourseModuleComponent
@@ -222,10 +217,6 @@ function DevCourseModulePage() {
             setCredentials={setCredentials}
             isOpen={isOpen}
             setIsOpen={setIsOpen}
-            message={message}
-            toastShow={toastShow}
-            toastStatus={toastStatus}
-            setToastShow={setToastShow}
             isSubmitting={isSubmitting}
             ModuleNavData={ModuleNavData}
             isOpenContent={isOpenContent}
