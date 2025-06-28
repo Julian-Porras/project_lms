@@ -109,7 +109,6 @@ export const UIProvider = ({ children }) => {
         showToast,
         hideToast,
         breadcrumbs,
-        setBreadcrumbs,
         resetBreadcrumbs,
         newBreadcrumb,
         isBlocking,

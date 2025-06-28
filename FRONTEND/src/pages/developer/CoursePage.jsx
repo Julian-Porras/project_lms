@@ -103,7 +103,7 @@ function DevCoursePage() {
         }
         
         resetBreadcrumbs();
-        newBreadcrumb("Courses", "/course", true);
+        newBreadcrumb("Course", "/course", true);
     }, [newBreadcrumb, resetBreadcrumbs,coursesData]);
 
     return (

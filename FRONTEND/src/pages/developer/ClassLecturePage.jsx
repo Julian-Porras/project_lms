@@ -1,7 +1,7 @@
 import ClassLectureComponent from "../components/ClassLectureComponent";
 import { devClassModuleRouter } from "../../router/developerRouter";
 import useDeveloperApi from "../../api/developer";
-import { useParams } from "react-router-dom";
+import { useParams,useLocation } from "react-router-dom";
 import { useAuth } from "../../context/authContext";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useUI } from "../../context/uiContext";
@@ -16,8 +16,10 @@ function ClassLecturePage() {
     const { user } = useAuth();
     const { lecture_id } = useParams();
     const { showToast, setIsBlocking, newBreadcrumb, resetBreadcrumbs, classroom } = useUI();
+    const location = useLocation();
 
     const param = lecture_id;
+    const base = location.pathname.split("/")[1];
     let routes = [];
 
     const [errors, setErrors] = useState({});
@@ -35,10 +37,10 @@ function ClassLecturePage() {
     }
 
     const ModuleNavData = {
-        base: "developer",
+        base: base,
         routes: devClassModuleRouter,
-        param: param,
-        paramName: 'lecture_id'
+        param: classroom.classId,
+        paramName: 'class_id'
     }
 
     const { data: contentData, isLoading: isContentLoading } = useQuery({
