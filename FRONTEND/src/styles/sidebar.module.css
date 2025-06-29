@@ -10,7 +10,7 @@
 
 .sidebarAside {
     transition: all 0.1s ease-in-out;
-    @apply h-screen border-r border-gray-200 pt-22 flex flex-col whitespace-nowrap;
+    @apply h-screen border-r border-gray-200 pt-16 flex flex-col whitespace-nowrap;
     background-color: var(--bg-color-default);
     overflow-y: auto;
     scrollbar-width: thin;

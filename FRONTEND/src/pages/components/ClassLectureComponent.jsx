@@ -3,7 +3,7 @@ import { DividerThin } from "../../components/Divider";
 import { ModuleNavComponent, ModuleStatusComponent } from "./ModuleNavigationComponent";
 import TextEditor from "../../components/TextEditor";
 import { InputText } from "../../components/Input";
-import { LoadingPage } from "../../components/Loading";
+import { LoadingPage, LoadingSkeleton } from "../../components/Loading";
 import style from "../../styles/page.module.css";
 
 function ClassLectureComponent({
@@ -20,7 +20,7 @@ function ClassLectureComponent({
         <div className="flex flex-row h-full">
             <ModuleNavComponent ModuleNavData={ModuleNavData} />
             <div className="flex flex-col w-full mx-5">
-                {isContentLoading ? <LoadingPage /> :
+                {isContentLoading ? <LoadingSkeleton /> :
                     isReady ? (
                         <>
                             <div className="flex flex-row items-center justify-between">

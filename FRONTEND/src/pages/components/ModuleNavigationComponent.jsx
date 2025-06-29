@@ -26,10 +26,11 @@ function ModuleNavComponent({ ModuleNavData }) {
         </ModuleNavCard>
     )
 }
-function ModuleStatusComponent({  }) {
+function ModuleStatusComponent({ children }) {
     return (
         <ModuleStatusCard>
-            <p className="text-lg">Classroom status</p>
+            <p className="text-lg font-semibold text-gray-700 mb-4">Classroom status</p>
+            {children}
         </ModuleStatusCard>
     )
 }
