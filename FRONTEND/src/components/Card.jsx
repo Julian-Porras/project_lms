@@ -85,9 +85,9 @@ function CourseCard({ route, name, year, students }) {
     )
 }
 
-function ClassModuleCard({  children }) {
+function ClassModuleCard({ isCourse, children }) {
     return (
-        <div className={styles.ModuleCard}>
+        <div className={`${isCourse ? styles.CourseModuleCard : styles.ModuleCard}`}>
             {children}
         </div>
     )

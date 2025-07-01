@@ -20,7 +20,7 @@ export function ModuleComponent({
     base,
 }) {
     return (
-        <ClassModuleCard >
+        <ClassModuleCard  isCourse={isCourse}>
             <div className="flex flex-row justify-between items-center p-4 rounded-t-md" >
                 <div className="flex flex-row items-center text-xl font-semibold gap-3 uppercase text-[var(--secondary-color)] ">
                     <LuAlbum size={22} /><p className={styles.moduleTitle} >{title}</p>
@@ -48,7 +48,7 @@ export function ModuleComponent({
                 </div>
             </div>
             <Divider />
-            <ContentComponent groupView={groupView} contentData={contentData} base={base} />
+            <ContentComponent courseView={false} groupView={groupView} contentData={contentData} base={base} />
             <div className="flex flex-row items-center text-gray-600 justify-center cursor-pointer gap-2 p-3 hover:bg-blue-50 rounded-b-md"
                 onClick={() => { setOpenContent(true); setModuleId(module_id); }}
             >
@@ -58,7 +58,7 @@ export function ModuleComponent({
     );
 }
 
-export function ContentComponent({ groupView, contentData, base }) {
+export function ContentComponent({ groupView, contentData, base, courseView }) {
     const lectures = [];
     const assignments = [];
     const quizzes = [];
@@ -66,6 +66,7 @@ export function ContentComponent({ groupView, contentData, base }) {
         if (item.item_type === CONTENT.LECTURE) {
             lectures.push({
                 id: item.id,
+                course_id: item.course_id,
                 type: item.item_type,
                 name: item.item_name,
                 visible: item.is_visible,
@@ -74,6 +75,7 @@ export function ContentComponent({ groupView, contentData, base }) {
         else if (item.item_type === CONTENT.ASSIGNMENT) {
             assignments.push({
                 id: item.id,
+                course_id: item.course_id,
                 type: item.item_type,
                 name: item.item_name,
                 visible: item.is_visible,
@@ -82,6 +84,7 @@ export function ContentComponent({ groupView, contentData, base }) {
         else if (item.item_type === CONTENT.QUIZ) {
             quizzes.push({
                 id: item.id,
+                course_id: item.course_id,
                 type: item.item_type,
                 name: item.item_name,
                 visible: item.is_visible,
@@ -96,11 +99,13 @@ export function ContentComponent({ groupView, contentData, base }) {
                     assignments={assignments}
                     quizzes={quizzes}
                     base={base}
+                    courseView={courseView}
                 />
                 :
                 <ListContentLayout
                     contentData={contentData}
                     base={base}
+                    courseView={courseView}
                 />
             }
         </div>
@@ -110,6 +115,7 @@ export function ContentComponent({ groupView, contentData, base }) {
 export function ListContentLayout({
     contentData,
     base,
+    courseView,
 }) {
     return (
         contentData?.map((item) => (
@@ -126,7 +132,7 @@ export function ListContentLayout({
                             <LuRocket color="#168f56" size={18} />
                         }
                         <p className=" hover:underline cursor-pointer" >{item.item_name}</p>
-                        {item.course_id && <LuLink2 color="#6a7282" size={16} />}
+                        {!courseView && item.course_id && <LuLink2 color="#6a7282" size={16} />}
                     </div>
                     <div className={styles.contentItemWrapper}>
                         {item.is_visible ? <PublishedContentStatus /> : <NotPublishedContentStatus />}
@@ -144,6 +150,7 @@ export function GroupContentLayout({
     assignments,
     quizzes,
     base,
+    courseView,
 }) {
     return (
         <>
@@ -158,6 +165,7 @@ export function GroupContentLayout({
                                 <ModuleItemCard route={lecture.id} base={base}>
                                     <div className={styles.contentItemWrapperGroup}>
                                         <p key={lecture.id} className="hover:underline cursor-pointer" >{lecture.name}</p>
+                                        {!courseView && lecture.course_id && <LuLink2 color="#6a7282" size={16} />}
                                     </div>
                                     <div className={styles.contentItemWrapper}>
                                         {lecture.visible ? <PublishedContentStatus /> : <NotPublishedContentStatus />}
@@ -181,6 +189,7 @@ export function GroupContentLayout({
                                 <ModuleItemCard>
                                     <div className={styles.contentItemWrapperGroup}>
                                         <p key={assignment.id} className=" hover:underline cursor-pointer" >{assignment.name}</p>
+                                        {!courseView && assignment.course_id && <LuLink2 color="#6a7282" size={16} />}
                                     </div>
                                     <div className={styles.contentItemWrapper}>
                                         {assignment.visible ? <PublishedContentStatus /> : <NotPublishedContentStatus />}
@@ -204,6 +213,7 @@ export function GroupContentLayout({
                                 <ModuleItemCard>
                                     <div className={styles.contentItemWrapperGroup}>
                                         <p key={quiz.id} className=" hover:underline cursor-pointer" >{quiz.name}</p>
+                                        {!courseView && quiz.course_id && <LuLink2 color="#6a7282" size={16} />}
                                     </div>
                                     <div className={styles.contentItemWrapper}>
                                         {quiz.visible ? <PublishedContentStatus /> : <NotPublishedContentStatus />}
@@ -218,4 +228,56 @@ export function GroupContentLayout({
             }
         </>
     )
+}
+
+export function CourseModule({
+    isCourse,
+    title,
+    isVisible,
+    setOpenContent,
+    setOpenEdit,
+    contentData,
+    module_id,
+    setModuleId,
+    setCredentials,
+    groupView,
+    base,
+}) {
+    return (
+        <ClassModuleCard isCourse={isCourse}>
+            <div className="flex flex-row justify-between items-center p-4 rounded-t-md" >
+                <div className="flex flex-row items-center text-xl font-semibold gap-3 uppercase text-[var(--secondary-color)] ">
+                    <LuAlbum size={22} /><p className={styles.moduleTitle} >{title}</p>
+                    {isCourse &&
+                        <div className="flex flex-row items-center justify-center gap-2 text-gray-500">
+                            <LuLink2 size={16} />
+                            <p className="text-xs text-gray-500">from course</p>
+                        </div>
+                    }
+                </div>
+                <div className="flex flex-row items-center gap-4 ">
+                    {isVisible ? <LuEye size={19} color="var(--gray-color)" /> : <LuEyeOff size={19} color="var(--gray-color)" />}
+                    <div className="flex flex-row items-center justify-center gap-1 border-green-400 border-1 text-green-500 rounded-sm px-2 py-1 hover:bg-blue-50 cursor-pointer"
+                        onClick={() => {
+                            setOpenEdit(true);
+                            setModuleId(module_id);
+                            setCredentials(prev => ({
+                                ...prev,
+                                module_name: title,
+                                is_visible: isVisible ? true : false,
+                            }));
+                        }}>
+                        <LuSquarePen /><p>EDIT</p>
+                    </div>
+                </div>
+            </div>
+            <Divider />
+            <ContentComponent courseView={true} groupView={groupView} contentData={contentData} base={base} />
+            <div className="flex flex-row items-center text-gray-600 justify-center cursor-pointer gap-2 p-3 hover:bg-blue-50 rounded-b-md"
+                onClick={() => { setOpenContent(true); setModuleId(module_id); }}
+            >
+                <LuPlus size={18} /><p>ADD CONTENT</p>
+            </div>
+        </ClassModuleCard>
+    );
 }

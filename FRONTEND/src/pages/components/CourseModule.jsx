@@ -9,7 +9,7 @@ import { InputText } from "../../components/Input";
 import SelectOptions from "../../components/Select";
 import { ButtonCard } from "../../components/Card";
 import { ModuleNavComponent, ModuleStatusComponent } from "./ModuleNavigationComponent";
-import { ModuleComponent } from "./ModuleComponent";
+import { CourseModule } from "./ModuleComponent";
 import { LuListStart } from "react-icons/lu";
 import { SwitchComponent } from "../../components/Switch";
 import { CONTENT } from "../../constants/content";
@@ -68,7 +68,8 @@ function CourseModuleComponent({
                         {classData?.modules?.length > 0 ? (
                             classData?.modules?.map((module, index) => (
                                 <Fragment key={module.id}>
-                                    <ModuleComponent
+                                    <CourseModule
+                                        isCourse={module.id}
                                         isVisible={module.is_visible}
                                         title={module.module_name}
                                         setOpenContent={setOpenContent}

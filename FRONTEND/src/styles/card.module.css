@@ -35,7 +35,14 @@
 }
 
 .ModuleCard {
-  @apply rounded-md shadow-sm flex flex-col;
+  @apply rounded-md shadow-sm flex flex-col border-t-3 border-t-green-400 ;
+  background-color: var(--card-bg);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.CourseModuleCard {
+  @apply rounded-md shadow-sm flex flex-col border-t-3 border-t-gray-400 ;
   background-color: var(--card-bg);
   width: 100%;
   box-sizing: border-box;
