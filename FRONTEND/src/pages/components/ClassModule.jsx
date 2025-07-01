@@ -16,6 +16,7 @@ import { CONTENT } from "../../constants/content";
 import { Fragment } from "react";
 import { NavLink, useResolvedPath } from "react-router-dom";
 import { CreateModuleModal, EditModuleModal, OrderModuleModal } from "./ModalComponent";
+import ActivityLog from "./ActivityLog";
 
 function ClassModuleComponent({
     errors,
@@ -45,13 +46,36 @@ function ClassModuleComponent({
     handleViewChange,
 }) {
     const base = useResolvedPath(".").pathname;
+    const logs = [
+        {
+            user: "Developer",
+            action: 'edited "Course Introduction"',
+            timestamp: "2025-06-27T14:22:00Z",
+            type: "dev",
+        },
+        {
+            user: "You",
+            action: 'approved "Enrollment Request"',
+            timestamp: "2025-06-28T08:45:00Z",
+            type: "users",
+        },
+        {
+            user: "Developer",
+            action: 'edited "Course Introduction"',
+            timestamp: "2025-06-27T14:22:00Z",
+            type: "dev",
+        },
+    ];
     return (
         <div className="flex flex-row ">
             <ModuleNavComponent ModuleNavData={ModuleNavData} />
             {isClassLoading ? (<LoadingPage />) :
                 <div className="flex flex-col w-full h-full mx-5">
                     <div className="flex flex-row items-center justify-between " >
-                        <p className={style.title} >{classData?.classroom_name}</p>
+                        <div className="flex flex-row items-center gap-4">
+                            <p className={style.title} >{classData?.classroom_name}</p>
+                            <p className=" text-xs text-gray-500 uppercase">modules</p>
+                        </div>
                         <ButtonSecondary method={() => setIsOpen(true)}> <FaPlus />Create Module</ButtonSecondary>
                     </div>
                     <DividerThin />
@@ -93,7 +117,9 @@ function ClassModuleComponent({
                     </div>
                 </div>
             }
-            <ModuleStatusComponent />
+            <ModuleStatusComponent >
+                <ActivityLog logs={logs} />
+            </ModuleStatusComponent>
             <>
                 <CreateModuleModal
                     isOpen={isOpen}

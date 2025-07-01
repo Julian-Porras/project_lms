@@ -15,6 +15,7 @@ import { SwitchComponent } from "../../components/Switch";
 import { CONTENT } from "../../constants/content";
 import { Fragment } from "react";
 import { NavLink, useResolvedPath } from "react-router-dom";
+import ActivityLog from "./ActivityLog";
 
 function CourseModuleComponent({
     errors,
@@ -44,6 +45,27 @@ function CourseModuleComponent({
     handleViewChange,
 }) {
     const base = useResolvedPath(".").pathname;
+
+    const logs = [
+        {
+            user: "Developer",
+            action: 'edited "Course Introduction"',
+            timestamp: "2025-06-27T14:22:00Z",
+            type: "dev",
+        },
+        {
+            user: "You",
+            action: 'approved "Enrollment Request"',
+            timestamp: "2025-06-28T08:45:00Z",
+            type: "users",
+        },
+        {
+            user: "Developer",
+            action: 'edited "Course Introduction"',
+            timestamp: "2025-06-27T14:22:00Z",
+            type: "dev",
+        },
+    ];
     return (
         <div className="flex flex-row ">
             <ModuleNavComponent ModuleNavData={ModuleNavData} />
@@ -92,7 +114,9 @@ function CourseModuleComponent({
                     </div>
                 </div>
             }
-            <ModuleStatusComponent />
+            <ModuleStatusComponent >
+                <ActivityLog logs={logs} />
+            </ModuleStatusComponent>
             <Modal
                 isOpen={isOpen}
                 onClose={() => setIsOpen(false)}

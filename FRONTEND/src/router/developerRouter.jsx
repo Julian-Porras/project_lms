@@ -11,6 +11,7 @@ const CourseModulePage = lazy(() => import("../pages/developer/CourseModulePage"
 const SettingsPage = lazy(() => import("../pages/settings"));
 const ClassLecturePage = lazy(() => import("../pages/developer/ClassLecturePage"));
 const CourseLecturePage = lazy(() => import("../pages/developer/CourseLecturePage"));
+const ClassPeoplePage = lazy(() => import("../pages/developer/ClassPeoplePage"));
 
 const devClassContentRouter = [
   {
@@ -43,7 +44,7 @@ const devClassModuleRouter = [
   },
   {
     path: "classroom/:class_id/p",
-    element: <ClassModulePage />,
+    element: <ClassPeoplePage />,
     meta: { label: "People" },
   },
   {

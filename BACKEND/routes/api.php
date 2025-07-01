@@ -47,6 +47,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::controller(DevClassroomController::class)->group(function () {
             Route::get('/d/class', 'fetchClasses');
             Route::get('/d/class/{class_id}', 'fetchClass');
+            Route::get('/d/class/{class_id}/info', 'fetchClassInfo');
             Route::post('/d/create-class', 'createClass');
             Route::post('/d/edit-class/{class_id}', 'editClass');
         });

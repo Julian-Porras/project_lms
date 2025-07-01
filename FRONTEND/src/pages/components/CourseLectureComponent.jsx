@@ -5,7 +5,6 @@ import TextEditor from "../../components/TextEditor";
 import { InputText } from "../../components/Input";
 import { LoadingPage, LoadingSkeleton } from "../../components/Loading";
 import style from "../../styles/page.module.css";
-import ActivityLog from "./ActivityLog";
 
 
 function CourseLectureComponent({
@@ -17,39 +16,7 @@ function CourseLectureComponent({
     handleChange,
     handleEditSubmit,
 }) {
-
-    const logs = [
-        {
-            user: "Julian",
-            action: 'edited "Course Introduction"',
-            timestamp: "2025-06-27T14:22:00Z",
-            type: "edit",
-        },
-        {
-            user: "Julian",
-            action: 'edited "Course Introduction"',
-            timestamp: "2025-06-27T14:22:00Z",
-            type: "edit",
-        },
-        {
-            user: "System",
-            action: 'approved "Enrollment Request"',
-            timestamp: "2025-06-28T08:45:00Z",
-            type: "approve",
-        },
-        {
-            user: "Admin",
-            action: 'deleted "Module 3"',
-            timestamp: "2025-06-27T09:12:00Z",
-            type: "delete",
-        },
-        {
-            user: "Admin",
-            action: 'deleted "Module 3"',
-            timestamp: "2025-06-27T09:12:00Z",
-            type: "delete",
-        },
-    ];
+    
     const isReady = !!content?.item_name || !!content?.item_content;
     return (
         <div className="flex flex-row h-full">
@@ -87,7 +54,6 @@ function CourseLectureComponent({
                 }
             </div>
             <ModuleStatusComponent >
-                <ActivityLog logs={logs} />
             </ModuleStatusComponent>
 
         </div>

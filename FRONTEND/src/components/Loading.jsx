@@ -42,8 +42,9 @@ function LoadingSkeleton() {
     return (
         <Stack spacing={2}>
             {/* For variant="text", adjust the height via font-size */}
-            <Skeleton variant="text" sx={{ fontSize: '3rem' }} />
-            <Skeleton variant="rounded" sx={{width: '100%', height: '6rem'}} />
+            <Skeleton variant="text" sx={{ fontSize: '2rem' }} />
+            <Skeleton variant="text" sx={{ fontSize: '2px' }} />
+            <Skeleton variant="rounded" sx={{width: '100%', height: '8rem'}} />
         </Stack>
     )
 }

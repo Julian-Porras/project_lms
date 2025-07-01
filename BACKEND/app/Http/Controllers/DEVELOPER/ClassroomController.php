@@ -27,6 +27,12 @@ class ClassroomController extends Controller
         return response()->json($class, 200);
     }
 
+    public function fetchClassInfo($class_id)
+    {
+        $class = $this->classroomService->getClassroomInfo($class_id);
+        return response()->json($class, 200);
+    }
+
     public function createClass(CreateClassRequest $request)
     {
         $user = auth('sanctum')->user();

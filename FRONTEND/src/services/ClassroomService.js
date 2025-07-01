@@ -17,6 +17,13 @@ export default function ClassroomService() {
         return response.data;
     };
 
+    const fetchClassInfoApi = async ({ class_id, signal }) => {
+        const response = await AxiosAuth.get(`/api/d/class/${class_id}/info`, {
+            signal,
+        });
+        return response.data;
+    };
+
     const createClassApi = async (credentials) => {
         const response = await AxiosAuth.post(`/api/d/create-class`, credentials);
         return response.data;
@@ -30,6 +37,7 @@ export default function ClassroomService() {
     return {
         fetchClassesApi,
         fetchClassApi,
+        fetchClassInfoApi,
         createClassApi,
         editClassApi,
     }

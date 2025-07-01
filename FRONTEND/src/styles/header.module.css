@@ -11,7 +11,7 @@
 }
 .headerTitle{
     cursor: pointer;
-    color: var(--primary-color);
+    color: var(--text-color);
 }
 .logoContainer{
     @apply w-50 flex flex-row gap-1 items-center;

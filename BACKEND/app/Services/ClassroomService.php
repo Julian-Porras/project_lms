@@ -66,6 +66,17 @@ class ClassroomService
         return $classroom;
     }
 
+    public function getClassroomInfo($class_id)
+    {
+        // Get the classroom
+        $classroom = DB::table('tbl_classroom')->where('id', $class_id)->first();
+        if (!$classroom) {
+            return null;
+        }
+
+        return $classroom;
+    }
+
     public function createClassroom(array $data)
     {
         return ClassroomModel::create($data);

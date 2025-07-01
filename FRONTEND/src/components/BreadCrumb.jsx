@@ -11,7 +11,7 @@ export default function BreadCrumb() {
     const safeBreadcrumbs = Array.isArray(breadcrumbs) ? breadcrumbs : [];
 
     // Collapse everything except first and last two
-    const shouldCollapse = safeBreadcrumbs.length > 3;
+    const shouldCollapse = safeBreadcrumbs.length > 4;
     const first = safeBreadcrumbs[0];
     const middle = shouldCollapse ? safeBreadcrumbs.slice(1, -1) : [];
     const lastTwo = shouldCollapse ? safeBreadcrumbs.slice(-1) : safeBreadcrumbs.slice(1);
