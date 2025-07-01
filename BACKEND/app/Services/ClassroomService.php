@@ -35,37 +35,34 @@ class ClassroomService
         if (!$classroom) {
             return null;
         }
-        // Get class_modules
-        $classModules = DB::table('tbl_module')
-            ->where('classroom_id', $class_id)
-            ->get();
-
-        // Get course_modules
-        $courseModules = DB::table('tbl_module')
-            ->where('course_id', $classroom->course_id)
-            ->get();
 
         // Merge modules and sort by created_at
-        $modules = $classModules
-            ->merge($courseModules)
-            ->sortBy('created_at')
+        $modules = DB::table('tbl_module')
+            ->where('classroom_id', $class_id)
+            ->orWhere('course_id', $classroom->course_id)
+            ->orderBy('created_at')
+            ->get()
+            ->unique('id')
             ->values();
 
         // Get module_items for all modules
         $moduleItems = DB::table('tbl_module_item')
             ->select('id', 'classroom_id', 'course_id', 'item_name', 'item_type', 'module_id', 'is_visible')
-            ->whereIn('module_id', $modules->pluck('id')->all())
+            ->whereIn('module_id', $modules->pluck('id'))
+            ->where(function ($query) use ($class_id) {
+                $query->where('classroom_id', $class_id)
+                    ->orWhereNull('classroom_id');
+            })
             ->get()
             ->groupBy('module_id');
 
         // Attach module_items to each module
-        $modules = $modules->map(function ($module) use ($moduleItems) {
-            $module->module_items = $moduleItems->get($module->id, collect());
-            return $module;
-        });
+        foreach ($modules as $module) {
+            $module->module_items = $moduleItems[$module->id] ?? collect();
+        }
 
         // Attach modules to classroom
-        $classroom->modules = $modules->values();
+        $classroom->modules = $modules;
         return $classroom;
     }
 
