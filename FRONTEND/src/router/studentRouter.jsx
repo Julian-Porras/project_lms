@@ -4,8 +4,8 @@ import { ROLES } from "../constants/role";
 import { FaDesktop } from "react-icons/fa";
 import { LuLayoutDashboard } from "react-icons/lu";
 
-const StudentDashboard = lazy(() => import("../pages/student/dashboard"));
-const StudentClassroomTab = lazy(() => import("../pages/student/classroom"));
+const StudentDashboard = lazy(() => import("../pages/student/DashboardPage.jsx"));
+const StudentClassroomTab = lazy(() => import("../pages/student/ClassroomPage.jsx"));
 const SettingsPage = lazy(() => import("../pages/settings"));
 
 const studentRouter = [

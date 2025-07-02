@@ -14,21 +14,15 @@ export const AuthProvider = ({ children }) => {
     const [errors, setErrors] = useState({});
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if (token && !user) {
-            userInfo();
-        }
-    }, [token]);
-
     const login = async (credentials) => {
-        setLoading((d) => true);
-        setErrors((d) => { });
+        setLoading(() => true);
+        setErrors(() => { });
         try {
             const data = await loginApi(credentials);
             const bearer = data.token;
             localStorage.setItem("token", bearer);
-            setToken((d) => bearer);
-            setErrors((d) => { });
+            setToken(() => bearer);
+            setErrors(() => { });
             const userData = await userInfo();
             switch (userData.role_id) {
                 case ROLES.ADMIN:
@@ -56,15 +50,15 @@ export const AuthProvider = ({ children }) => {
     };
 
     const register = async (credentials) => {
-        setLoading((d) => true);
-        setErrors((d) => { });
+        setLoading(() => true);
+        setErrors(() => { });
         try {
             const data = await registerApi(credentials);
             console.log(data);
             const bearer = data.token;
             localStorage.setItem("token", bearer);
-            setToken((d) => bearer);
-            setErrors((d) => { });
+            setToken(() => bearer);
+            setErrors(() => { });
             const userData = await userInfo();
             switch (userData.role_id) {
                 case ROLES.ADMIN:
@@ -105,7 +99,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     const logout = async () => {
-        setLoggingOut((d) => true);
+        setLoggingOut(() => true);
         try {
             await logoutApi();
         } catch (err) {
@@ -117,14 +111,20 @@ export const AuthProvider = ({ children }) => {
             )
         } finally {
             localStorage.clear();
-            setLoggingOut((d) => false);
-            setToken((d) => null);
-            setAuthUser((d) => false);
-            setUser((d) => null);
+            setLoggingOut(() => false);
+            setToken(() => null);
+            setAuthUser(() => false);
+            setUser(() => null);
             navigate("/");
         }
     };
 
+    useEffect(() => {
+        if (token && !user) {
+            userInfo();
+        }
+    }, [token, user, userInfo]);
+    
     return (
         <AuthContext.Provider value={{
             token,

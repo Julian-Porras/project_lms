@@ -120,7 +120,6 @@ function ClassPeopleComponent({
                             <p className={style.title} >{classData?.classroom_name}</p>
                             <p className=" text-xs text-gray-500 uppercase">people</p>
                         </div>
-                        {/* <ButtonSecondary method={() => setIsOpen(true)}> <FaPlus />Create Module</ButtonSecondary> */}
                     </div>
                     <DividerThin />
                     <TabContext value={tabValue}>

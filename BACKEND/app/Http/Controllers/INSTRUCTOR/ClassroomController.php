@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers\instructor;
 
-use App\Enums\PaginateEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateClassRequest;
 use App\Http\Requests\UpdateClassRequest;
-use App\Models\ClassroomLogsModel;
 use App\Services\ClassroomService;
 use Illuminate\Http\Request;
 

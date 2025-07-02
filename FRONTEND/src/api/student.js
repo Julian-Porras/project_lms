@@ -1,19 +1,18 @@
-import useAxios from '../hooks/useAxios'
+import StudentService from "../services/StudentService.js";
 
-const { AxiosAuth } = useAxios();
+export default function useStudentApi(){
+    const { fetchClassStudentsApi, fetchStudentClassesApi} = StudentService();
 
-// ****************** class api ******************
-export const fetchClassesApi = async () => {
-    const response = await AxiosAuth.get(`/api/s/class`);
-    return response.data;
-};
+    const fetchClassStudents = async ({ page, limit, signal, path }) => {
+        return fetchClassStudentsApi({page, limit, signal, path});
+    };
 
-export const fetchClassModulesApi = async (class_id) => {
-    const response = await AxiosAuth.get(`/api/s/class/${class_id}`);
-    return response.data;
-};
+    const fetchStudentClasses = async ({ page, limit, signal, path }) => {
+        return fetchStudentClassesApi({page, limit, signal, path});
+    };
 
-export const fetchClassModuleItemsApi = async (module_id) => {
-    const response = await AxiosAuth.get(`/api/s/class/module/${module_id}`);
-    return response.data;
-};
+    return {
+        fetchClassStudents,
+        fetchStudentClasses,
+    }
+}
