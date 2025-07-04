@@ -123,7 +123,7 @@ export const AuthProvider = ({ children }) => {
         if (token && !user) {
             userInfo();
         }
-    }, [token, user, userInfo]);
+    }, [token, user]);
     
     return (
         <AuthContext.Provider value={{
