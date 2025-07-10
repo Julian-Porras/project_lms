@@ -1,4 +1,10 @@
-import { createContext, useContext, useState, useCallback, useEffect } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useCallback,
+  useEffect,
+} from "react";
 import { ToastComponent } from "../components/Toast";
 import { ROLES } from "../constants/role";
 import { useAuth } from "./authContext";
@@ -10,7 +16,9 @@ export const UIProvider = ({ children }) => {
   const { user } = useAuth();
 
   const [isBlocking, setIsBlocking] = useState(false);
-  const [blockMessage, setBlockMessage] = useState("You have unsaved changes. Are you sure you want to leave?");
+  const [blockMessage, setBlockMessage] = useState(
+    "You have unsaved changes. Are you sure you want to leave?"
+  );
 
   const [toastShow, setToastShow] = useState(false);
   const [message, setMessage] = useState("");
@@ -71,11 +79,11 @@ export const UIProvider = ({ children }) => {
     [basePath]
   );
   useEffect(() => {
-    const savedClassroom = localStorage.getItem('classroom');
+    const savedClassroom = localStorage.getItem("classroom");
     if (savedClassroom) {
       setClassroom(JSON.parse(savedClassroom));
     }
-    const savedCourse = localStorage.getItem('course');
+    const savedCourse = localStorage.getItem("course");
     if (savedCourse) {
       setCoursePage(JSON.parse(savedCourse));
     }
@@ -83,13 +91,12 @@ export const UIProvider = ({ children }) => {
 
   useEffect(() => {
     if (classroom?.classId && classroom?.className) {
-      localStorage.setItem('classroom', JSON.stringify(classroom));
+      localStorage.setItem("classroom", JSON.stringify(classroom));
     }
     if (coursePage?.courseId && coursePage?.courseName) {
-      localStorage.setItem('course', JSON.stringify(coursePage));
+      localStorage.setItem("course", JSON.stringify(coursePage));
     }
   }, [classroom, coursePage]);
-
 
   useEffect(() => {
     const handleBeforeUnload = (e) => {
@@ -102,7 +109,7 @@ export const UIProvider = ({ children }) => {
     return () => window.removeEventListener("beforeunload", handleBeforeUnload);
   }, [isBlocking]);
 
-  usePrompt(blockMessage, isBlocking)
+  usePrompt(blockMessage, isBlocking);
   return (
     <UIContext.Provider
       value={{
