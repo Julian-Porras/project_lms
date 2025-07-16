@@ -4,7 +4,6 @@ import { DividerThin } from "../../components/Divider";
 import style from "../../styles/page.module.css";
 import { FaPlus } from "react-icons/fa";
 import { LoadingPage } from "../../components/Loading";
-import { ToastComponent } from "../../components/Toast";
 import PaginationBase from "../../components/Pagination";
 import { CourseModal } from "./ModalComponent";
 
@@ -18,10 +17,6 @@ function CourseComponent({
     setCredentials,
     isOpen,
     setIsOpen,
-    message,
-    toastShow,
-    toastStatus,
-    setToastShow,
     isSubmitting,
     page,
     totalPages,
@@ -33,12 +28,6 @@ function CourseComponent({
 }) {
     return (
         <>
-            <ToastComponent
-                message={message}
-                show={toastShow}
-                setShow={setToastShow}
-                toastStatus={toastStatus}
-            />
             <div className="flex flex-row items-center justify-between " >
                 <p className={style.title} >Course</p>
                 <ButtonSecondary method={() => setIsOpen(true)}> <FaPlus />Create Course</ButtonSecondary>
